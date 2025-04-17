@@ -1,0 +1,201 @@
+.uam-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.uam-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.uam-user-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.uam-search-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.uam-search-bar {
+    display: flex;
+    gap: 10px;
+}
+
+.uam-search-bar input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+}
+
+.uam-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.uam-create-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.uam-create-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.uam-form-row {
+    display: flex;
+    gap: 10px;
+}
+
+.uam-form-row input {
+    flex: 1;
+}
+
+.uam-form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.uam-user-list {
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.uam-list-header,
+.uam-list-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr;
+    padding: 12px;
+    align-items: center;
+}
+
+.uam-list-header {
+    background: #f5f5f5;
+    font-weight: bold;
+}
+
+.uam-list-row {
+    border-top: 1px solid #eee;
+}
+
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+input, select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+/* Back Button */
+
+.uam-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.uam-header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.uam-back-button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.uam-back-button:hover {
+    background-color: #0056b3;
+}
+
+/*  */
+
+.uam-form {
+    padding: 10px;
+}
+
+.uam-form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.uam-form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.uam-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.swal2-input,
+.swal2-select {
+    width: 100% !important;
+    margin: 5px 0 !important;
+}
+
+.swal2-select {
+    height: 40px !important;
+}
+
+.uam-modify-button {
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.uam-modify-button:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,63 @@
+.umContainer {
+    position: relative;
+    font-family: Arial, sans-serif;
+    width: 95vw;
+    height: 90vh;
+    margin: 30px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+}
+
+.umHeader {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.umUserInfo {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.umProfilePicture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.umUsername {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.umLogoutButton {
+    padding: 8px 16px;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    color: #333;
+    cursor: pointer;
+}
+
+.umButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+}
+
+.umActionButton {
+    width: 45%;
+    padding: 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
