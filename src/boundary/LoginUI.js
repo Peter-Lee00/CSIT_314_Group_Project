@@ -62,6 +62,7 @@ function LoginUI() {
     };
 
     return (
+        <body>
         <div className="login-container">
             <div className="login-box">
                 <div className="login-header">
@@ -116,6 +117,7 @@ function LoginUI() {
                 </form>
             </div>
         </div>
+        </body>
     );
 }
 

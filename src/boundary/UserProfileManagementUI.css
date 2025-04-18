@@ -2,6 +2,10 @@
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
 }
 
 .upm-header {
@@ -23,6 +27,9 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-right: 20px;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .upm-back-button {
@@ -43,11 +50,24 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .upm-search-bar {
     display: flex;
     gap: 10px;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .upm-search-input {
@@ -55,6 +75,8 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 250px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
 }
 
 .upm-profile-list {
