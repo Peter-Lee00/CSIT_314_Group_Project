@@ -50,9 +50,9 @@ function LoginUI() {
     switch (status) {
       case 'SUCCESS':
         Swal.fire({
-          title: 'Welcome!',
+          title: 'Login Successfully !',
           icon: 'success',
-          confirmButtonText: 'Let me in!',
+          confirmButtonText: 'Okay',
           timer: 1500
         }).then(() => {
           // Navigate user based on their role
@@ -78,7 +78,7 @@ function LoginUI() {
       case 'INVALID_CREDENTIALS':
         Swal.fire({
           title: 'Login failed',
-          text: 'Double-check that email or password.',
+          text: 'Please check your email and password.',
           icon: 'error',
           confirmButtonText: 'Retry'
         });
@@ -87,7 +87,16 @@ function LoginUI() {
       case 'INVALID_PROFILE':
         Swal.fire({
           title: 'Role Mismatch',
-          text: "You're not allowed to log in with that role.",
+          text: "Access denied. Please check your role again.",
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        break;
+
+      case 'SUSPENDED_ACCOUNT':
+        Swal.fire({
+          title: 'Account Suspended',
+          text: "Your account has been suspended. Please contact the administrator.",
           icon: 'error',
           confirmButtonText: 'OK'
         });

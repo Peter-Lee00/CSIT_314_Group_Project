@@ -60,7 +60,7 @@ function UserAccountManagementUI() {
       title: 'Create Account',
       width: 800,
       html: `
-        <div class="uam-wrapper" style="grid-template-columns: 1fr 1fr;">
+        <div class="uam-wrapper">
           <div class="item">
             <label>First Name</label>
             <input type="text" id="firstName" class="swal2-input" placeholder="John">
@@ -81,7 +81,7 @@ function UserAccountManagementUI() {
             <label>Email</label>
             <input type="email" id="email" class="swal2-input" placeholder="user@example.com">
           </div>
-          <div class="item" style="grid-column: span 2;">
+          <div class="item full-width">
             <label>User Profile</label>
             <select id="userProfile" class="swal2-select">
               <option value="">Choose role</option>
@@ -90,7 +90,7 @@ function UserAccountManagementUI() {
               <option value="HomeOwner">Home Owner</option>
             </select>
           </div>
-          <div id="addressField" class="item" style="grid-column: span 2; display: none;">
+          <div id="addressField" class="item full-width" style="display: none;">
             <label>Address</label>
             <input type="text" id="address" class="swal2-input" placeholder="Optional for most roles">
           </div>
@@ -167,23 +167,38 @@ function UserAccountManagementUI() {
 
   const launchUpdateModal = (user) => {
     const addressField = user.userProfile === 'HomeOwner' ? `
-      <div class="item" style="grid-column: span 2;">
+      <div class="item full-width">
         <label>Address</label>
         <input type="text" id="address" class="swal2-input" value="${user.address || ''}">
       </div>
     ` : '';
 
     Swal.fire({
-      title: 'Edit User',
+      title: 'Edit Account Details',
       width: 800,
       html: `
-        <div class="uam-wrapper" style="grid-template-columns: 1fr 1fr;">
-          <div class="item"><label>First Name</label><input id="firstName" class="swal2-input" value="${user.firstName}"></div>
-          <div class="item"><label>Last Name</label><input id="lastName" class="swal2-input" value="${user.lastName}"></div>
-          <div class="item"><label>Password</label><input id="password" class="swal2-input" value="${user.password}"></div>
-          <div class="item"><label>Phone</label><input id="phoneNumber" class="swal2-input" value="${user.phoneNumber || ''}"></div>
-          <div class="item"><label>Email</label><input id="email" class="swal2-input" value="${user.email}" disabled></div>
-          <div class="item" style="grid-column: span 2;">
+        <div class="uam-wrapper">
+          <div class="item">
+            <label>First Name</label>
+            <input id="firstName" class="swal2-input" value="${user.firstName}">
+          </div>
+          <div class="item">
+            <label>Last Name</label>
+            <input id="lastName" class="swal2-input" value="${user.lastName}">
+          </div>
+          <div class="item">
+            <label>Password</label>
+            <input id="password" class="swal2-input" value="${user.password}">
+          </div>
+          <div class="item">
+            <label>Phone</label>
+            <input id="phoneNumber" class="swal2-input" value="${user.phoneNumber || ''}">
+          </div>
+          <div class="item">
+            <label>Email</label>
+            <input id="email" class="swal2-input" value="${user.email}" disabled>
+          </div>
+          <div class="item full-width">
             <label>User Profile</label>
             <select id="userProfile" class="swal2-select">
               <option value="PlatformAdmin" ${user.userProfile === 'PlatformAdmin' ? 'selected' : ''}>Platform Admin</option>
@@ -254,7 +269,7 @@ function UserAccountManagementUI() {
     const ctrl = new SuspendUserAccountController();
     const didSuspend = await ctrl.suspendUserAccount(email);
     if (didSuspend) {
-      Swal.fire('Success!', 'User suspended.', 'success');
+      Swal.fire('Success!', 'User suspended Successfully.', 'success');
       loadUsers();
     } else {
       Swal.fire('Error!', "Couldn't suspend the user.", 'error');
@@ -266,7 +281,7 @@ function UserAccountManagementUI() {
       <div className="uam-header">
         <div className="uam-header-left">
           <button onClick={goBack} className="uam-back-button">← Back</button>
-          <h1>User Accounts</h1>
+          <h1>Accounts Management</h1>
         </div>
         <div className="uam-user-controls">
           <span>{activeUser}</span>

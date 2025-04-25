@@ -28,7 +28,7 @@ function UserManagementUI() {
         if (logout) {
             Swal.fire({
                 position: "center",
-                title: 'Logout Successful',
+                title: 'Logout Successfully !',
                 icon: 'success',
                 confirmButtonText: 'OK',
                 timer: 1500

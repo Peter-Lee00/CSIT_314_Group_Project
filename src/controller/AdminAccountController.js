@@ -90,12 +90,12 @@ export class SearchUserAccountController {
 
 
 export class SuspendUserAccountController {
-  async suspendUserAccount(username) {
+  async suspendUserAccount(email) {
     try {
       // First get the user data
-      const userData = await UserAccount.searchUserAccount(username);
+      const userData = await UserAccount.searchUserAccount(email);
       if (!userData) {
-        console.warn("User not found:", username);
+        console.warn("User not found:", email);
         return false;
       }
 
@@ -114,7 +114,7 @@ export class SuspendUserAccountController {
       const result = await user.suspendUserAccount();
       return result;
     } catch (err) {
-      console.warn("Could not suspend account for:", username);
+      console.warn("Could not suspend account for:", email);
       return false;
     }
   }

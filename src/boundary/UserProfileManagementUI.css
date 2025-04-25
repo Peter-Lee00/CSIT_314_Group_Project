@@ -1,11 +1,9 @@
 .upm-container {
     padding: 20px;
-    max-width: 1200px;
     margin: 0 auto;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
+    background-color: #1e2327;
+    min-height: 100vh;
+    color: #ffffff;
 }
 
 .upm-header {
@@ -13,32 +11,35 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
+    padding: 15px 20px;
+    background-color: #2c3338;
+    border-radius: 4px;
 }
 
 .upm-header-left {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
 
-.upm-user-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-right: 20px;
-    padding: 10px;
-    border-radius: 5px;
+.upm-header h1 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 24px;
+    font-weight: normal;
 }
 
 .upm-back-button {
-    padding: 8px 16px;
     background-color: #007bff;
     color: white;
     border: none;
+    padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .upm-back-button:hover {
@@ -50,135 +51,183 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    text-decoration: none;
+    gap: 10px;
 }
 
 .upm-search-bar {
     display: flex;
     gap: 10px;
     align-items: center;
-    background-color: #ffffff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    text-decoration: none;
 }
 
 .upm-search-input {
-    padding: 8px;
-    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border: none;
     border-radius: 4px;
+    background-color: #3a4149;
+    color: #ffffff;
     width: 250px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
+    font-size: 14px;
+}
+
+.upm-search-input:focus {
+    outline: none;
+    background-color: #454d55;
 }
 
 .upm-profile-list {
-    border: 1px solid #eee;
+    background-color: #2c3338;
     border-radius: 4px;
-    background-color: white;
-}
-
-.upm-list-header,
-.upm-list-row {
-    display: grid;
-    grid-template-columns: 2fr 3fr 2fr 1fr;
-    padding: 12px;
-    align-items: center;
+    overflow: hidden;
 }
 
 .upm-list-header {
-    background: #f5f5f5;
-    font-weight: bold;
-    border-bottom: 2px solid #ddd;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr 1fr 1fr;
+    gap: 15px;
+    padding: 12px 20px;
+    background-color: #2c3338;
+    font-weight: 500;
+    border-bottom: 1px solid #3a4149;
 }
 
 .upm-list-row {
-    border-top: 1px solid #eee;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr 1fr 1fr;
+    gap: 15px;
+    padding: 12px 20px;
+    border-bottom: 1px solid #3a4149;
+    align-items: center;
 }
 
 .upm-list-row:hover {
-    background-color: #f8f9fa;
+    background-color: #3a4149;
 }
 
-/* Form Styles */
-.upm-wrapper {
-    padding: 10px;
-}
-
-.upm-wrapper .item {
-    margin-bottom: 15px;
-}
-
-.upm-wrapper label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
-}
-
-/* SweetAlert2 Custom Styles */
-.swal2-input,
-.swal2-select {
-    width: 100% !important;
-    margin: 5px 0 !important;
-    padding: 8px !important;
-    border: 1px solid #ddd !important;
-    border-radius: 4px !important;
-}
-
-.swal2-select {
-    height: 40px !important;
-}
-
-/* Button Styles */
-button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
+.upm-list-row button {
     background-color: #007bff;
     color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s;
+    font-size: 13px;
+    min-width: 70px;
 }
 
-button:hover {
+.upm-list-row button:hover {
     background-color: #0056b3;
 }
 
-button[type="button"] {
-    background-color: #6c757d;
+/* Modal Form Styles */
+.upm-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 20px;
 }
 
-button[type="button"]:hover {
-    background-color: #5a6268;
+.upm-wrapper .item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-/* Status Indicators */
-.suspended {
-    color: #dc3545;
+.upm-wrapper .item label {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
 }
 
-.active {
-    color: #28a745;
+.upm-wrapper .item input,
+.upm-wrapper .item select {
+    padding: 10px 12px;
+    background-color: #3a4149;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 14px;
+    width: 100%;
+}
+
+.upm-wrapper .item input:focus,
+.upm-wrapper .item select:focus {
+    outline: none;
+    background-color: #454d55;
+}
+
+/* SweetAlert2 Custom Styles */
+.swal2-popup {
+    background-color: #2c3338 !important;
+    color: #ffffff !important;
+}
+
+.swal2-title {
+    color: #ffffff !important;
+    font-size: 24px !important;
+    font-weight: normal !important;
+}
+
+.swal2-html-container {
+    margin: 0 !important;
+}
+
+.swal2-actions {
+    margin-top: 25px !important;
+}
+
+.swal2-confirm {
+    background-color: #28a745 !important;
+    min-width: 100px !important;
+}
+
+.swal2-cancel {
+    background-color: #dc3545 !important;
+    min-width: 100px !important;
+}
+
+.swal2-confirm:focus,
+.swal2-cancel:focus {
+    box-shadow: none !important;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .upm-list-header,
     .upm-list-row {
-        grid-template-columns: 1fr 2fr 1fr 1fr;
-        font-size: 14px;
+        grid-template-columns: 1fr 1.5fr 1fr 80px;
+        font-size: 13px;
+        gap: 10px;
+        padding: 10px 15px;
     }
 
     .upm-search-input {
         width: 200px;
     }
+
+    .upm-list-row button {
+        padding: 4px 8px;
+        min-width: 60px;
+    }
+}
+
+.upm-user-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.upm-user-controls span {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.upm-user-controls button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
 }

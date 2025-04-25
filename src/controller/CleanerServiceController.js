@@ -22,7 +22,7 @@ class CleanerServiceController {
         }
     }
 
-    async createService(name, desc, price, durationHrs, cleanerEmail, type) {
+    async createService(name, desc, price, durationHrs, cleanerEmail, type, isOffering = true) {
         try {
             // Slightly paranoid: force float just in case
             const parsedPrice = parseFloat(price); 
@@ -36,8 +36,9 @@ class CleanerServiceController {
                 cleanerEmail,
                 type
             );
+            newSvc.isOffering = isOffering;
 
-            const response = await newSvc.createService(); // might eventually want some error codes here
+            const response = await newSvc.createService();
             return response;
         } catch (e) {
             console.error("Problem occurred during service creation:", e);
@@ -45,14 +46,12 @@ class CleanerServiceController {
         }
     }
 
-    async updateService(serviceId, updates) {
+    async updateService(serviceId, updatedData) {
         try {
-            // assuming updates is a clean object (no extra validation here)
-            const updated = await CleaningService.updateService(serviceId, updates);
-            return updated;
-        } catch (e) {
-            console.log("Couldn't update service with ID:", serviceId);
-            console.error(e);  // more detail here
+            const success = await CleaningService.updateService(serviceId, updatedData);
+            return success;
+        } catch (err) {
+            console.error("Update failed:", err);
             return false;
         }
     }
@@ -72,6 +71,21 @@ class CleanerServiceController {
     getServiceTypes() {
         // This is usually a static method, just pass it straight
         return CleaningService.getServiceTypes();
+    }
+
+    async updateServiceOffering(serviceId, isOffering) {
+        try {
+            const result = await CleaningService.updateServiceOffering(serviceId, isOffering);
+            if (result.success) {
+                return result;
+            } else {
+                console.error("Service offering update failed:", result.error);
+                return null;
+            }
+        } catch (error) {
+            console.error("Controller error updating service offering:", error);
+            return null;
+        }
     }
 }
 

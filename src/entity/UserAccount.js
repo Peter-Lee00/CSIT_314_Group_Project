@@ -155,7 +155,7 @@ class UserAccount {
 
       const user = snapshot.docs[0].data();
 
-      if (user.suspended) {
+      if (user.suspended === true) {
         console.log("Suspended account attempted login.");
         return "SUSPENDED";
       }

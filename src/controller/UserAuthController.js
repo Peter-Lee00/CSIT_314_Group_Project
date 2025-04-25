@@ -7,14 +7,20 @@ export class UserLoginController {
         try {
             // First verify the user account
             const userProfile = await UserAccount.verifyUserAccount(email, password);
+
+            // If the user account has been suspended
+            if (userProfile === "SUSPENDED") {
+                console.log("User account has been suspended");
+                return 'SUSPENDED_ACCOUNT';
+            }
             
-            // If email/password verification fails, return special code for invalid credentials
+            // If email/password not match with DB
             if (!userProfile) {
                 console.log("Invalid email/password");
                 return 'INVALID_CREDENTIALS';
             }
 
-            // If credentials are correct, then check profile type
+            // If credentials are correct, after that check profile type
             if (userProfile !== profileType) {
                 console.log("Profile type mismatch", userProfile, profileType);
                 return 'INVALID_PROFILE';
@@ -28,7 +34,7 @@ export class UserLoginController {
             if (userData) {
                 Cookies.set('username', userData.firstName || email);
             }
-            console.log("Login successful");
+            console.log("Login successfully");
             return 'SUCCESS';
 
         } catch (error) {
@@ -44,7 +50,7 @@ export class UserLogoutController {
             Cookies.remove('email');
             Cookies.remove('userProfile');
             Cookies.remove('username');
-            console.log("Logout successful");
+            console.log("Logout successfully");
             return true;
         } catch (error) {
             console.error("Logout error:", error);

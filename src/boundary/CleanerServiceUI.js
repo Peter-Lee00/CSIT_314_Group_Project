@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // So we can redirect if the user isn't a cleaner
 import Cookies from 'js-cookie';
 import CleanerServiceController from '../controller/CleanerServiceController';
+import { ServiceOffering } from '../entity/CleaningService';
 import Swal from 'sweetalert2';
 import './CleanerServiceUI.css';
 
@@ -9,9 +10,13 @@ const CleanerServiceUI = () => {
   const navigate = useNavigate();
 
   const [myServices, setMyServices] = useState([]);
+  const [filteredServices, setFilteredServices] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [currentCleanerId, setCurrentCleanerId] = useState('');
   const [availableTypes, setAvailableTypes] = useState([]);
   const [loading, setLoading] = useState(true); // shows the loader while data is fetching
+  const [searchPerformed, setSearchPerformed] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
 
   const controller = new CleanerServiceController();
 
@@ -34,11 +39,55 @@ const CleanerServiceUI = () => {
     setAvailableTypes(types);
   }, [navigate]);
 
+  const SearchService = () => {
+    setSearchPerformed(true);
+    if (searchTerm.trim() === '') {
+      setFilteredServices(showHistory ? 
+        myServices.filter(service => !service.isOffering) :
+        myServices.filter(service => service.isOffering)
+      );
+    } else {
+      const filtered = myServices.filter(service => 
+        service.serviceName.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (showHistory ? !service.isOffering : service.isOffering)
+      );
+      setFilteredServices(filtered);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      SearchService
+  ();
+    }
+  };
+
+  const resetSearch = () => {
+    setSearchTerm('');
+    setFilteredServices(showHistory ? 
+      myServices.filter(service => !service.isOffering) :
+      myServices.filter(service => service.isOffering)
+    );
+    setSearchPerformed(false);
+  };
+
+  const toggleHistory = () => {
+    setShowHistory(!showHistory);
+    setSearchTerm('');
+    setSearchPerformed(false);
+    setFilteredServices(
+      !showHistory ? 
+      myServices.filter(service => !service.isOffering) :
+      myServices.filter(service => service.isOffering)
+    );
+  };
+
   const fetchServicesForCleaner = async (id) => {
     try {
       setLoading(true);
       const serviceList = await controller.getCleanerServices(id);
-      setMyServices(serviceList || []);  // fallback just in case
+      setMyServices(serviceList || []);
+      setFilteredServices((serviceList || []).filter(service => service.isOffering));
     } catch (e) {
       console.error('Uh-oh, problem getting services:', e);
       Swal.fire('Oops', 'Failed to load services. Try again later.', 'error');
@@ -66,7 +115,8 @@ const CleanerServiceUI = () => {
         serviceType: document.getElementById('serviceType').value,
         description: document.getElementById('description').value,
         price: document.getElementById('price').value,
-        duration: document.getElementById('duration').value
+        duration: document.getElementById('duration').value,
+        isOffering: true
       })
     });
 
@@ -77,7 +127,8 @@ const CleanerServiceUI = () => {
         newService.price,
         newService.duration,
         currentCleanerId,
-        newService.serviceType
+        newService.serviceType,
+        newService.isOffering
       );
 
       if (isAdded) {
@@ -86,6 +137,39 @@ const CleanerServiceUI = () => {
       } else {
         Swal.fire('Oops', 'Failed to add service', 'error');
       }
+    }
+  };
+
+  const handleServiceOfferingChange = async (serviceId, newOfferingStatus) => {
+    try {
+      const result = await controller.updateServiceOffering(serviceId, newOfferingStatus);
+      
+      if (result === null) {
+        // Failed to update
+        Swal.fire({
+          icon: 'error',
+          title: 'Update Failed',
+          text: 'Failed to update service offering status. Please try again.',
+        });
+        return;
+      }
+
+      // Success case
+      Swal.fire({
+        icon: 'success',
+        title: 'Status Updated',
+        text: `Service has been ${newOfferingStatus ? 'restored to current offerings' : 'moved to history'}.`,
+      });
+      
+      // Refresh the service list
+      await fetchServicesForCleaner(currentCleanerId);
+    } catch (error) {
+      console.error("UI error handling service offering update:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An unexpected error occurred. Please try again.',
+      });
     }
   };
 
@@ -102,15 +186,29 @@ const CleanerServiceUI = () => {
         <input id="description" class="swal2-input" value="${existingService.description}">
         <input id="price" class="swal2-input" type="number" value="${existingService.price}">
         <input id="duration" class="swal2-input" type="number" value="${existingService.duration}">
+        <select id="isOffering" class="swal2-select">
+          <option value="true" ${existingService.isOffering ? 'selected' : ''}>Available</option>
+          <option value="false" ${!existingService.isOffering ? 'selected' : ''}>Archive</option>
+        </select>
       `,
       showCancelButton: true,
-      preConfirm: () => ({
-        serviceName: document.getElementById('serviceName').value,
-        serviceType: document.getElementById('serviceType').value,
-        description: document.getElementById('description').value,
-        price: document.getElementById('price').value,
-        duration: document.getElementById('duration').value
-      })
+      preConfirm: () => {
+        const updatedOffering = document.getElementById('isOffering').value === 'true';
+        const data = {
+          serviceName: document.getElementById('serviceName').value,
+          serviceType: document.getElementById('serviceType').value,
+          description: document.getElementById('description').value,
+          price: document.getElementById('price').value,
+          duration: document.getElementById('duration').value
+        };
+
+        // If offering status changed, handle it separately
+        if (updatedOffering !== existingService.isOffering) {
+          handleServiceOfferingChange(existingService.id, updatedOffering);
+        }
+
+        return data;
+      }
     });
 
     if (updatedInfo) {
@@ -149,21 +247,77 @@ const CleanerServiceUI = () => {
     }
   };
 
+  const moveToHistory = async (service) => {
+    const updatedService = { ...service, isOffering: false };
+    const wasUpdated = await controller.updateService(service.id, updatedService);
+    if (wasUpdated) {
+      Swal.fire('Updated', 'Service moved to history', 'success');
+      fetchServicesForCleaner(currentCleanerId);
+    } else {
+      Swal.fire('Oops', 'Failed to move service to history', 'error');
+    }
+  };
+
+  const restoreService = async (service) => {
+    const updatedService = { ...service, isOffering: true };
+    const wasUpdated = await controller.updateService(service.id, updatedService);
+    if (wasUpdated) {
+      Swal.fire('Updated', 'Service restored to current offerings', 'success');
+      fetchServicesForCleaner(currentCleanerId);
+    } else {
+      Swal.fire('Oops', 'Failed to restore service', 'error');
+    }
+  };
+
   // Layout below is mostly left intact
   return (
     <div className="cs-container">
       <div className="cs-header">
         <h1>My Cleaning Services</h1>
-        <button className="cs-back-button" onClick={() => navigate(-1)}>
-          Home
-        </button>
+        {!showHistory && (
+          <button className="cs-back-button" onClick={() => navigate(-1)}>
+            Home
+          </button>
+        )}
       </div>
 
-      <div className="cs-actions">
-        <button className="cs-create-button" onClick={promptCreateService}>
-          + Add New Service
-        </button>
+      <div className="cs-search-section">
+        <div className="cs-search-bar">
+          <input
+            type="text"
+            placeholder="Search by service name"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyPress={handleKeyPress}
+            className="cs-search-input"
+          />
+          <button onClick={SearchService} className="cs-search-button">
+            Search
+          </button>
+          <button 
+            onClick={toggleHistory} 
+            className={`cs-history-button ${showHistory ? 'active' : ''}`}
+          >
+            {showHistory ? 'Current Services' : 'History'}
+          </button>
+          {searchPerformed && (
+            <button onClick={resetSearch} className="cs-reset-button">
+              Reset
+            </button>
+          )}
+        </div>
+        {!showHistory && (
+          <button className="cs-create-button" onClick={promptCreateService}>
+            + Add New Service
+          </button>
+        )}
       </div>
+
+      {searchPerformed && (
+        <div className="cs-search-results">
+          Found {filteredServices.length} service{filteredServices.length !== 1 ? 's' : ''} matching "{searchTerm}"
+        </div>
+      )}
 
       <div className="cs-service-list">
         <div className="cs-list-header">
@@ -174,7 +328,7 @@ const CleanerServiceUI = () => {
           <div>Duration</div>
           <div>Actions</div>
         </div>
-        {myServices.map((srv) => (
+        {filteredServices.map((srv) => (
           <div key={srv.id} className="cs-list-row">
             <div>{srv.serviceName}</div>
             <div>{srv.serviceType}</div>
@@ -183,10 +337,19 @@ const CleanerServiceUI = () => {
             <div>{srv.duration}h</div>
             <div className="cs-actions-cell">
               <button className="cs-edit-button" onClick={() => promptEditService(srv)}>Edit</button>
-              <button className="cs-delete-button" onClick={() => confirmDeleteService(srv.id)}>Delete</button>
+              {!showHistory && (
+                <button className="cs-delete-button" onClick={() => confirmDeleteService(srv.id)}>
+                  Delete
+                </button>
+              )}
             </div>
           </div>
         ))}
+        {filteredServices.length === 0 && !loading && (
+          <div className="cs-no-results">
+            {showHistory ? 'No historical services found' : 'No current services found'}
+          </div>
+        )}
       </div>
     </div>
   );
