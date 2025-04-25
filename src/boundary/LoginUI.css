@@ -1,29 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
 * {
-  margin: 0;
-  padding: 4px;
-  font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 4px;
+    font-family: "Poppins", sans-serif;
     box-sizing: border-box;
-    
     background: transparent;
     text-align: center;
     font-size: 16px;
     font-weight: 400;
     transition: all 0.3s ease;
-
-
-
 }
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('https://img.freepik.com/free-vector/realistic-style-technology-particle-background_23-2148426704.jpg') no-repeat;
+    background: #1a1a2e;  /* Dark purple background */
     background-size: cover;
     background-position: center;
-  }
+}
+
 .login-container {
     display: flex;
     justify-content: center;
@@ -34,97 +32,124 @@ body {
 
 .login-box {
     width: 420px;
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(30, 30, 60, 0.9);  /* Semi-transparent dark purple */
+    border: 2px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    color: #fff;
-    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    color: white;
+    border-radius: 15px;
     padding: 30px 40px;
     margin: 20px;
-    box-sizing:content-box;
-    position: relative;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    font-weight: 400;
-    animation: slideIn 0.5s ease-in-out;
-    animation: fadeIn 0.5s ease-in-out;
-    
 }
 
-.login-box h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 1.5rem;
-    
-}
 .login-box h1 {
-    font-size: 46px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
+    font-size: 36px;
+    color: white;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
 .login-box p {
     font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
     margin-bottom: 30px;
-    line-height: 1.5;
+}
 
-  }
 .form-group {
     position: relative;
-  width: 100%;
-  margin-bottom: 25px;
+    width: 100%;
+    margin-bottom: 25px;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    font-size: 25px;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+    color: white;
     font-weight: 500;
-    transition: color 0.3s ease;
-    
+    text-align: left;
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
     border: 2px solid rgba(255, 255, 255, 0.2);
     outline: none;
     transition: border-color 0.3s ease;
     padding: 0.75rem;
-    color : #02ff0e;
+    color : white;
     border: 1px solid #ddd;
     border-radius: 40px;
     font-size: 16px;
-    transition: border-color 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    padding-right: 30px;
+}
+
+.form-group select option {
+    background: #2d2d4d;
+    color: white;
+    padding: 10px;
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
     border-color: #4a90e2;
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .login-button {
     width: 100%;
-    padding: 0.75rem;
-    height: 45px;
-    background-color: #4a90e2;
+    padding: 12px;
+    background: #4a90e2;
     color: white;
     border: none;
-    outline: none;
-    border-radius: 40px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    margin-top: 10px;
 }
 
 .login-button:hover {
-    background-color: #000000;
+    background: #357abd;
+    transform: translateY(-2px);
 }
 
 .login-button:active {
-    background-color: #2d6da3;
+    transform: translateY(0);
+}
+
+/* Add these new styles for the section headers */
+.form-group label[for="selectRole"],
+.form-group label[for="email"],
+.form-group label[for="password"] {
+    font-size: 20px;
+    color: white;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+/* Style for the section titles */
+.section-title {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 8px;
+    text-align: left;
 }
 
 @media (max-width: 480px) {

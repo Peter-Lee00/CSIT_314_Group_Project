@@ -1,124 +1,167 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import './LoginUI.css';
 import { UserLoginController } from "../controller/UserAuthController";
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'; 
 
 function LoginUI() {
-    const [userProfile, setUserProfile] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        if (userProfile === "") {
-            Swal.fire({
-                position: "center",
-                title: 'Invalid Input',
-                icon: 'error',
-                text: 'Please select user profile.',
-                confirmButtonText: 'OK',
-                timer: 1500
-            });
-        } else if (email === "" || password === "") {
-            Swal.fire({
-                position: "center",
-                title: 'Invalid Input',
-                icon: 'error',
-                text: 'Please fill up email/password.',
-                confirmButtonText: 'OK',
-                timer: 1500
-            });
-        } else {
-            const userLoginController = new UserLoginController();
-            const loginSuccess = await userLoginController.authenticateLogin(email, password, userProfile);
-            // Inside handleLogin function
-        if (loginSuccess) {
-            Swal.fire({
-                position: "center",
-                title: 'Login Successful',
-                icon: 'success',
-                confirmButtonText: 'OK',
-                timer: 1500
-            }).then(() => {
-                Cookies.set('email', email);
-                Cookies.set('userProfile', userProfile);
-                if (userProfile === "UserAdmin") {
-                    window.location.href = "/usermanagement";  // Changed to use location.href
-                } else {
-                    window.location.href = "/";
-                }
-            });
-        } else {
-                Swal.fire({
-                    position: "center",
-                    title: 'Login Failed',
-                    icon: 'error',
-                    text: 'Invalid email/password or account suspended.',
-                    confirmButtonText: 'OK'
-                });
-            }
-        }
-    };
+  // Keeping track of form state – using controlled inputs
+  const [selectedRole, setSelectedRole] = useState("");
+  const [emailInput, setEmailInput] = useState("");
+  const [pwd, setPwd] = useState("");
 
-    return (
-        <body>
-        <div className="login-container">
-            <div className="login-box">
-                <div className="login-header">
-                    <h1>Home Cleaning Service</h1>
-                    <p>Welcome back! Please login to your account.</p>
-                </div>
+  // Called when the login form is submitted
+  const tryLogin = async (event) => {
+    event.preventDefault();
 
-                <form className="login-form" onSubmit={handleLogin}>
-                    <div className="form-group">
-                        <label htmlFor="loginAs">Select Role</label>
-                        <select
-                            id="loginAs"
-                            value={userProfile}
-                            onChange={(e) => setUserProfile(e.target.value)}
-                            className="form-control"
-                        >
-                            <option value="">Select your role</option>
-                            <option value="UserAdmin">User Administrator</option>
-                            <option value="Cleaner">Cleaner</option>
-                            <option value="HomeOwner">Home Owner</option>
-                            <option value="PlatformManager">Platform Manager</option>
-                        </select>
-                    </div>
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const role = document.getElementById('profileType').value;
 
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="form-control"
-                            placeholder="Enter your email"
-                        />
-                    </div>
+    // Bare-minimum validation
+    if (!role) {
+      Swal.fire({
+        title: 'Oops!',
+        text: 'Please choose your role first!',
+        icon: 'error',
+        confirmButtonText: 'Will do'
+      });
+      return;
+    }
 
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="form-control"
-                            placeholder="Enter your password"
-                        />
-                    </div>
+    if (!email || !password) {
+      Swal.fire({
+        title: 'Missing Info',
+        text: 'Both email and password are required.',
+        icon: 'error',
+        confirmButtonText: 'Alright'
+      });
+      return;
+    }
 
-                    <button type="submit" className="login-button">
-                        Login
-                    </button>
-                </form>
-            </div>
+    // Proceed to check with backend
+    const auth = new UserLoginController();
+    const status = await auth.authenticateLogin(email, password, role);
+
+    // Different reactions based on backend reply
+    switch (status) {
+      case 'SUCCESS':
+        Swal.fire({
+          title: 'Welcome!',
+          icon: 'success',
+          confirmButtonText: 'Let me in!',
+          timer: 1500
+        }).then(() => {
+          // Navigate user based on their role
+          switch (role) {
+            case 'Cleaner':
+              navigate('/cleaner/services');
+              break;
+            case 'UserAdmin':
+              navigate('/usermanagement');
+              break;
+            case 'PlatformAdmin':
+              navigate('/userprofilemanagement');
+              break;
+            case 'HomeOwner':
+              navigate('/homeowner/dashboard');
+              break;
+            default:
+              navigate('/');
+          }
+        });
+        break;
+
+      case 'INVALID_CREDENTIALS':
+        Swal.fire({
+          title: 'Login failed',
+          text: 'Double-check that email or password.',
+          icon: 'error',
+          confirmButtonText: 'Retry'
+        });
+        break;
+
+      case 'INVALID_PROFILE':
+        Swal.fire({
+          title: 'Role Mismatch',
+          text: "You're not allowed to log in with that role.",
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        break;
+
+      default:
+        Swal.fire({
+          title: 'Unexpected Error',
+          text: 'Something went wrong. Please try again later.',
+          icon: 'error',
+          confirmButtonText: 'Alright'
+        });
+    }
+  };
+
+  return (
+    <div className="login-container">
+      <div className="login-box">
+        <div className="login-header">
+          <h1>Cleaning Services</h1>
+          <p>Login to continue !</p>
         </div>
-        </body>
-    );
+
+        <form className="login-form" onSubmit={tryLogin}>
+          {/* Select role (required for login logic) */}
+          <div className="form-group">
+            <label htmlFor="profileType">Role</label>
+            <select
+              id="profileType"
+              value={selectedRole}
+              onChange={(e) => setSelectedRole(e.target.value)}
+              className="form-control"
+            >
+              <option value="">Select Role</option>
+              <option value="UserAdmin">User Admin</option>
+              <option value="Cleaner">Cleaner</option>
+              <option value="HomeOwner">Home Owner</option>
+              <option value="PlatformAdmin">Platform Admin</option>
+            </select>
+          </div>
+
+          {/* Email input field */}
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              value={emailInput}
+              onChange={(e) => setEmailInput(e.target.value)}
+              className="form-control"
+              placeholder="example@email.com"
+            />
+          </div>
+
+          {/* Password input field */}
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={pwd}
+              onChange={(e) => setPwd(e.target.value)}
+              className="form-control"
+              placeholder="••••••••"
+            />
+          </div>
+
+          <button type="submit" className="login-button">
+            Log In
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 export default LoginUI;

@@ -1,0 +1,211 @@
+body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.cs-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 25px;
+    background-color: #242424;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #363636;
+}
+
+.cs-header h1 {
+    color: #ffffff;
+    font-size: 24px;
+    margin: 0;
+}
+
+.cs-back-button {
+    padding: 8px 16px;
+    background-color: #363636;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.cs-back-button:hover {
+    background-color: #404040;
+    transform: translateY(-1px);
+}
+
+.cs-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 25px;
+}
+
+.cs-create-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.cs-create-button:hover {
+    background-color: #45a049;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cs-service-list {
+    background-color: #2d2d2d;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cs-list-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.5fr 0.8fr 0.8fr 1fr;
+    background-color: #363636;
+    padding: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    border-bottom: 1px solid #404040;
+}
+
+.cs-list-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.5fr 0.8fr 0.8fr 1fr;
+    padding: 15px;
+    align-items: center;
+    border-bottom: 1px solid #363636;
+    transition: all 0.3s ease;
+    color: #ffffff;
+}
+
+.cs-list-row:hover {
+    background-color: #363636;
+}
+
+.cs-actions-cell {
+    display: flex;
+    gap: 8px;
+}
+
+.cs-edit-button {
+    padding: 6px 12px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 13px;
+}
+
+.cs-edit-button:hover {
+    background-color: #1976D2;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cs-delete-button {
+    padding: 6px 12px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 13px;
+}
+
+.cs-delete-button:hover {
+    background-color: #d32f2f;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* SweetAlert Custom Styles */
+.swal2-popup {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+}
+
+.swal2-title {
+    color: #ffffff !important;
+}
+
+.swal2-input, .swal2-select {
+    margin: 10px auto !important;
+    width: 80% !important;
+    background-color: #363636 !important;
+    color: #ffffff !important;
+    border: 1px solid #404040 !important;
+}
+
+.swal2-select {
+    height: 40px !important;
+}
+
+.swal2-input::placeholder {
+    color: #888888 !important;
+}
+
+.swal2-confirm {
+    background-color: #4CAF50 !important;
+}
+
+.swal2-cancel {
+    background-color: #f44336 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .cs-list-header, .cs-list-row {
+        grid-template-columns: 1fr 1fr 1fr 0.8fr 0.8fr 1fr;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cs-container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .cs-list-header, .cs-list-row {
+        grid-template-columns: 1fr 1fr 1fr 0.8fr 0.8fr 1fr;
+        padding: 10px;
+    }
+    
+    .cs-actions {
+        flex-direction: column;
+    }
+    
+    .cs-create-button {
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    .cs-actions-cell {
+        flex-direction: column;
+    }
+    
+    .cs-edit-button, .cs-delete-button {
+        width: 100%;
+    }
+}

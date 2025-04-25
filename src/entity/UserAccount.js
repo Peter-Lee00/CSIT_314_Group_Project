@@ -1,207 +1,198 @@
 import { db } from '../firebase';
-import { 
-    collection, 
-    query, 
-    where, 
-    getDocs,
-    doc,
-    setDoc,
-    updateDoc,
-    getDoc
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  setDoc,
+  updateDoc
 } from 'firebase/firestore';
 
 class UserAccount {
-    constructor(firstName, lastName, password, phoneNumber, email, userProfile) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.userProfile = userProfile;
+  constructor(firstName, lastName, password, phoneNumber, email, userProfile, address = null) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.password = password;
+    this.phoneNumber = phoneNumber;
+    this.email = email;
+    this.userProfile = userProfile;
+    this.address = userProfile === 'HomeOwner' ? address : null; // Only for HomeOwners
+  }
+
+  async createUserAccount() {
+    try {
+      if (this.userProfile === 'HomeOwner' && !this.address) {
+        return { success: false, message: 'Home Owner must have an address' };
+      }
+
+      const userRef = doc(db, 'Users', this.email);
+
+      const payload = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        password: this.password,
+        phoneNumber: this.phoneNumber,
+        email: this.email,
+        userProfile: this.userProfile,
+        suspended: false
+      };
+
+      if (this.userProfile === 'HomeOwner') {
+        payload.address = this.address;
+      }
+
+      await setDoc(userRef, payload);
+      return { success: true, message: 'Account created successfully' };
+    } catch (err) {
+      console.error("User creation error:", err);
+      return { success: false, message: 'Something went wrong during creation' };
     }
+  }
 
-    static async searchUserAccount(email) {
-        try {
-            const usersRef = collection(db, 'Users');
-            const q = query(usersRef, where('email', '==', email));
-            const querySnapshot = await getDocs(q);
+  static async searchUserAccount(email) {
+    try {
+      const usersCol = collection(db, 'Users');
+      const q = query(usersCol, where('email', '==', email));
+      const snapshot = await getDocs(q);
 
-            if (querySnapshot.empty) {
-                return null;
-            }
+      if (snapshot.empty) {
+        console.log("User not found for email:", email);
+        return null;
+      }
 
-            const userData = querySnapshot.docs[0].data();
-            return {
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                password: userData.password, // Make sure password is included
-                phoneNumber: userData.phoneNumber,
-                email: userData.email,
-                userProfile: userData.userProfile,
-                suspended: userData.suspended
-            };
-        } catch (error) {
-            console.error("Error searching user account:", error);
-            return null;
-        }
+      const docSnap = snapshot.docs[0];
+      const data = docSnap.data();
+
+      return {
+        id: docSnap.id,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        password: data.password,
+        phoneNumber: data.phoneNumber,
+        email: data.email,
+        userProfile: data.userProfile,
+        suspended: data.suspended || false,
+        address: data.address
+      };
+    } catch (err) {
+      console.error("Error looking up user:", err);
+      return null;
     }
+  }
 
-    async updateUserAccount(firstName, lastName, password, phoneNumber, email, userProfile) {
-        try {
-            const userRef = doc(db, 'Users', email);
-            const docSnap = await getDoc(userRef);
-            
-            if (!docSnap.exists()) {
-                console.error("User document not found");
-                return false;
-            }
+  async updateUserAccount(firstName, lastName, password, phoneNumber, email, userProfile, address) {
+    try {
+      const userRef = doc(db, 'Users', email);
+      const updatePayload = {
+        firstName,
+        lastName,
+        password,
+        phoneNumber,
+        email,
+        userProfile
+      };
 
-            await updateDoc(userRef, {
-                firstName,
-                lastName,
-                password, // Make sure password is included in update
-                phoneNumber,
-                email,
-                userProfile
-            });
-            return true;
-        } catch (error) {
-            console.error("Error updating user account:", error);
+      if (userProfile === 'HomeOwner') {
+        updatePayload.address = address;
+      } else {
+        updatePayload.address = null;
+      }
+
+      await updateDoc(userRef, updatePayload);
+      return true;
+    } catch (err) {
+      console.error("Update error:", err);
+      return false;
+    }
+  }
+
+  static async getUserProfiles() {
+    // Static profile presets
+    return [
+      { id: 'UserAdmin', name: 'User Administrator' },
+      { id: 'PlatformAdmin', name: 'Platform Administrator' },
+      { id: 'Cleaner', name: 'Cleaner' },
+      { id: 'HomeOwner', name: 'Home Owner' }
+    ];
+  }
+
+  static async loadAllUsers() {
+    try {
+      const usersRef = collection(db, 'Users');
+      const snapshot = await getDocs(usersRef);
+
+      return snapshot.docs.map(docSnap => {
+        const user = docSnap.data();
+        return {
+          id: docSnap.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          password: user.password,
+          phoneNumber: user.phoneNumber,
+          email: user.email,
+          userProfile: user.userProfile,
+          suspended: user.suspended || false,
+          ...(user.userProfile === 'HomeOwner' && { address: user.address })
+        };
+      });
+    } catch (err) {
+      console.error("Failed to fetch users:", err);
+      return [];
+    }
+  }
+
+  static async verifyUserAccount(email, password) {
+    try {
+      const usersRef = collection(db, 'Users');
+      const q = query(usersRef, where('email', '==', email));
+      const snapshot = await getDocs(q);
+
+      if (snapshot.empty) {
+        console.log("No matching user for:", email);
+        return null;
+      }
+
+      const user = snapshot.docs[0].data();
+
+      if (user.suspended) {
+        console.log("Suspended account attempted login.");
+        return "SUSPENDED";
+      }
+
+      if (user.password === password) {
+        console.log("User verified:", user.userProfile);
+        return user.userProfile;
+      }
+
+      console.log("Wrong password entered");
+      return null;
+    } catch (err) {
+      console.error("Verification failed:", err);
+      return null;
+    }
+  }
+
+  async suspendUserAccount() {
+    try {
+        const usersCol = collection(db, 'Users');
+        const q = query(usersCol, where('email', '==', this.email));
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+            console.log("No user found with email:", this.email);
             return false;
         }
-    }
-    
-    // Verify user account
-    static async verifyUserAccount(email, password) {
-        try {
-            const usersRef = collection(db, 'Users');
-            const q = query(usersRef, where('email', '==', email));
-            const querySnapshot = await getDocs(q);
 
-            if (!querySnapshot.empty) {
-                const userData = querySnapshot.docs[0].data();
-                if (userData.suspended) {
-                    return { success: false, message: 'Account is suspended' };
-                }
-                if (userData.password === password) {
-                    return {
-                        success: true,
-                        userProfile: userData.userProfile,
-                        userData: userData
-                    };
-                }
-            }
-            return { success: false, message: 'Invalid credentials' };
-        } catch (error) {
-            console.error("Error verifying user:", error);
-            return { success: false, message: 'Error during verification' };
-        }
-    }
-
-    async createUserAccount() {
-        try {
-            const userRef = doc(db, 'Users', this.email); // Changed from username to email
-            await setDoc(userRef, {
-                firstName: this.firstName,
-                lastName: this.lastName,
-                password: this.password,
-                phoneNumber: this.phoneNumber,
-                email: this.email,
-                userProfile: this.userProfile,
-                suspended: false
-            });
-            return { success: true, message: 'User account created successfully' };
-        } catch (error) {
-            console.error("Error creating user:", error);
-            return { success: false, message: 'Error creating user account' };
-        }
-    }
-
-    // Get user profile types
-    static async getUserProfiles() {
-        return [
-            { id: 'PlatformAdmin', name: 'Platform Administrator' },
-            { id: 'Cleaner', name: 'Cleaner' },
-            { id: 'HomeOwner', name: 'Home Owner' }
-        ];
-    }
-
-    // Search users by criteria
-static async searchUsers(criteria) {
-    try {
-        const usersRef = collection(db, 'Users');
-        let q = query(usersRef);
-
-        if (criteria.username) {
-            q = query(q, where('username', '==', criteria.username));
-        }
-        if (criteria.userProfile) {
-            q = query(q, where('userProfile', '==', criteria.userProfile));
-        }
-
-        const snapshot = await getDocs(q);
-        return snapshot.docs.map(doc => ({
-            id: doc.id,
-            firstName: doc.data().firstName,
-            lastName: doc.data().lastName,
-            password: doc.data().password, // Add this line
-            phoneNumber: doc.data().phoneNumber,
-            email: doc.data().email,
-            userProfile: doc.data().userProfile,
-            suspended: doc.data().suspended
-        }));
-    } catch (error) {
-        console.error("Error searching users:", error);
-        return [];
-    }
-}
-
-    // Search user account by email
-    static async searchUserAccount(email) {
-        try {
-            const usersRef = collection(db, 'Users');
-            const q = query(usersRef, where('email', '==', email));
-            const querySnapshot = await getDocs(q);
-
-            if (querySnapshot.empty) {
-                return null;
-            }
-
-            const userData = querySnapshot.docs.map(doc => ({
-                email: doc.data().email,
-                firstName: doc.data().firstName,
-                lastName: doc.data().lastName,
-                phoneNumber: doc.data().phoneNumber,
-                userProfile: doc.data().userProfile,
-                suspended: doc.data().suspended
-            }));
-
-            return userData;
-        } catch (error) {
-            console.error("Error searching user account:", error);
-            return null;
-        }
-    }
-
-    // Update user account
-async updateUserAccount(firstName, lastName, password, phoneNumber, email, userProfile) {
-    try {
-        const userRef = doc(db, 'Users', email);
-        await updateDoc(userRef, {
-            firstName,
-            lastName,
-            password,
-            phoneNumber,
-            email,
-            userProfile
-        });
+        const userDoc = snapshot.docs[0];
+        const userRef = doc(db, 'Users', userDoc.id);
+        await updateDoc(userRef, { suspended: true });
         return true;
     } catch (error) {
-        console.error("Error updating user account:", error);
+        console.error("Error suspending user account:", error);
         return false;
     }
-}
-    
+  }
 }
 
 export default UserAccount;
