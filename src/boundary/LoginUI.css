@@ -11,17 +11,6 @@
     font-weight: 400;
     transition: all 0.3s ease;
 }
-
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #1a1a2e;  /* Dark purple background */
-    background-size: cover;
-    background-position: center;
-}
-
 .login-container {
     display: flex;
     justify-content: center;
@@ -35,11 +24,17 @@ body {
     background: rgba(30, 30, 60, 0.9);  /* Semi-transparent dark purple */
     border: 2px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     color: white;
     border-radius: 15px;
     padding: 30px 40px;
     margin: 20px;
+    position: relative;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: 400;
+    box-sizing:content-box;
+    animation: slideIn 0.5s ease-in-out;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .login-box h1 {
@@ -47,12 +42,14 @@ body {
     color: white;
     margin-bottom: 10px;
     font-weight: 600;
+    text-align: center ;
 }
 
 .login-box p {
     font-size: 16px;
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 30px;
+    line-height: 1.5;
 }
 
 .form-group {
@@ -114,11 +111,13 @@ body {
 .login-button {
     width: 100%;
     padding: 12px;
+    height: 45px;
     background: #4a90e2;
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 16px;
+    outline: none;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
