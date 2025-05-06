@@ -23,6 +23,7 @@ body {
 /* Common button styles */
 button {
   cursor: pointer;
+  background-color: #7eb6ee;
   padding: 8px 16px;
   border: none;
   border-radius: 4px;

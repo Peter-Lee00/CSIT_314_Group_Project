@@ -1,9 +1,10 @@
 .uam-container {
     padding: 20px;
     margin: 0 auto;
-    background-color: #1e2327;
-    min-height: 100vh;
-    color: #ffffff;
+    background-color: #000000;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
 }
 
 .uam-header {
@@ -50,14 +51,26 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: white;
     margin-bottom: 20px;
     gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .uam-search-bar {
     display: flex;
     gap: 10px;
     align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    text-decoration: none;
 }
 
 .uam-search-bar input {
@@ -68,6 +81,7 @@
     color: #ffffff;
     width: 250px;
     font-size: 14px;
+    
 }
 
 .uam-search-bar input:focus {
@@ -86,9 +100,10 @@
     font-size: 14px;
 }
 
+
 /* Edit Form Styles */
 .uam-edit-form {
-    background-color: #2c3338;
+    background-color: #406076;
     border-radius: 8px;
     padding: 20px;
     max-width: 600px;
