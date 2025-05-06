@@ -11,44 +11,53 @@ import {
 
 class UserAccount {
   constructor(firstName, lastName, password, phoneNumber, email, userProfile, address = null) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.password = password;
-    this.phoneNumber = phoneNumber;
-    this.email = email;
-    this.userProfile = userProfile;
-    this.address = userProfile === 'HomeOwner' ? address : null; // Only for HomeOwners
+    this.firstName    = firstName;
+    this.lastName     = lastName;
+    this.password     = password;
+    this.phoneNumber  = phoneNumber;
+    this.email        = email;
+    this.userProfile  = userProfile;
+    // only keep address when HomeOwner
+    this.address      = userProfile === 'HomeOwner' ? address : null;
+
+    // side-channel for UI text
+    this.statusMessage = '';
   }
 
   async createUserAccount() {
+    // 1) validate HomeOwner
+    if (this.userProfile === 'HomeOwner' && !this.address) {
+      this.statusMessage = 'Home Owner must have an address';
+      return false;
+    }
+
+    // 2) build payload
+    const payload = {
+      firstName:   this.firstName,
+      lastName:    this.lastName,
+      password:    this.password,
+      phoneNumber: this.phoneNumber,
+      email:       this.email,
+      userProfile: this.userProfile,
+      suspended:   false,
+      // only include address if HomeOwner
+      ...(this.userProfile === 'HomeOwner' && { address: this.address }),
+    };
+
     try {
-      if (this.userProfile === 'HomeOwner' && !this.address) {
-        return { success: false, message: 'Home Owner must have an address' };
-      }
-
       const userRef = doc(db, 'Users', this.email);
-
-      const payload = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        password: this.password,
-        phoneNumber: this.phoneNumber,
-        email: this.email,
-        userProfile: this.userProfile,
-        suspended: false
-      };
-
-      if (this.userProfile === 'HomeOwner') {
-        payload.address = this.address;
-      }
-
       await setDoc(userRef, payload);
-      return { success: true, message: 'Account created successfully' };
+
+      this.statusMessage = 'Account created successfully';
+      return true;
     } catch (err) {
-      console.error("User creation error:", err);
-      return { success: false, message: 'Something went wrong during creation' };
+      console.error('User creation error:', err);
+      this.statusMessage = 'Something went wrong during creation';
+      return false;
     }
   }
+
+  
 
   static async searchUserAccount(email) {
     try {
