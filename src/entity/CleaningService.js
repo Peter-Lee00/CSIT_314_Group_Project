@@ -1,5 +1,5 @@
 import { db } from '../firebase';
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where, increment } from 'firebase/firestore';
 
 // Define service offering status constant
 export const ServiceOffering = {
@@ -20,16 +20,21 @@ class CleaningService {
         DISINFECTION: "Disinfection Service"
     };
 
-    constructor(name, desc, price, durationHrs, cleanerEmail, type) {
-        // Storing all the passed data here
+    constructor(name, desc, price, durationHrs, cleanerEmail, type, isOffering = true, serviceArea = '', specialEquipment = '', numWorkers = '', includedTasks = [], serviceAvailableFrom = '', serviceAvailableTo = '') {
         this.serviceName = name;
         this.description = desc;
         this.price = price;
         this.duration = durationHrs;
         this.cleanerId = cleanerEmail;
         this.serviceType = type;
-        this.isAvailable = true;  // might need a toggle later
-        this.isOffering = true;   // by default, new services are current offerings
+        this.isAvailable = true;
+        this.isOffering = isOffering;
+        this.serviceArea = serviceArea;
+        this.specialEquipment = specialEquipment;
+        this.numWorkers = numWorkers;
+        this.includedTasks = includedTasks;
+        this.serviceAvailableFrom = serviceAvailableFrom;
+        this.serviceAvailableTo = serviceAvailableTo;
     }
 
     async createService() {
@@ -44,6 +49,12 @@ class CleaningService {
                 serviceType: this.serviceType,
                 isAvailable: this.isAvailable,
                 isOffering: this.isOffering,
+                serviceArea: this.serviceArea,
+                specialEquipment: this.specialEquipment,
+                numWorkers: this.numWorkers,
+                includedTasks: this.includedTasks,
+                serviceAvailableFrom: this.serviceAvailableFrom,
+                serviceAvailableTo: this.serviceAvailableTo,
                 createdAt: new Date().toISOString() // just saving ISO for now
             });
             return result.id;
@@ -163,6 +174,114 @@ class CleaningService {
         } catch (e) {
             console.error('Error fetching service by ID:', e);
             return null;
+        }
+    }
+
+    static async increaseCount(serviceId, countType) {
+        try {
+            if (countType !== "view" && countType !== "shortlist") {
+                throw new Error("Invalid count type. Use 'view' or 'shortlist'");
+            }
+
+            const current_month = new Date().toISOString().slice(0, 7);
+            const serviceRef = doc(db, 'CleaningServices', serviceId);
+
+            await updateDoc(serviceRef, {
+                [countType + "_count"]: increment(1),
+                [`${countType}_history.${current_month}`]: increment(1)
+            });
+
+            console.log(`Successfully incremented ${countType} for service ID: ${serviceId}`);
+            return { success: true, message: `${countType} incremented successfully` };
+        } catch (error) {
+            console.error(`Error incrementing ${countType} for cleaning service:`, error);
+            return { success: false, message: error.message };
+        }
+    }
+
+    static async increaseViewCount(serviceId) {
+        try {
+            const current_month = new Date().toISOString().slice(0, 7);
+            const serviceRef = doc(db, 'CleaningServices', serviceId);
+
+            await updateDoc(serviceRef, {
+                view_count: increment(1),
+                [`view_history.${current_month}`]: increment(1)
+            });
+
+            console.log(`Successfully incremented view count for service ID: ${serviceId}`);
+            return true;
+        } catch (error) {
+            console.error(`Error incrementing view count for cleaning service:`, error);
+            return false;
+        }
+    }
+
+    static async increaseShortlistCount(serviceId) {
+        try {
+            const current_month = new Date().toISOString().slice(0, 7);
+            const serviceRef = doc(db, 'CleaningServices', serviceId);
+
+            await updateDoc(serviceRef, {
+                shortlist_count: increment(1),
+                [`shortlist_history.${current_month}`]: increment(1)
+            });
+
+            console.log(`Successfully incremented shortlist count for service ID: ${serviceId}`);
+            return true;
+        } catch (error) {
+            console.error(`Error incrementing shortlist count for cleaning service:`, error);
+            return false;
+        }
+    }
+
+    static async trackViewCount(serviceId) {
+        try {
+            const serviceSnap = await getDocs(query(collection(db, 'CleaningServices'), where('__name__', '==', serviceId)));
+            
+            if (!serviceSnap.empty) {
+                const serviceData = serviceSnap.docs[0].data();
+                return serviceData.view_history || null;
+            }
+            return null;
+        } catch (error) {
+            console.error("Error tracking view count:", error);
+            return null;
+        }
+    }
+
+    static async trackShortlistCount(serviceId) {
+        try {
+            const serviceSnap = await getDocs(query(collection(db, 'CleaningServices'), where('__name__', '==', serviceId)));
+            
+            if (!serviceSnap.empty) {
+                const serviceData = serviceSnap.docs[0].data();
+                return serviceData.shortlist_history || null;
+            }
+            return null;
+        } catch (error) {
+            console.error("Error tracking shortlist count:", error);
+            return null;
+        }
+    }
+
+    static async getConfirmedMatches(cleanerId, serviceType, priceRange, startDate, endDate) {
+        try {
+            const matchesColl = collection(db, 'ConfirmedMatches');
+            const conditions = [where('cleanerId', '==', cleanerId)];
+            if (serviceType) conditions.push(where('serviceType', '==', serviceType));
+            if (priceRange && priceRange.length === 2) {
+                conditions.push(where('price', '>=', Number(priceRange[0])));
+                conditions.push(where('price', '<=', Number(priceRange[1])));
+            }
+            if (startDate) conditions.push(where('confirmedAt', '>=', startDate));
+            if (endDate) conditions.push(where('confirmedAt', '<=', endDate));
+            const q = query(matchesColl, ...conditions);
+            const results = await getDocs(q);
+            return results.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        } catch (err) {
+            console.error('Error fetching confirmed matches:', err);
+            return [];
         }
     }
 }

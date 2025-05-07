@@ -22,7 +22,7 @@ class CleanerServiceController {
         }
     }
 
-    async createService(name, desc, price, durationHrs, cleanerEmail, type, isOffering = true) {
+    async createService(name, desc, price, durationHrs, cleanerEmail, type, isOffering = true, serviceArea = '', specialEquipment = '', numWorkers = '', includedTasks = [], serviceAvailableFrom = '', serviceAvailableTo = '') {
         try {
             // Slightly paranoid: force float just in case
             const parsedPrice = parseFloat(price); 
@@ -34,9 +34,15 @@ class CleanerServiceController {
                 parsedPrice,
                 parsedDuration,
                 cleanerEmail,
-                type
+                type,
+                isOffering,
+                serviceArea,
+                specialEquipment,
+                numWorkers,
+                includedTasks,
+                serviceAvailableFrom,
+                serviceAvailableTo
             );
-            newSvc.isOffering = isOffering;
 
             const response = await newSvc.createService();
             return response;
@@ -87,6 +93,34 @@ class CleanerServiceController {
             return null;
         }
     }
+
+    async getConfirmedMatches(cleanerId, serviceType, priceRange, startDate, endDate) {
+        return await CleaningService.getConfirmedMatches(cleanerId, serviceType, priceRange, startDate, endDate);
+    }
 }
 
-export default CleanerServiceController;
+class CleanerTrackViewCountController {
+    async trackViewCount(serviceId) {
+        try {
+            const viewCountHistory = await CleaningService.trackViewCount(serviceId);
+            return viewCountHistory;
+        } catch (error) {
+            console.error("Controller Error tracking view count:", error);
+            return null;
+        }
+    }
+}
+
+class CleanerTrackShortlistCountController {
+    async trackShortlistCount(serviceId) {
+        try {
+            const shortlistCountHistory = await CleaningService.trackShortlistCount(serviceId);
+            return shortlistCountHistory;
+        } catch (error) {
+            console.error("Controller Error tracking shortlist count:", error);
+            return null;
+        }
+    }
+}
+
+export { CleanerServiceController, CleanerTrackViewCountController, CleanerTrackShortlistCountController };

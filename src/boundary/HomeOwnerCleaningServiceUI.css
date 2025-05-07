@@ -299,3 +299,7 @@
         gap: 4px;
     }
 }
+
+.hocContainer h2 {
+    color: #222;
+}

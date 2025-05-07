@@ -10,7 +10,9 @@ function HomeOwnerCleaningServiceUI() {
         serviceName: "",
         serviceType: "",
         priceRange: "",
-        duration: ""
+        duration: "",
+        startDate: "",
+        endDate: ""
     });
     const [showShortlist, setShowShortlist] = useState(false);
     const [shortlistedServices, setShortlistedServices] = useState([]);
@@ -42,7 +44,7 @@ function HomeOwnerCleaningServiceUI() {
             undefined // cleanerId
         );
         // Map all fields including extra info
-        setServices((result || []).map(doc => ({
+        let filtered = (result || []).map(doc => ({
             id: doc.id,
             serviceName: doc.serviceName,
             description: doc.description,
@@ -53,7 +55,21 @@ function HomeOwnerCleaningServiceUI() {
             specialEquipment: doc.specialEquipment,
             numWorkers: doc.numWorkers,
             includedTasks: doc.includedTasks,
-        })));
+            serviceAvailableFrom: doc.serviceAvailableFrom,
+            serviceAvailableTo: doc.serviceAvailableTo,
+        }));
+        // Date period filter (same as CleanerServiceUI)
+        if (filters.startDate) {
+            filtered = filtered.filter(service =>
+                (!service.serviceAvailableTo || service.serviceAvailableTo >= filters.startDate)
+            );
+        }
+        if (filters.endDate) {
+            filtered = filtered.filter(service =>
+                (!service.serviceAvailableFrom || service.serviceAvailableFrom <= filters.endDate)
+            );
+        }
+        setServices(filtered);
     };
 
     const handleInputChange = (e) => {
@@ -69,14 +85,20 @@ function HomeOwnerCleaningServiceUI() {
             serviceName: "",
             serviceType: "",
             priceRange: "",
-            duration: ""
+            duration: "",
+            startDate: "",
+            endDate: ""
         });
         fetchServices({});
     };
 
     const handleShortlist = async (service) => {
-        const username = localStorage.getItem('username') || 'testuser'; // Replace with real auth
+        const username = localStorage.getItem('username') || 'testuser';
         const controller = new OwnerCleaningServiceController();
+        
+        // Increment shortlist count when service is added to shortlist
+        await CleaningService.increaseShortlistCount(service.id);
+        
         const result = await controller.saveToShortlist(username, service);
         if (result) {
             Swal.fire({
@@ -118,6 +140,9 @@ function HomeOwnerCleaningServiceUI() {
     const handleCloseShortlist = () => setShowShortlist(false);
 
     const handleViewService = async (service) => {
+        // Increment view count when service is viewed
+        await CleaningService.increaseViewCount(service.id);
+
         // If the service has an id, fetch the latest from CleaningServices
         let latestService = service;
         if (service.id) {
@@ -140,6 +165,8 @@ function HomeOwnerCleaningServiceUI() {
                             <tr><th style='text-align:left;padding:8px 6px;'>Special Equipment Used</th><td style='padding:8px 6px;'>${latestService.specialEquipment || 'N/A'}</td></tr>
                             <tr><th style='text-align:left;padding:8px 6px;'>Number of Workers</th><td style='padding:8px 6px;'>${latestService.numWorkers || 'N/A'}</td></tr>
                             <tr><th style='text-align:left;padding:8px 6px;'>What's Included</th><td style='padding:8px 6px;'>${latestService.includedTasks && latestService.includedTasks.length ? latestService.includedTasks.join(', ') : 'N/A'}</td></tr>
+                            <tr><th style='text-align:left;padding:8px 6px;'>Available From</th><td style='padding:8px 6px;'>${latestService.serviceAvailableFrom || 'N/A'}</td></tr>
+                            <tr><th style='text-align:left;padding:8px 6px;'>Available To</th><td style='padding:8px 6px;'>${latestService.serviceAvailableTo || 'N/A'}</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -176,7 +203,14 @@ function HomeOwnerCleaningServiceUI() {
             </div>
             <h2>Available Cleaning Services</h2>
             <div className="hocSearch-container">
-                <div className="hocSearch-bar">
+                <div className="hocSearch-bar" style={{
+                    display: 'flex',
+                    gap: '12px',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    width: '100%',
+                    justifyContent: 'flex-start'
+                }}>
                     <input
                         name="serviceName"
                         className="hocSearch-input"
@@ -212,7 +246,23 @@ function HomeOwnerCleaningServiceUI() {
                         <option value="101-200">$101 - $200</option>
                         <option value="201-500">$201 - $500</option>
                     </select>
-                    <button className="hocSearch-button" onClick={handleSearch}>Search</button>
+                    <input
+                        type="date"
+                        name="startDate"
+                        className="hocSearch-input"
+                        value={search.startDate}
+                        onChange={handleInputChange}
+                        style={{ minWidth: '140px' }}
+                    />
+                    <input
+                        type="date"
+                        name="endDate"
+                        className="hocSearch-input"
+                        value={search.endDate}
+                        onChange={handleInputChange}
+                        style={{ minWidth: '140px' }}
+                    />
+                    <button className="hocShortlist-button" onClick={handleSearch}>Search</button>
                     <button className="hocSearch-button" onClick={handleClear}>Clear</button>
                 </div>
             </div>
