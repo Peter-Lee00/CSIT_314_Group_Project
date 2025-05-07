@@ -5,7 +5,8 @@ import UserManagementUI from './boundary/UserManagementUI';
 import UserAccountManagementUI from './boundary/UserAccountManagementUI';
 import UserProfileManagementUI from './boundary/UserProfileManagementUI';
 import CleanerServiceUI from './boundary/CleanerServiceUI';
-/* import HomeOwnerUI from './boundary/HomeOwnerUI'; */
+import HomeOwnerCleaningServiceUI from './boundary/HomeOwnerCleaningServiceUI';
+import HomeOwnerShortlistCleaningServiceUI from './boundary/HomeOwnerShortlistCleaningServiceUI';
 import './App.css';
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
           <Route path="/useraccountmanagement" element={<UserAccountManagementUI />} />
           <Route path="/userprofilemanagement" element={<UserProfileManagementUI />} />
           <Route path="/cleaner/services" element={<CleanerServiceUI />} />
-          {/* <Route path="/homeowner" element={<HomeOwnerUI />} /> */}
+          <Route path="/homeowner/dashboard" element={<HomeOwnerCleaningServiceUI />} />
+          <Route path="/my-shortlist" element={<HomeOwnerShortlistCleaningServiceUI />} />
         </Routes>
       </div>
     </Router>

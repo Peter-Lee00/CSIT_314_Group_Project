@@ -71,6 +71,7 @@ class CleaningService {
         }
     }
 
+
     static async updateService(serviceId, updateFields) {
         try {
             const singleService = doc(db, 'CleaningServices', serviceId);
@@ -120,6 +121,49 @@ class CleaningService {
     static getServiceTypes() {
         // Just returns values, no keys
         return Object.values(this.SERVICE_TYPES);
+    }
+
+    static async searchCleaningService(serviceName, serviceType, priceRange, duration, cleanerId) {
+        try {
+            const serviceColl = collection(db, 'CleaningServices');
+            const conditions = [];
+
+            if (serviceName) conditions.push(where("serviceName", "==", serviceName));
+            if (serviceType) conditions.push(where("serviceType", "==", serviceType));
+            if (priceRange && priceRange.length === 2) {
+                conditions.push(where("price", ">=", Number(priceRange[0])));
+                conditions.push(where("price", "<=", Number(priceRange[1])));
+            }
+            if (duration) conditions.push(where("duration", "==", Number(duration)));
+            if (cleanerId) conditions.push(where("cleanerId", "==", cleanerId));
+            // Only show currently offered services
+            conditions.push(where("isOffering", "==", true));
+
+            const q = query(serviceColl, ...conditions);
+            const results = await getDocs(q);
+
+            if (results.empty) return null;
+            return results.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        } catch (err) {
+            console.error("Error searching cleaning services:", err);
+            return null;
+        }
+    }
+
+    static async getServiceById(serviceId) {
+        try {
+            const serviceRef = doc(db, 'CleaningServices', serviceId);
+            const serviceSnap = await getDocs(query(collection(db, 'CleaningServices'), where('__name__', '==', serviceId)));
+            if (!serviceSnap.empty) {
+                const docData = serviceSnap.docs[0];
+                return { id: docData.id, ...docData.data() };
+            } else {
+                return null;
+            }
+        } catch (e) {
+            console.error('Error fetching service by ID:', e);
+            return null;
+        }
     }
 }
 

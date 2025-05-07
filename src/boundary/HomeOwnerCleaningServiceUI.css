@@ -1,0 +1,301 @@
+.hocContainer {
+    font-family: Arial, sans-serif;
+    width: 95vw;
+    margin: 30px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+}
+
+.hocSearch-container {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    max-width: 100%;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+}
+
+.hocSearch-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+}
+
+.hocSearch-bar input,
+.hocSearch-bar select {
+    min-width: 160px;
+    flex: 1 1 160px;
+    max-width: 220px;
+    height: 44px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background: #f7f7f7;
+    color: #222;
+    box-sizing: border-box;
+}
+
+.hocSearch-bar button {
+    min-width: 90px;
+    flex: 0 0 auto;
+    height: 44px;
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 0 18px;
+    border: none;
+    background: #333;
+    color: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    transition: background 0.2s;
+}
+.hocSearch-bar button:hover {
+    background: #222;
+}
+
+.hocService-table {
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr 1fr 1fr 1.5fr;
+    gap: 10px;
+    background-color: #f4f4f4;
+    border-radius: 16px;
+    padding: 16px;
+    overflow-x: auto;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.hocTable-header {
+    display: contents;
+    font-weight: bold;
+    color: #333;
+    background-color: #f0f0f0;
+    padding: 10px 0;
+    border-radius: 8px;
+}
+
+.hocTable-row {
+    display: contents;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.hocNoResults {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #888;
+    padding: 20px 0;
+}
+
+.hocHeader {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.hocLogout-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.hocShortlist-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1976d2;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+.hocShortlist-view-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1976d2;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.hocShortlist-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.hocShortlist-modal-content {
+    background: #fff;
+    padding: 2em;
+    border-radius: 10px;
+    min-width: 300px;
+    max-width: 90vw;
+    color: #222;
+}
+.hocShortlist-modal-content h3,
+.hocShortlist-modal-content li,
+.hocShortlist-modal-content p {
+    color: #222; 
+}
+.hocShortlist-close {
+    float: right;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.hocView-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+}
+.hocShortlist-table {
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr 1fr 1fr 1fr;
+    gap: 10px;
+    background: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 1em;
+}
+.hocShortlist-header {
+    display: contents;
+    font-weight: bold;
+    color: #222;
+}
+.hocShortlist-table span {
+    color: #222;
+    padding: 6px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.hocAction-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.hocView-button, .hocShortlist-button {
+    min-width: 90px;
+    max-width: 120px;
+    flex: 1 1 90px;
+    box-sizing: border-box;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    border: none;
+    color: #fff;
+    transition: background 0.2s;
+    padding: 0 18px;
+    display: block;
+    margin: 0 auto;
+    white-space: nowrap;
+    text-align: center;
+}
+.hocView-button {
+    background: #333;
+}
+.hocView-button:hover {
+    background: #1976d2;
+}
+.hocShortlist-button {
+    background: #1976d2;
+}
+.hocShortlist-button:hover {
+    background: #1251a3;
+}
+
+.hocService-table span {
+    color: #222;
+    font-size: 16px;
+    word-break: break-word;
+    align-self: center;
+}
+
+.hocTable-header span {
+    color: #333;
+    font-weight: bold;
+}
+
+.hocShortlist-remove-button {
+    min-width: 90px;
+    max-width: 120px;
+    flex: 1 1 90px;
+    box-sizing: border-box;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    border: none;
+    color: #fff;
+    background: #e53935;
+    transition: background 0.2s;
+    padding: 0 18px;
+    display: block;
+    margin: 0 auto;
+    white-space: nowrap;
+    text-align: center;
+}
+.hocShortlist-remove-button:hover {
+    background: #b71c1c;
+}
+
+@media (max-width: 700px) {
+    .hocService-table {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1.5fr;
+        font-size: 13px;
+        padding: 8px;
+    }
+    .hocAction-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .hocSearch-bar input,
+    .hocSearch-bar select,
+    .hocSearch-bar button {
+        font-size: 14px;
+        height: 38px;
+        min-width: 0;
+        max-width: 100%;
+    }
+    .hocView-button, .hocShortlist-button {
+        font-size: 14px;
+        height: 34px;
+        min-width: 60px;
+        max-width: 100px;
+        padding: 0 8px;
+        white-space: nowrap;
+    }
+    .hocAction-buttons {
+        gap: 4px;
+    }
+}

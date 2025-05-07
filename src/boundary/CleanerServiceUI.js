@@ -107,6 +107,10 @@ const CleanerServiceUI = () => {
         <input id="description" class="swal2-input" placeholder="Short description">
         <input id="price" type="number" class="swal2-input" placeholder="Price in SGD">
         <input id="duration" type="number" class="swal2-input" placeholder="Duration (hrs)">
+        <input id="serviceArea" class="swal2-input" placeholder="Service Area">
+        <input id="specialEquipment" class="swal2-input" placeholder="Special Equipment Used">
+        <input id="numWorkers" type="number" class="swal2-input" placeholder="Number of Workers">
+        <input id="includedTasks" class="swal2-input" placeholder="What's Included (comma separated)">
       `,
       showCancelButton: true,
       focusConfirm: false,
@@ -116,6 +120,10 @@ const CleanerServiceUI = () => {
         description: document.getElementById('description').value,
         price: document.getElementById('price').value,
         duration: document.getElementById('duration').value,
+        serviceArea: document.getElementById('serviceArea').value,
+        specialEquipment: document.getElementById('specialEquipment').value,
+        numWorkers: document.getElementById('numWorkers').value,
+        includedTasks: document.getElementById('includedTasks').value.split(',').map(s => s.trim()),
         isOffering: true
       })
     });
@@ -128,7 +136,11 @@ const CleanerServiceUI = () => {
         newService.duration,
         currentCleanerId,
         newService.serviceType,
-        newService.isOffering
+        newService.isOffering,
+        newService.serviceArea,
+        newService.specialEquipment,
+        newService.numWorkers,
+        newService.includedTasks
       );
 
       if (isAdded) {
@@ -186,6 +198,10 @@ const CleanerServiceUI = () => {
         <input id="description" class="swal2-input" value="${existingService.description}">
         <input id="price" class="swal2-input" type="number" value="${existingService.price}">
         <input id="duration" class="swal2-input" type="number" value="${existingService.duration}">
+        <input id="serviceArea" class="swal2-input" value="${existingService.serviceArea || ''}" placeholder="Service Area">
+        <input id="specialEquipment" class="swal2-input" value="${existingService.specialEquipment || ''}" placeholder="Special Equipment Used">
+        <input id="numWorkers" class="swal2-input" type="number" value="${existingService.numWorkers || ''}" placeholder="Number of Workers">
+        <input id="includedTasks" class="swal2-input" value="${existingService.includedTasks ? existingService.includedTasks.join(', ') : ''}" placeholder="What's Included (comma separated)">
         <select id="isOffering" class="swal2-select">
           <option value="true" ${existingService.isOffering ? 'selected' : ''}>Available</option>
           <option value="false" ${!existingService.isOffering ? 'selected' : ''}>Archive</option>
@@ -199,7 +215,11 @@ const CleanerServiceUI = () => {
           serviceType: document.getElementById('serviceType').value,
           description: document.getElementById('description').value,
           price: document.getElementById('price').value,
-          duration: document.getElementById('duration').value
+          duration: document.getElementById('duration').value,
+          serviceArea: document.getElementById('serviceArea').value,
+          specialEquipment: document.getElementById('specialEquipment').value,
+          numWorkers: document.getElementById('numWorkers').value,
+          includedTasks: document.getElementById('includedTasks').value.split(',').map(s => s.trim())
         };
 
         // If offering status changed, handle it separately
