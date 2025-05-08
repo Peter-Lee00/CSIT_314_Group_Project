@@ -89,7 +89,7 @@ const CleanerServiceUI = () => {
       );
     }
     filtered = filtered.filter(service => showHistory ? !service.isOffering : service.isOffering);
-    setFilteredServices(filtered);
+      setFilteredServices(filtered);
   };
 
   const handleKeyPress = (e) => {
@@ -608,11 +608,11 @@ const CleanerServiceUI = () => {
             loadConfirmedRequests();
           }}>History</button>
           <button className="cs-history-button" onClick={handleHistorySearch}>Archived</button>
-          {!showHistory && (
-            <button className="cs-back-button" onClick={() => navigate(-1)}>
-              Home
-            </button>
-          )}
+        {!showHistory && (
+          <button className="cs-back-button" onClick={() => navigate(-1)}>
+            Home
+          </button>
+        )}
         </div>
       </div>
 
@@ -703,9 +703,9 @@ const CleanerServiceUI = () => {
             <div>{srv.duration}h</div>
             <div className="cs-actions-cell">
               <button className="cs-edit-button" onClick={() => promptEditService(srv)}>Edit</button>
-              <button className="cs-delete-button" onClick={() => confirmDeleteService(srv.id)}>
-                Delete
-              </button>
+                <button className="cs-delete-button" onClick={() => confirmDeleteService(srv.id)}>
+                  Delete
+                </button>
             </div>
             <span>
               <div className="counter-display">

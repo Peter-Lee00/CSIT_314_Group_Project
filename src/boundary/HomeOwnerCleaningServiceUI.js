@@ -19,6 +19,16 @@ function HomeOwnerCleaningServiceUI() {
     const [shortlistedServices, setShortlistedServices] = useState([]);
     const [selectedService, setSelectedService] = useState(null);
     const username = localStorage.getItem('username') || 'testuser';
+    const [showHistoryModal, setShowHistoryModal] = useState(false);
+    const [confirmedServices, setConfirmedServices] = useState([]);
+    const [historyFilters, setHistoryFilters] = useState({
+        serviceName: '',
+        serviceType: '',
+        priceRange: '',
+        date: '',
+        search: ''
+    });
+    const [serviceDetails, setServiceDetails] = useState({});
 
     // Add isShortlisted function
     const isShortlisted = (serviceId) => {
@@ -301,15 +311,62 @@ function HomeOwnerCleaningServiceUI() {
         }
     };
 
+    const loadConfirmedServices = async () => {
+        try {
+            const allRequests = await CleaningServiceRequest.getRequestsByHomeowner(username);
+            const accepted = allRequests.filter(r => r.status === 'ACCEPTED');
+            setConfirmedServices(accepted);
+            // Fetch service details for each confirmed service
+            const serviceIds = [...new Set(accepted.map(req => req.serviceId))];
+            const details = {};
+            for (const id of serviceIds) {
+                const service = await CleaningService.getServiceById(id);
+                if (service) details[id] = service;
+            }
+            setServiceDetails(details);
+        } catch (error) {
+            console.error('Error loading confirmed services:', error);
+            Swal.fire('Error', 'Failed to load service history', 'error');
+        }
+    };
+
+    const getUnique = (arr, key) => [...new Set(arr.map(item => item[key]).filter(Boolean))];
+
+    const filterConfirmedServices = () => {
+        return confirmedServices.filter(request => {
+            const service = serviceDetails[request.serviceId] || {};
+            const matchesServiceName = !historyFilters.serviceName || service.serviceName === historyFilters.serviceName;
+            const matchesServiceType = !historyFilters.serviceType || service.serviceType === historyFilters.serviceType;
+            const matchesPrice = !historyFilters.priceRange || (() => {
+                if (!service.price) return false;
+                const [min, max] = historyFilters.priceRange.split('-').map(Number);
+                return service.price >= min && service.price <= max;
+            })();
+            const matchesDate = !historyFilters.date || request.requestedDate === historyFilters.date;
+            const matchesSearch = !historyFilters.search || (
+                (service.serviceName && service.serviceName.toLowerCase().includes(historyFilters.search.toLowerCase())) ||
+                (service.serviceType && service.serviceType.toLowerCase().includes(historyFilters.search.toLowerCase())) ||
+                (service.price && String(service.price).includes(historyFilters.search)) ||
+                (service.serviceArea && service.serviceArea.toLowerCase().includes(historyFilters.search.toLowerCase()))
+            );
+            return matchesServiceName && matchesServiceType && matchesPrice && matchesDate && matchesSearch;
+        });
+    };
+
     return (
         <div className="hocContainer">
             <div className="hocHeader">
-                <button className="hocLogout-button" onClick={handleLogout}>Logout</button>
-                <button className="hocShortlist-view-button" onClick={handleViewShortlist}>
-                    My Shortlist
-                </button>
+                <h2 style={{margin:0}}>Available Cleaning Services</h2>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                    <button className="hocLogout-button" onClick={handleLogout}>Logout</button>
+                    <button className="hocShortlist-button" onClick={handleViewShortlist}>
+                        My Shortlist
+                    </button>
+                    <button className="hocShortlist-button" onClick={() => { setShowHistoryModal(true); loadConfirmedServices(); }}>
+                        Service History
+                    </button>
+                </div>
             </div>
-            <h2>Available Cleaning Services</h2>
             <div className="hocSearch-container">
                 <div className="hocSearch-bar" style={{
                     display: 'flex',
@@ -383,7 +440,7 @@ function HomeOwnerCleaningServiceUI() {
                     <span>Duration</span>
                     <span></span>
                 </div>
-                {services.length === 0 ? (
+            {services.length === 0 ? (
                     <div className="hocNoResults" style={{ gridColumn: "1 / -1" }}>No cleaning services found.</div>
                 ) : (
                     services.map(service => (
@@ -413,34 +470,114 @@ function HomeOwnerCleaningServiceUI() {
                         {shortlistedServices.length === 0 ? (
                             <p>No shortlisted services.</p>
                         ) : (
-                            <div className="hocShortlist-table">
-                                <div className="hocShortlist-header">
-                                    <span>Service Name</span>
-                                    <span>Description</span>
-                                    <span>Type</span>
-                                    <span>Price</span>
-                                    <span>Duration</span>
-                                    <span></span>
-                                </div>
+                            <div className="cs-requests-list">
                                 {shortlistedServices.map(service => (
-                                    <React.Fragment key={service.id}>
-                                        <span>{service.serviceName}</span>
-                                        <span>{service.description}</span>
-                                        <span>{service.serviceType}</span>
-                                        <span>${service.price}</span>
-                                        <span>{service.duration} hrs</span>
-                                        <span style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                                            <button className="hocView-button" onClick={() => handleViewService(service)}>
-                                                View
-                                            </button>
-                                            <button className="hocShortlist-remove-button" onClick={() => handleRemoveFromShortlist(service.id)}>
-                                                Remove
-                                            </button>
-                                        </span>
-                                    </React.Fragment>
+                                    <div key={service.id} className="cs-request-card">
+                                        <div className="cs-request-header">
+                                            <h3>{service.serviceName}</h3>
+                                            <div style={{display:'flex',gap:'10px'}}>
+                                                <button className="hocView-button" onClick={() => handleViewService(service)}>
+                                                    View
+                                                </button>
+                                                <button className="hocShortlist-remove-button" onClick={() => handleRemoveFromShortlist(service.id)}>
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div className="cs-request-details">
+                                            <p><strong>Description:</strong> {service.description}</p>
+                                            <p><strong>Type:</strong> {service.serviceType}</p>
+                                            <p><strong>Price:</strong> ${service.price}</p>
+                                            <p><strong>Duration:</strong> {service.duration} hrs</p>
+                                        </div>
+                                    </div>
                                 ))}
                             </div>
                         )}
+                    </div>
+                </div>
+            )}
+            {showHistoryModal && (
+                <div className="hocShortlist-modal">
+                    <div className="hocShortlist-modal-content">
+                        <div className="hocModal-header-bar">
+                            <button className="hocShortlist-close" onClick={() => setShowHistoryModal(false)}>Close</button>
+                        </div>
+                        <h3>Service History</h3>
+                        {/* Filter controls */}
+                        <div className="hocSearch-bar" style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' }}>
+                            <input
+                                type="text"
+                                placeholder="Search by service name"
+                                value={historyFilters.search}
+                                onChange={e => setHistoryFilters(f => ({ ...f, search: e.target.value }))}
+                                className="hocSearch-input"
+                            />
+                            <select
+                                value={historyFilters.serviceType}
+                                onChange={e => setHistoryFilters(f => ({ ...f, serviceType: e.target.value }))}
+                                className="hocSelect"
+                            >
+                                <option value="">All Types</option>
+                                <option value="Basic Cleaning">Basic Cleaning</option>
+                                <option value="Deep Cleaning">Deep Cleaning</option>
+                                <option value="Move In/Out Cleaning">Move In/Out Cleaning</option>
+                                <option value="Office Cleaning">Office Cleaning</option>
+                                <option value="Window Cleaning">Window Cleaning</option>
+                                <option value="Carpet Cleaning">Carpet Cleaning</option>
+                                <option value="Post Renovation Cleaning">Post Renovation Cleaning</option>
+                                <option value="Disinfection Service">Disinfection Service</option>
+                            </select>
+                            <select
+                                value={historyFilters.priceRange}
+                                onChange={e => setHistoryFilters(f => ({ ...f, priceRange: e.target.value }))}
+                                className="hocSelect"
+                            >
+                                <option value="">All Prices</option>
+                                <option value="0-50">$0 - $50</option>
+                                <option value="51-100">$51 - $100</option>
+                                <option value="101-200">$101 - $200</option>
+                                <option value="201-500">$201 - $500</option>
+                            </select>
+                            <input
+                                type="date"
+                                value={historyFilters.date}
+                                onChange={e => setHistoryFilters(f => ({ ...f, date: e.target.value }))}
+                                className="hocSearch-input"
+                            />
+                            <button onClick={() => setHistoryFilters({
+                                serviceName: '',
+                                serviceType: '',
+                                priceRange: '',
+                                date: '',
+                                search: ''
+                            })} className="hocSearch-button">Clear</button>
+                        </div>
+                        <div className="cs-requests-list">
+                            {filterConfirmedServices().length === 0 ? (
+                                <p>No service history found.</p>
+                            ) : (
+                                filterConfirmedServices().map(request => {
+                                    const service = serviceDetails[request.serviceId] || {};
+                                    return (
+                                        <div key={request.id} className="cs-request-card">
+                                            <div className="cs-request-header">
+                                                <h3>Cleaner: {service.cleanerId || 'N/A'}</h3>
+                                                <span className="cs-request-status accepted">ACCEPTED</span>
+                                            </div>
+                                            <div className="cs-request-details">
+                                                <p><strong>Service Name:</strong> {service.serviceName || 'N/A'}</p>
+                                                <p><strong>Service Type:</strong> {service.serviceType || 'N/A'}</p>
+                                                <p><strong>Price:</strong> {service.price ? `$${service.price}` : 'N/A'}</p>
+                                                <p><strong>Service Area:</strong> {service.serviceArea || 'N/A'}</p>
+                                                <p><strong>Date Used:</strong> {request.requestedDate || 'N/A'}</p>
+                                                <p><strong>Confirmed On:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
