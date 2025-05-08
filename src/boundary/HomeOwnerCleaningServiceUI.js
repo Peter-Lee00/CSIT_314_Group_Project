@@ -3,6 +3,7 @@ import OwnerCleaningServiceController from "../controller/OwnerCleaningServiceCo
 import "./HomeOwnerCleaningServiceUI.css"; // Create this CSS file for styling
 import Swal from "sweetalert2";
 import CleaningService from '../entity/CleaningService';
+import CleaningServiceRequest from '../entity/CleaningServiceRequest';
 
 function HomeOwnerCleaningServiceUI() {
     const [services, setServices] = useState([]);
@@ -16,6 +17,13 @@ function HomeOwnerCleaningServiceUI() {
     });
     const [showShortlist, setShowShortlist] = useState(false);
     const [shortlistedServices, setShortlistedServices] = useState([]);
+    const [selectedService, setSelectedService] = useState(null);
+    const username = localStorage.getItem('username') || 'testuser';
+
+    // Add isShortlisted function
+    const isShortlisted = (serviceId) => {
+        return shortlistedServices.some(service => service.id === serviceId);
+    };
 
     // Logout handler
     const handleLogout = () => {
@@ -96,6 +104,18 @@ function HomeOwnerCleaningServiceUI() {
         const username = localStorage.getItem('username') || 'testuser';
         const controller = new OwnerCleaningServiceController();
         
+        // Check if service is already in shortlist
+        if (isShortlisted(service.id)) {
+            Swal.fire({
+                title: 'Already Shortlisted',
+                text: 'This service is already in your shortlist!',
+                icon: 'info',
+                confirmButtonText: 'OK',
+                timer: 1500
+            });
+            return;
+        }
+        
         // Increment shortlist count when service is added to shortlist
         await CleaningService.increaseShortlistCount(service.id);
         
@@ -171,7 +191,17 @@ function HomeOwnerCleaningServiceUI() {
                     </table>
                 </div>
             `,
-            confirmButtonText: 'Close'
+            showCancelButton: true,
+            confirmButtonText: 'Send Request',
+            cancelButtonText: 'Close',
+            showDenyButton: true,
+            denyButtonText: 'Add to Shortlist'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleSendRequest(latestService);
+            } else if (result.isDenied) {
+                handleShortlist(latestService);
+            }
         });
     };
 
@@ -190,6 +220,84 @@ function HomeOwnerCleaningServiceUI() {
             await controller.removeFromShortlist(username, serviceId);
             handleViewShortlist();
             Swal.fire('Removed!', 'Service has been removed from your shortlist.', 'success');
+        }
+    };
+
+    const handleSendRequest = async (service) => {
+        try {
+            // Check if request already exists
+            const existingRequests = await CleaningServiceRequest.getRequestsByHomeowner(username);
+            const hasExistingRequest = existingRequests.some(req => 
+                req.serviceId === service.id && 
+                (req.status === 'PENDING' || req.status === 'ACCEPTED')
+            );
+
+            if (hasExistingRequest) {
+                Swal.fire({
+                    title: 'Request Already Sent',
+                    text: 'You have already sent a request for this service!',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            // Show a modal with date picker (restricted) and message
+            const { value: formValues } = await Swal.fire({
+                title: 'Send Request',
+                html:
+                    `<label for="req-date">Pick a date:</label><br />` +
+                    `<input id="req-date" type="date" class="swal2-input" min="${service.serviceAvailableFrom}" max="${service.serviceAvailableTo}" required><br />` +
+                    `<label for="req-msg">Message to Cleaner (optional):</label><br />` +
+                    `<textarea id="req-msg" class="swal2-textarea" placeholder="Type your message here..."></textarea>`,
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'Send Request',
+                cancelButtonText: 'Cancel',
+                preConfirm: () => {
+                    const date = document.getElementById('req-date').value;
+                    const msg = document.getElementById('req-msg').value;
+                    if (!date) {
+                        Swal.showValidationMessage('Please pick a date');
+                        return false;
+                    }
+                    return { date, msg };
+                }
+            });
+
+            if (formValues) {  // User clicked Send Request
+                const result = await CleaningServiceRequest.createRequest(
+                    service.id,
+                    username,
+                    service.cleanerId,
+                    formValues.msg,
+                    formValues.date
+                );
+                
+                if (result) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Request sent successfully! The cleaner will review your request.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Failed to send request. Please try again.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            }
+        } catch (error) {
+            console.error('Error sending request:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to send request. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         }
     };
 
@@ -333,6 +441,31 @@ function HomeOwnerCleaningServiceUI() {
                                 ))}
                             </div>
                         )}
+                    </div>
+                </div>
+            )}
+            {selectedService && (
+                <div className="hocModal">
+                    <div className="hocModal-content">
+                        <h2>{selectedService.serviceName}</h2>
+                        <p><strong>Type:</strong> {selectedService.serviceType}</p>
+                        <p><strong>Price:</strong> ${selectedService.price}</p>
+                        <p><strong>Description:</strong> {selectedService.description}</p>
+                        <p><strong>Available From:</strong> {selectedService.serviceAvailableFrom || 'N/A'}</p>
+                        <p><strong>Available To:</strong> {selectedService.serviceAvailableTo || 'N/A'}</p>
+                        <div style={{display:'flex',gap:'12px',justifyContent:'flex-end',marginTop:'20px'}}>
+                            <button className="hocShortlist-button" onClick={() => handleShortlist(selectedService)}>
+                                {isShortlisted(selectedService.id) ? 'Remove from Shortlist' : 'Add to Shortlist'}
+                            </button>
+                            <button 
+                                className="hocShortlist-button" 
+                                onClick={() => handleSendRequest(selectedService)}
+                                style={{backgroundColor: '#4CAF50'}}
+                            >
+                                Send Request
+                            </button>
+                            <button className="hocSearch-button" onClick={() => setSelectedService(null)}>Close</button>
+                        </div>
                     </div>
                 </div>
             )}

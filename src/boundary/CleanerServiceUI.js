@@ -6,6 +6,8 @@ import { ServiceOffering } from '../entity/CleaningService';
 import Swal from 'sweetalert2';
 import Chart from 'chart.js/auto';
 import './CleanerServiceUI.css';
+import CleaningServiceRequest from '../entity/CleaningServiceRequest';
+import CleaningService from '../entity/CleaningService';
 
 const CleanerServiceUI = () => {
   const navigate = useNavigate();
@@ -26,6 +28,18 @@ const CleanerServiceUI = () => {
   const [historyResults, setHistoryResults] = useState([]);
   const [searchType, setSearchType] = useState('');
   const [searchPriceRange, setSearchPriceRange] = useState('');
+  const [showRequests, setShowRequests] = useState(false);
+  const [requests, setRequests] = useState([]);
+  const [requestServiceDetails, setRequestServiceDetails] = useState({});
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [confirmedRequests, setConfirmedRequests] = useState([]);
+  const [historyFilters, setHistoryFilters] = useState({
+    serviceName: '',
+    serviceType: '',
+    priceRange: '',
+    date: '',
+    search: ''
+  });
 
   const controller = new CleanerServiceController();
 
@@ -497,20 +511,114 @@ const CleanerServiceUI = () => {
     setFilteredServices(myServices.filter(service => service.isOffering));
   };
 
+  const loadRequests = async () => {
+    try {
+      const cleanerRequests = await CleaningServiceRequest.getRequestsByCleaner(currentCleanerId);
+      // Only show pending requests
+      setRequests(cleanerRequests.filter(r => r.status === 'PENDING'));
+      // Fetch service details for each request
+      const serviceIds = [...new Set(cleanerRequests.map(req => req.serviceId))];
+      const details = {};
+      for (const id of serviceIds) {
+        const service = await CleaningService.getServiceById(id);
+        if (service) details[id] = service;
+      }
+      setRequestServiceDetails(details);
+    } catch (error) {
+      console.error('Error loading requests:', error);
+      Swal.fire('Error', 'Failed to load requests', 'error');
+    }
+  };
+
+  const handleRequestStatus = async (requestId, newStatus) => {
+    try {
+      const success = await CleaningServiceRequest.updateRequestStatus(requestId, newStatus);
+      if (success) {
+        Swal.fire('Success', `Request ${newStatus.toLowerCase()} successfully`, 'success');
+        loadRequests(); // Refresh the requests list
+      } else {
+        Swal.fire('Error', 'Failed to update request status', 'error');
+      }
+    } catch (error) {
+      console.error('Error updating request status:', error);
+      Swal.fire('Error', 'Failed to update request status', 'error');
+    }
+  };
+
+  const loadConfirmedRequests = async () => {
+    try {
+      const cleanerRequests = await CleaningServiceRequest.getRequestsByCleaner(currentCleanerId);
+      const accepted = cleanerRequests.filter(r => r.status === 'ACCEPTED');
+      setConfirmedRequests(accepted);
+      // Fetch service details for each confirmed request
+      const serviceIds = [...new Set(accepted.map(req => req.serviceId))];
+      const details = {};
+      for (const id of serviceIds) {
+        const service = await CleaningService.getServiceById(id);
+        if (service) details[id] = service;
+      }
+      setRequestServiceDetails(details);
+    } catch (error) {
+      console.error('Error loading confirmed requests:', error);
+      Swal.fire('Error', 'Failed to load confirmed requests', 'error');
+    }
+  };
+
+  const getUnique = (arr, key) => [...new Set(arr.map(item => item[key]).filter(Boolean))];
+
+  const filterConfirmedRequests = () => {
+    return confirmedRequests.filter(request => {
+      const service = requestServiceDetails[request.serviceId] || {};
+      const matchesServiceName = !historyFilters.serviceName || service.serviceName === historyFilters.serviceName;
+      const matchesServiceType = !historyFilters.serviceType || service.serviceType === historyFilters.serviceType;
+      const matchesPrice = !historyFilters.priceRange || (() => {
+        if (!service.price) return false;
+        const [min, max] = historyFilters.priceRange.split('-').map(Number);
+        return service.price >= min && service.price <= max;
+      })();
+      const matchesDate = !historyFilters.date || request.requestedDate === historyFilters.date;
+      const matchesSearch = !historyFilters.search || (
+        (service.serviceName && service.serviceName.toLowerCase().includes(historyFilters.search.toLowerCase())) ||
+        (service.serviceType && service.serviceType.toLowerCase().includes(historyFilters.search.toLowerCase())) ||
+        (service.price && String(service.price).includes(historyFilters.search)) ||
+        (service.serviceArea && service.serviceArea.toLowerCase().includes(historyFilters.search.toLowerCase())) ||
+        (request.homeownerId && request.homeownerId.toLowerCase().includes(historyFilters.search.toLowerCase()))
+      );
+      return matchesServiceName && matchesServiceType && matchesPrice && matchesDate && matchesSearch;
+    });
+  };
+
   // Layout below is mostly left intact
   return (
     <div className="cs-container">
       <div className="cs-header">
         <h1>My Cleaning Services</h1>
-        {!showHistory && (
-          <button className="cs-back-button" onClick={() => navigate(-1)}>
-            Home
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button 
+            className="cs-history-button" 
+            onClick={() => {
+              setShowRequests(true);
+              loadRequests();
+            }}
+          >
+            View Requests
           </button>
-        )}
+          <button className="cs-history-button" onClick={() => {
+            setShowHistoryModal(true);
+            loadConfirmedRequests();
+          }}>History</button>
+          <button className="cs-history-button" onClick={handleHistorySearch}>Archived</button>
+          {!showHistory && (
+            <button className="cs-back-button" onClick={() => navigate(-1)}>
+              Home
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className="cs-search-section">
-        <div className="cs-search-main">
+      {/* Refactored search/filter bar layout */}
+      <div className="cs-search-section" style={{flexDirection: 'column', gap: '8px'}}>
+        <div className="cs-search-main" style={{gap: '8px', alignItems: 'center'}}>
           <input
             type="text"
             placeholder="Search by service name"
@@ -525,7 +633,7 @@ const CleanerServiceUI = () => {
             + Add New Service
           </button>
         </div>
-        <div className="cs-search-filters">
+        <div className="cs-search-filters" style={{gap: '8px', alignItems: 'center'}}>
           <select
             value={searchType}
             onChange={e => setSearchType(e.target.value)}
@@ -568,7 +676,6 @@ const CleanerServiceUI = () => {
             className="cs-search-input"
             style={{ minWidth: '140px' }}
           />
-          <button onClick={handleHistorySearch} className="cs-history-button">History</button>
         </div>
       </div>
 
@@ -620,6 +727,153 @@ const CleanerServiceUI = () => {
           </div>
         )}
       </div>
+
+      {/* Add Requests Modal */}
+      {showRequests && (
+        <div className="cs-modal">
+          <div className="cs-modal-content">
+            <div className="cs-modal-header">
+              <h2>Service Requests</h2>
+              <button className="cs-modal-close" onClick={() => setShowRequests(false)}>×</button>
+            </div>
+            <div className="cs-requests-list">
+              {requests.length === 0 ? (
+                <p>No requests found.</p>
+              ) : (
+                requests.map(request => {
+                  const service = requestServiceDetails[request.serviceId] || {};
+                  return (
+                    <div key={request.id} className="cs-request-card">
+                      <div className="cs-request-header">
+                        <h3>Request from {request.homeownerId}</h3>
+                        <span className={`cs-request-status ${request.status.toLowerCase()}`}>{request.status}</span>
+                      </div>
+                      <div className="cs-request-details">
+                        <p><strong>Service Name:</strong> {service.serviceName || 'N/A'}</p>
+                        <p><strong>Service Type:</strong> {service.serviceType || 'N/A'}</p>
+                        <p><strong>Price:</strong> {service.price ? `$${service.price}` : 'N/A'}</p>
+                        <p><strong>Location:</strong> {service.serviceArea || 'N/A'}</p>
+                        <p><strong>Requested Date:</strong> {request.requestedDate || 'N/A'}</p>
+                        <p><strong>Requested On:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
+                        {request.message && <p><strong>Message:</strong> {request.message}</p>}
+                      </div>
+                      {request.status === 'PENDING' && (
+                        <div className="cs-request-actions">
+                          <button 
+                            className="cs-accept-button"
+                            onClick={() => handleRequestStatus(request.id, 'ACCEPTED')}
+                          >
+                            Accept
+                          </button>
+                          <button 
+                            className="cs-decline-button"
+                            onClick={() => handleRequestStatus(request.id, 'DECLINED')}
+                          >
+                            Decline
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showHistoryModal && (
+        <div className="cs-modal">
+          <div className="cs-modal-content">
+            <div className="cs-modal-header">
+              <h2>Confirmed Matches</h2>
+              <button className="cs-modal-close" onClick={() => setShowHistoryModal(false)}>×</button>
+            </div>
+            {/* Filter controls - Updated to match main service list style */}
+            <div className="cs-search-section" style={{flexDirection: 'column', gap: '8px'}}>
+              <div className="cs-search-main" style={{gap: '8px', alignItems: 'center'}}>
+                <input
+                  type="text"
+                  placeholder="Search by service name"
+                  value={historyFilters.search}
+                  onChange={e => setHistoryFilters(f => ({ ...f, search: e.target.value }))}
+                  className="cs-search-input"
+                />
+                <button onClick={() => filterConfirmedRequests()} className="cs-search-button">Search</button>
+                <button onClick={() => setHistoryFilters({
+                  serviceName: '',
+                  serviceType: '',
+                  priceRange: '',
+                  date: '',
+                  search: ''
+                })} className="cs-reset-button">Clear</button>
+              </div>
+              <div className="cs-search-filters" style={{gap: '8px', alignItems: 'center'}}>
+                <select
+                  value={historyFilters.serviceType}
+                  onChange={e => setHistoryFilters(f => ({ ...f, serviceType: e.target.value }))}
+                  className="cs-search-input"
+                  style={{ minWidth: '140px' }}
+                >
+                  <option value="">All Types</option>
+                  <option value="Basic Cleaning">Basic Cleaning</option>
+                  <option value="Deep Cleaning">Deep Cleaning</option>
+                  <option value="Move In/Out Cleaning">Move In/Out Cleaning</option>
+                  <option value="Office Cleaning">Office Cleaning</option>
+                  <option value="Window Cleaning">Window Cleaning</option>
+                  <option value="Carpet Cleaning">Carpet Cleaning</option>
+                  <option value="Post Renovation Cleaning">Post Renovation Cleaning</option>
+                  <option value="Disinfection Service">Disinfection Service</option>
+                </select>
+                <select
+                  value={historyFilters.priceRange}
+                  onChange={e => setHistoryFilters(f => ({ ...f, priceRange: e.target.value }))}
+                  className="cs-search-input"
+                  style={{ minWidth: '140px' }}
+                >
+                  <option value="">All Prices</option>
+                  <option value="0-50">$0 - $50</option>
+                  <option value="51-100">$51 - $100</option>
+                  <option value="101-200">$101 - $200</option>
+                  <option value="201-500">$201 - $500</option>
+                </select>
+                <input
+                  type="date"
+                  value={historyFilters.date}
+                  onChange={e => setHistoryFilters(f => ({ ...f, date: e.target.value }))}
+                  className="cs-search-input"
+                  style={{ minWidth: '140px' }}
+                />
+              </div>
+            </div>
+            <div className="cs-requests-list">
+              {filterConfirmedRequests().length === 0 ? (
+                <p>No confirmed matches found.</p>
+              ) : (
+                filterConfirmedRequests().map(request => {
+                  const service = requestServiceDetails[request.serviceId] || {};
+                  return (
+                    <div key={request.id} className="cs-request-card">
+                      <div className="cs-request-header">
+                        <h3>Confirmed with {request.homeownerId}</h3>
+                        <span className="cs-request-status accepted">ACCEPTED</span>
+                      </div>
+                      <div className="cs-request-details">
+                        <p><strong>Service Name:</strong> {service.serviceName || 'N/A'}</p>
+                        <p><strong>Service Type:</strong> {service.serviceType || 'N/A'}</p>
+                        <p><strong>Price:</strong> {service.price ? `$${service.price}` : 'N/A'}</p>
+                        <p><strong>Location:</strong> {service.serviceArea || 'N/A'}</p>
+                        <p><strong>Confirmed Date:</strong> {request.requestedDate || 'N/A'}</p>
+                        <p><strong>Confirmed On:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

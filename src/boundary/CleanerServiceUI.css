@@ -447,3 +447,143 @@ body {
         flex: unset;
     }
 }
+
+/* Request Modal Styles */
+.cs-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.cs-modal-content {
+    background-color: #2c3338;
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.cs-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #3d4449;
+}
+
+.cs-modal-header h2 {
+    margin: 0;
+    color: #ffffff;
+}
+
+.cs-modal-close {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.cs-requests-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 10px 0;
+}
+
+.cs-request-card {
+    background-color: #1e2327;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cs-request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.cs-request-header h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.1em;
+}
+
+.cs-request-status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.cs-request-status.pending {
+    background-color: #FFA500;
+    color: #000000;
+}
+
+.cs-request-status.accepted {
+    background-color: #4CAF50;
+    color: #ffffff;
+}
+
+.cs-request-status.declined {
+    background-color: #f44336;
+    color: #ffffff;
+}
+
+.cs-request-details {
+    margin-bottom: 15px;
+}
+
+.cs-request-details p {
+    margin: 8px 0;
+    color: #cccccc;
+}
+
+.cs-request-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.cs-accept-button, .cs-decline-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    flex: 1;
+}
+
+.cs-accept-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.cs-accept-button:hover {
+    background-color: #45a049;
+}
+
+.cs-decline-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.cs-decline-button:hover {
+    background-color: #da190b;
+}

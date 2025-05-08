@@ -1,0 +1,86 @@
+.crContainer {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.crRequestsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.crRequestCard {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.2s;
+}
+
+.crRequestCard:hover {
+    transform: translateY(-2px);
+}
+
+.crRequestHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.crRequestHeader h3 {
+    margin: 0;
+    color: #333;
+}
+
+.crStatus {
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.crRequestDetails {
+    margin-bottom: 15px;
+}
+
+.crRequestDetails p {
+    margin: 8px 0;
+    color: #666;
+}
+
+.crRequestActions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.crAcceptButton, .crDeclineButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.crAcceptButton {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.crAcceptButton:hover {
+    background-color: #45a049;
+}
+
+.crDeclineButton {
+    background-color: #f44336;
+    color: white;
+}
+
+.crDeclineButton:hover {
+    background-color: #da190b;
+} 
