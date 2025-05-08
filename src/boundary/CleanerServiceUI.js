@@ -6,7 +6,7 @@ import { ServiceOffering } from '../entity/CleaningService';
 import Swal from 'sweetalert2';
 import Chart from 'chart.js/auto';
 import './CleanerServiceUI.css';
-//for taking screenshot
+
 const CleanerServiceUI = () => {
   const navigate = useNavigate();
 
