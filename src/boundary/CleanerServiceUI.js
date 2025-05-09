@@ -8,6 +8,8 @@ import Chart from 'chart.js/auto';
 import './CleanerServiceUI.css';
 import CleaningServiceRequest from '../entity/CleaningServiceRequest';
 import CleaningService from '../entity/CleaningService';
+import ServiceCategory from '../entity/ServiceCategory';
+import { UserLogoutController } from '../controller/UserAuthController';
 
 const CleanerServiceUI = () => {
   const navigate = useNavigate();
@@ -57,9 +59,10 @@ const CleanerServiceUI = () => {
     setCurrentCleanerId(email);
     fetchServicesForCleaner(email); 
 
-    // Getting the types of services from controller
-    const types = controller.getServiceTypes(); // might eventually make async if we hit an API
+    // Fetch service types from ServiceCategory
+    ServiceCategory.listCategories().then(types => {
     setAvailableTypes(types);
+    });
   }, [navigate]);
 
   const SearchService = () => {
@@ -141,7 +144,7 @@ const CleanerServiceUI = () => {
         <div style="display: flex; flex-direction: column; gap: 10px;">
           <div style="display: flex; gap: 16px;">
             <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Service Name:</label><input id="serviceName" class="swal2-input" style="flex:1;" placeholder="Service Name"></div>
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Type:</label><select id="serviceType" class="swal2-select" style="flex:1;">${availableTypes.map(type => `<option value="${type}">${type}</option>`).join('')}</select></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Type:</label><select id="serviceType" class="swal2-select" style="flex:1;">${availableTypes.map(type => `<option value="${type.name}">${type.name}</option>`).join('')}</select></div>
           </div>
           <div style="display: flex; align-items: center;">
             <label style="width: 120px;">Description:</label>
@@ -253,7 +256,7 @@ const CleanerServiceUI = () => {
         <div style="display: flex; flex-direction: column; gap: 10px;">
           <div style="display: flex; gap: 16px;">
             <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Service Name:</label><input id="serviceName" class="swal2-input" style="flex:1;" value="${existingService.serviceName}"></div>
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Type:</label><select id="serviceType" class="swal2-select" style="flex:1;">${availableTypes.map(type => `<option value="${type}" ${type === existingService.serviceType ? 'selected' : ''}>${type}</option>`).join('')}</select></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Type:</label><select id="serviceType" class="swal2-select" style="flex:1;">${availableTypes.map(type => `<option value="${type.name}" ${type.name === existingService.serviceType ? 'selected' : ''}>${type.name}</option>`).join('')}</select></div>
           </div>
           <div style="display: flex; align-items: center;">
             <label style="width: 120px;">Description:</label>
@@ -588,6 +591,30 @@ const CleanerServiceUI = () => {
     });
   };
 
+  const handleLogout = async () => {
+    const userAuthController = new UserLogoutController();
+    const logout = await userAuthController.logout();
+    if (logout) {
+      Swal.fire({
+        position: "center",
+        title: 'Logout Successful',
+        icon: 'success',
+        confirmButtonText: 'Back to login',
+        timer: 1500
+      }).then(() => {
+        window.location.href = "/";
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        title: 'Logout Failed',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        timer: 1500
+      });
+    }
+  };
+
   // Layout below is mostly left intact
   return (
     <div className="cs-container">
@@ -608,6 +635,7 @@ const CleanerServiceUI = () => {
             loadConfirmedRequests();
           }}>History</button>
           <button className="cs-history-button" onClick={handleHistorySearch}>Archived</button>
+          <button className="cs-history-button" onClick={handleLogout}>Logout</button>
         {!showHistory && (
           <button className="cs-back-button" onClick={() => navigate(-1)}>
             Home

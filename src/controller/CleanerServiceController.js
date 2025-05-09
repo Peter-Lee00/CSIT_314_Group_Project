@@ -74,11 +74,6 @@ class CleanerServiceController {
         }
     }
 
-    getServiceTypes() {
-        // This is usually a static method, just pass it straight
-        return CleaningService.getServiceTypes();
-    }
-
     async updateServiceOffering(serviceId, isOffering) {
         try {
             const result = await CleaningService.updateServiceOffering(serviceId, isOffering);

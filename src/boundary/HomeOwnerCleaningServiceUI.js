@@ -4,6 +4,8 @@ import "./HomeOwnerCleaningServiceUI.css"; // Create this CSS file for styling
 import Swal from "sweetalert2";
 import CleaningService from '../entity/CleaningService';
 import CleaningServiceRequest from '../entity/CleaningServiceRequest';
+import { UserLogoutController } from '../controller/UserAuthController';
+import ServiceCategory from '../entity/ServiceCategory';
 
 function HomeOwnerCleaningServiceUI() {
     const [services, setServices] = useState([]);
@@ -29,6 +31,7 @@ function HomeOwnerCleaningServiceUI() {
         search: ''
     });
     const [serviceDetails, setServiceDetails] = useState({});
+    const [serviceTypes, setServiceTypes] = useState([]);
 
     // Add isShortlisted function
     const isShortlisted = (serviceId) => {
@@ -36,14 +39,35 @@ function HomeOwnerCleaningServiceUI() {
     };
 
     // Logout handler
-    const handleLogout = () => {
-        // If you have a logout function, call it here (e.g., clear cookies, tokens, etc.)
-        // For now, just redirect to login page
-        window.location.href = "/";
+    const handleLogout = async () => {
+        const userAuthController = new UserLogoutController();
+        const logout = await userAuthController.logout();
+        if (logout) {
+            Swal.fire({
+                position: "center",
+                title: 'Logout Successful',
+                icon: 'success',
+                confirmButtonText: 'Back to login',
+                timer: 1500
+            }).then(() => {
+                window.location.href = "/";
+            });
+        } else {
+            Swal.fire({
+                position: "center",
+                title: 'Logout Failed',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                timer: 1500
+            });
+        }
     };
 
-    // Fetch all services on mount
+    // Fetch all services and categories on mount
     useEffect(() => {
+        ServiceCategory.listCategories().then(types => {
+            setServiceTypes(types.map(t => t.name));
+        });
         fetchServices();
     }, []);
 
@@ -390,14 +414,9 @@ function HomeOwnerCleaningServiceUI() {
                         onChange={handleInputChange}
                     >
                         <option value="">All Types</option>
-                        <option value="Basic Cleaning">Basic Cleaning</option>
-                        <option value="Deep Cleaning">Deep Cleaning</option>
-                        <option value="Move In/Out Cleaning">Move In/Out Cleaning</option>
-                        <option value="Office Cleaning">Office Cleaning</option>
-                        <option value="Window Cleaning">Window Cleaning</option>
-                        <option value="Carpet Cleaning">Carpet Cleaning</option>
-                        <option value="Post Renovation Cleaning">Post Renovation Cleaning</option>
-                        <option value="Disinfection Service">Disinfection Service</option>
+                        {serviceTypes.map(type => (
+                            <option key={type} value={type}>{type}</option>
+                        ))}
                     </select>
                     <select
                         name="priceRange"
@@ -519,14 +538,9 @@ function HomeOwnerCleaningServiceUI() {
                                 className="hocSelect"
                             >
                                 <option value="">All Types</option>
-                                <option value="Basic Cleaning">Basic Cleaning</option>
-                                <option value="Deep Cleaning">Deep Cleaning</option>
-                                <option value="Move In/Out Cleaning">Move In/Out Cleaning</option>
-                                <option value="Office Cleaning">Office Cleaning</option>
-                                <option value="Window Cleaning">Window Cleaning</option>
-                                <option value="Carpet Cleaning">Carpet Cleaning</option>
-                                <option value="Post Renovation Cleaning">Post Renovation Cleaning</option>
-                                <option value="Disinfection Service">Disinfection Service</option>
+                                {serviceTypes.map(type => (
+                                    <option key={type} value={type}>{type}</option>
+                                ))}
                             </select>
                             <select
                                 value={historyFilters.priceRange}

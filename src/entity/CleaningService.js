@@ -1,5 +1,7 @@
 import { db } from '../firebase';
 import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where, increment } from 'firebase/firestore';
+import { collection as firestoreCollection } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 
 // Define service offering status constant
 export const ServiceOffering = {
@@ -8,18 +10,6 @@ export const ServiceOffering = {
 };
 
 class CleaningService {
-    // Available service types – feels like an enum
-    static SERVICE_TYPES = {
-        BASIC_CLEANING: "Basic Cleaning",
-        DEEP_CLEANING: "Deep Cleaning",
-        MOVE_IN_OUT: "Move In/Out Cleaning",
-        OFFICE_CLEANING: "Office Cleaning",
-        WINDOW_CLEANING: "Window Cleaning",
-        CARPET_CLEANING: "Carpet Cleaning",
-        POST_RENOVATION: "Post Renovation Cleaning",
-        DISINFECTION: "Disinfection Service"
-    };
-
     constructor(name, desc, price, durationHrs, cleanerEmail, type, isOffering = true, serviceArea = '', specialEquipment = '', numWorkers = '', includedTasks = [], serviceAvailableFrom = '', serviceAvailableTo = '') {
         this.serviceName = name;
         this.description = desc;
@@ -127,11 +117,6 @@ class CleaningService {
                 error: error.message
             };
         }
-    }
-
-    static getServiceTypes() {
-        // Just returns values, no keys
-        return Object.values(this.SERVICE_TYPES);
     }
 
     static async searchCleaningService(serviceName, serviceType, priceRange, duration, cleanerId) {
@@ -281,6 +266,20 @@ class CleaningService {
             return results.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         } catch (err) {
             console.error('Error fetching confirmed matches:', err);
+            return [];
+        }
+    }
+
+    static async getAllServices() {
+        try {
+            const serviceColl = collection(db, 'CleaningServices');
+            const results = await getDocs(serviceColl);
+            return results.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        } catch (err) {
+            console.error("Error getting all cleaning services:", err);
             return [];
         }
     }

@@ -63,8 +63,8 @@ function LoginUI() {
             case 'UserAdmin':
               navigate('/usermanagement');
               break;
-            case 'PlatformAdmin':
-              navigate('/userprofilemanagement');
+            case 'PlatformManager':
+              navigate('/platformmanager/dashboard');
               break;
             case 'HomeOwner':
               navigate('/homeowner/dashboard');
@@ -134,7 +134,7 @@ function LoginUI() {
               <option value="UserAdmin">User Admin</option>
               <option value="Cleaner">Cleaner</option>
               <option value="HomeOwner">Home Owner</option>
-              <option value="PlatformAdmin">Platform Admin</option>
+              <option value="PlatformManager">Platform Manager</option>
             </select>
           </div>
 
