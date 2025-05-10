@@ -469,14 +469,14 @@ function HomeOwnerCleaningServiceUI() {
                             <span>{service.serviceType}</span>
                             <span>${service.price}</span>
                             <span>{service.duration} hrs</span>
-                            <span className="hocAction-buttons">
-                                <button className="hocView-button" onClick={() => handleViewService(service)}>
+                            <div className="hocAction-buttons">
+                                <button className="cs-edit-button" onClick={() => handleViewService(service)}>
                                     View
                                 </button>
-                                <button className="hocShortlist-button" onClick={() => handleShortlist(service)}>
+                                <button className="cs-delete-button" onClick={() => handleShortlist(service)}>
                                     Shortlist
                                 </button>
-                            </span>
+                            </div>
                         </React.Fragment>
                     ))
                 )}

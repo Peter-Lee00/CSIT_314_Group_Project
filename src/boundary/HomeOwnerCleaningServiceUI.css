@@ -165,107 +165,54 @@
     padding: 5px 10px;
     cursor: pointer;
 }
-.hocView-button {
-    padding: 8px 12px;
+.hocView-button,
+.hocShortlist-button {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 4px;
+    font-weight: 500;
     border: none;
-    border-radius: 5px;
-    background-color: #333;
-    color: #fff;
     cursor: pointer;
-    font-size: 15px;
-}
-.hocShortlist-table {
-    display: grid;
-    grid-template-columns: 2fr 3fr 2fr 1fr 1fr 1fr;
-    gap: 10px;
-    background: #f1f1f1;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 1em;
-}
-.hocShortlist-header {
-    display: contents;
-    font-weight: bold;
-    color: #222;
-}
-.hocShortlist-table span {
-    color: #222;
-    padding: 6px 0;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.hocAction-buttons {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-}
-
-.hocView-button, .hocShortlist-button {
-    min-width: 90px;
-    max-width: 120px;
-    flex: 1 1 90px;
-    box-sizing: border-box;
-    height: 40px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-    font-weight: normal;
-    border: none;
-    color: #fff;
-    transition: background 0.2s;
-    padding: 0 18px;
-    display: block;
-    margin: 0 auto;
-    white-space: nowrap;
-    text-align: center;
-}
-.hocView-button {
-    background: #333;
+    transition: all 0.3s ease;
+    min-width: unset;
+    height: unset;
 }
 .hocView-button:hover {
-    background: #1976d2;
+    background-color: #1976D2;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-.hocShortlist-button {
-    background: #1976d2;
-}
+
 .hocShortlist-button:hover {
-    background: #1251a3;
-}
-
-.hocService-table span {
-    color: #222;
-    font-size: 16px;
-    word-break: break-word;
-    align-self: center;
-}
-
-.hocTable-header span {
-    color: #333;
-    font-weight: bold;
+    background-color: #d32f2f;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .hocShortlist-remove-button {
+    background: #e53935;
+}
+.hocShortlist-remove-button:hover {
+    background: #b71c1c;
+}
+
+.hocLogout-button,
+.hocShortlist-button {
+    padding: 8px 16px;
     min-width: 90px;
-    max-width: 120px;
-    flex: 1 1 90px;
-    box-sizing: border-box;
-    height: 40px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-    font-weight: normal;
+    height: 38px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-family: inherit;
+    font-weight: 500;
     border: none;
     color: #fff;
     background: #e53935;
+    margin-left: 5px;
+    cursor: pointer;
     transition: background 0.2s;
-    padding: 0 18px;
-    display: block;
-    margin: 0 auto;
-    white-space: nowrap;
-    text-align: center;
 }
-.hocShortlist-remove-button:hover {
+.hocLogout-button:hover {
     background: #b71c1c;
 }
 
@@ -287,13 +234,15 @@
         min-width: 0;
         max-width: 100%;
     }
-    .hocView-button, .hocShortlist-button {
-        font-size: 14px;
-        height: 34px;
+    .hocView-button,
+    .hocShortlist-button,
+    .hocShortlist-remove-button,
+    .hocLogout-button {
+        font-size: 13px;
+        height: 32px;
         min-width: 60px;
         max-width: 100px;
         padding: 0 8px;
-        white-space: nowrap;
     }
     .hocAction-buttons {
         gap: 4px;
@@ -302,4 +251,21 @@
 
 .hocContainer h2 {
     color: #222;
+}
+
+.hocService-table span,
+.hocTable-header span {
+    color: #222 !important;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.hocView-button,
+.hocShortlist-button {
+    min-width: 100px;
+    height: 40px;
+    font-size: 15px;
+    padding: 0 18px;
+    border-radius: 4px;
+    font-weight: 500;
 }
