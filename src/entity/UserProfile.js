@@ -98,6 +98,23 @@ class UserProfile {
             return null;
         }
     }
+
+    static async verifyUserProfile(profileName, selectedType) {
+        try {
+            const profileDoc = await getDoc(doc(db, 'UserProfiles', profileName));
+            if (profileDoc.exists()) {
+                const profileData = profileDoc.data();
+                if (profileData.suspended === true) {
+                    return false;
+                }
+                return profileData.profileType === selectedType;
+            }
+            return false;
+        } catch (error) {
+            console.error("Error verifying user profile:", error);
+            return false;
+        }
+    }
 }
 
 export default UserProfile;

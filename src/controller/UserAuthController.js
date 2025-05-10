@@ -3,7 +3,7 @@ import UserProfile from '../entity/UserProfile';
 import Cookies from 'js-cookie';
 
 export class UserLoginController {
-    async authenticateLogin(email, password, profileType) {
+    async authenticateLogin(email, password, profileType, profileDocId) {
         try {
             // First verify the user account
             const userProfile = await UserAccount.verifyUserAccount(email, password);
@@ -20,9 +20,10 @@ export class UserLoginController {
                 return 'INVALID_CREDENTIALS';
             }
 
-            // If credentials are correct, after that check profile type
-            if (userProfile !== profileType) {
-                console.log("Profile type mismatch", userProfile, profileType);
+            // Use UserProfile entity to verify profile type and suspension
+            const profileVerified = await UserProfile.verifyUserProfile(profileDocId, profileType);
+            if (!profileVerified) {
+                console.log("Profile verification failed");
                 return 'INVALID_PROFILE';
             }
 

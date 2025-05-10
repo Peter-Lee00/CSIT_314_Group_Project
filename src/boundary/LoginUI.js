@@ -21,6 +21,15 @@ function LoginUI() {
     const password = document.getElementById('password').value;
     const role = document.getElementById('profileType').value;
 
+    // Map role to Firestore document ID
+    const profileNameMap = {
+      UserAdmin: "User Admin",
+      Cleaner: "Cleaner",
+      HomeOwner: "Home Owner",
+      PlatformManager: "Platform Manager"
+    };
+    const profileDocId = profileNameMap[role];
+
     // Bare-minimum validation
     if (!role) {
       Swal.fire({
@@ -44,7 +53,7 @@ function LoginUI() {
 
     // Proceed to check with backend
     const auth = new UserLoginController();
-    const status = await auth.authenticateLogin(email, password, role);
+    const status = await auth.authenticateLogin(email, password, role, profileDocId);
 
     // Different reactions based on backend reply
     switch (status) {

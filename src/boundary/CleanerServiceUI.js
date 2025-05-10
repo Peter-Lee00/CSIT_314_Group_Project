@@ -633,7 +633,7 @@ const CleanerServiceUI = () => {
           <button className="cs-history-button" onClick={() => {
             setShowHistoryModal(true);
             loadConfirmedRequests();
-          }}>History</button>
+          }}>Confirmed Matches</button>
           <button className="cs-history-button" onClick={handleHistorySearch}>Archived</button>
           <button className="cs-history-button" onClick={handleLogout}>Logout</button>
         {!showHistory && (

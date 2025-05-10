@@ -90,23 +90,11 @@ function UserAccountManagementUI() {
               <option value="HomeOwner">Home Owner</option>
             </select>
           </div>
-          <div id="addressField" class="item full-width" style="display: none;">
-            <label>Address</label>
-            <input type="text" id="address" class="swal2-input" placeholder="Optional for most roles">
-          </div>
         </div>
       `,
       confirmButtonText: 'Create',
       showCancelButton: true,
       focusConfirm: false,
-      didOpen: () => {
-        const roleSelect = document.getElementById('userProfile');
-        const addrField = document.getElementById('addressField');
-
-        roleSelect.addEventListener('change', (e) => {
-          addrField.style.display = e.target.value === 'HomeOwner' ? 'block' : 'none';
-        });
-      },
       preConfirm: () => {
         const payload = {
           firstName: document.getElementById('firstName').value,
@@ -114,8 +102,7 @@ function UserAccountManagementUI() {
           password: document.getElementById('password').value,
           phoneNumber: document.getElementById('phoneNumber').value,
           email: document.getElementById('email').value,
-          userProfile: document.getElementById('userProfile').value,
-          address: document.getElementById('address')?.value
+          userProfile: document.getElementById('userProfile').value
         };
 
         if (!payload.firstName || !payload.lastName || !payload.password ||
@@ -123,12 +110,10 @@ function UserAccountManagementUI() {
           Swal.showValidationMessage('Please fill in all required fields.');
           return false;
         }
-
-        if (payload.userProfile === 'HomeOwner' && !payload.address) {
-          Swal.showValidationMessage('HomeOwners need to have an address.');
+        if (/\s/.test(payload.email)) {
+          Swal.showValidationMessage('Email cannot contain spaces.');
           return false;
         }
-
         return payload;
       }
     }).then(handleNewAccount);
@@ -145,8 +130,7 @@ function UserAccountManagementUI() {
       data.password,
       data.phoneNumber,
       data.email,
-      data.userProfile,
-      data.address
+      data.userProfile
     );
 
     if (created) {
@@ -166,13 +150,6 @@ function UserAccountManagementUI() {
   };
 
   const launchUpdateModal = (user) => {
-    const addressField = user.userProfile === 'HomeOwner' ? `
-      <div class="item full-width">
-        <label>Address</label>
-        <input type="text" id="address" class="swal2-input" value="${user.address || ''}">
-      </div>
-    ` : '';
-
     Swal.fire({
       title: 'Edit Account Details',
       width: 800,
@@ -206,7 +183,6 @@ function UserAccountManagementUI() {
               <option value="HomeOwner" ${user.userProfile === 'HomeOwner' ? 'selected' : ''}>Home Owner</option>
             </select>
           </div>
-          ${addressField}
         </div>
       `,
       confirmButtonText: 'Update',
@@ -218,8 +194,7 @@ function UserAccountManagementUI() {
           password: document.getElementById('password').value,
           phoneNumber: document.getElementById('phoneNumber').value,
           email: document.getElementById('email').value,
-          userProfile: document.getElementById('userProfile').value,
-          address: document.getElementById('address')?.value
+          userProfile: document.getElementById('userProfile').value
         };
 
         if (!data.firstName || !data.lastName || !data.password ||
@@ -227,12 +202,6 @@ function UserAccountManagementUI() {
           Swal.showValidationMessage('Fill everything out!');
           return false;
         }
-
-        if (data.userProfile === 'HomeOwner' && !data.address) {
-          Swal.showValidationMessage('Home Owner needs an address');
-          return false;
-        }
-
         return data;
       }
     }).then(applyUpdate);
@@ -249,8 +218,7 @@ function UserAccountManagementUI() {
       update.password,
       update.phoneNumber,
       update.email,
-      update.userProfile,
-      update.address
+      update.userProfile
     );
 
     if (ok) {

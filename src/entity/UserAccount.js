@@ -10,44 +10,36 @@ import {
 } from 'firebase/firestore';
 
 class UserAccount {
-  constructor(firstName, lastName, password, phoneNumber, email, userProfile, address = null) {
+  constructor(firstName, lastName, password, phoneNumber, email, userProfile) {
     this.firstName    = firstName;
     this.lastName     = lastName;
     this.password     = password;
     this.phoneNumber  = phoneNumber;
     this.email        = email;
     this.userProfile  = userProfile;
-    // only keep address when HomeOwner
-    this.address      = userProfile === 'HomeOwner' ? address : null;
-
-    // side-channel for UI text
     this.statusMessage = '';
   }
 
   async createUserAccount() {
-    // 1) validate HomeOwner
-    if (this.userProfile === 'HomeOwner' && !this.address) {
-      this.statusMessage = 'Home Owner must have an address';
+    // Prevent spaces in email
+    if (/\s/.test(this.email)) {
+      this.statusMessage = 'Email cannot contain spaces.';
       return false;
     }
-
+    // 1) validate HomeOwner (no longer needed)
     // 2) build payload
     const payload = {
       firstName:   this.firstName,
       lastName:    this.lastName,
       password:    this.password,
       phoneNumber: this.phoneNumber,
-      email:       this.email,
+      email:       this.email.trim(),
       userProfile: this.userProfile,
-      suspended:   false,
-      // only include address if HomeOwner
-      ...(this.userProfile === 'HomeOwner' && { address: this.address }),
+      suspended:   false
     };
-
     try {
-      const userRef = doc(db, 'Users', this.email);
+      const userRef = doc(db, 'Users', this.email.trim());
       await setDoc(userRef, payload);
-
       this.statusMessage = 'Account created successfully';
       return true;
     } catch (err) {
@@ -62,7 +54,7 @@ class UserAccount {
   static async searchUserAccount(email) {
     try {
       const usersCol = collection(db, 'Users');
-      const q = query(usersCol, where('email', '==', email));
+      const q = query(usersCol, where('email', '==', email.trim()));
       const snapshot = await getDocs(q);
 
       if (snapshot.empty) {
@@ -90,24 +82,26 @@ class UserAccount {
     }
   }
 
-  async updateUserAccount(firstName, lastName, password, phoneNumber, email, userProfile, address) {
+  async updateUserAccount(firstName, lastName, password, phoneNumber, email, userProfile) {
     try {
-      const userRef = doc(db, 'Users', email);
+      // Look up the user by email to get the correct document ID
+      const usersCol = collection(db, 'Users');
+      const q = query(usersCol, where('email', '==', email.trim()));
+      const snapshot = await getDocs(q);
+      if (snapshot.empty) {
+        console.error("No user found with email:", email);
+        return false;
+      }
+      const userDoc = snapshot.docs[0];
+      const userRef = doc(db, 'Users', userDoc.id);
       const updatePayload = {
         firstName,
         lastName,
         password,
         phoneNumber,
-        email,
+        email: email.trim(),
         userProfile
       };
-
-      if (userProfile === 'HomeOwner') {
-        updatePayload.address = address;
-      } else {
-        updatePayload.address = null;
-      }
-
       await updateDoc(userRef, updatePayload);
       return true;
     } catch (err) {
@@ -130,7 +124,6 @@ class UserAccount {
     try {
       const usersRef = collection(db, 'Users');
       const snapshot = await getDocs(usersRef);
-
       return snapshot.docs.map(docSnap => {
         const user = docSnap.data();
         return {
@@ -141,8 +134,7 @@ class UserAccount {
           phoneNumber: user.phoneNumber,
           email: user.email,
           userProfile: user.userProfile,
-          suspended: user.suspended || false,
-          ...(user.userProfile === 'HomeOwner' && { address: user.address })
+          suspended: user.suspended || false
         };
       });
     } catch (err) {
@@ -154,7 +146,7 @@ class UserAccount {
   static async verifyUserAccount(email, password) {
     try {
       const usersRef = collection(db, 'Users');
-      const q = query(usersRef, where('email', '==', email));
+      const q = query(usersRef, where('email', '==', email.trim()));
       const snapshot = await getDocs(q);
 
       if (snapshot.empty) {

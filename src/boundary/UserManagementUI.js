@@ -39,7 +39,7 @@ function UserManagementUI() {
     };
 
     return (
-        <body>
+        <div>
         <div className="umContainer">
             <div className="umHeader">
                 <div className="umUserInfo">
@@ -63,7 +63,7 @@ function UserManagementUI() {
                 </button>
             </div>
         </div>
-        </body>
+        </div>
     );
 }
 
