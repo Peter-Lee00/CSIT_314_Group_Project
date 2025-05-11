@@ -1,25 +1,51 @@
 import { db } from '../firebase';
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where } from 'firebase/firestore';
 
 class ServiceCategory {
-    static async addCategory(name, description = '') {
+    constructor(name, description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    async createCategory() {
         try {
-            const ref = collection(db, 'ServiceCategories');
-            const result = await addDoc(ref, { name, description });
+            const categoryCollRef = collection(db, 'ServiceCategories');
+            const result = await addDoc(categoryCollRef, {
+                name: this.name,
+                description: this.description,
+                createdAt: new Date().toISOString()
+            });
             return result.id;
         } catch (e) {
-            console.error('Error adding category:', e);
+            console.error("Couldn't add new category:", e);
             return null;
         }
     }
 
-    static async editCategory(categoryId, updateFields) {
+    static async listCategories() {
         try {
-            const ref = doc(db, 'ServiceCategories', categoryId);
-            await updateDoc(ref, updateFields);
+            const categoryColl = collection(db, 'ServiceCategories');
+            const results = await getDocs(categoryColl);
+            return results.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        } catch (err) {
+            console.error("Problem getting categories:", err);
+            return [];
+        }
+    }
+
+    static async updateCategory(categoryId, updateFields) {
+        try {
+            const categoryRef = doc(db, 'ServiceCategories', categoryId);
+            await updateDoc(categoryRef, {
+                ...updateFields,
+                updatedAt: new Date().toISOString()
+            });
             return true;
-        } catch (e) {
-            console.error('Error editing category:', e);
+        } catch (err) {
+            console.error("Update failed for category ID", categoryId, ":", err);
             return false;
         }
     }
@@ -30,19 +56,24 @@ class ServiceCategory {
             await deleteDoc(ref);
             return true;
         } catch (e) {
-            console.error('Error deleting category:', e);
+            console.error("Could not delete the category with ID", categoryId, ":", e);
             return false;
         }
     }
 
-    static async listCategories() {
+    static async getCategoryById(categoryId) {
         try {
-            const ref = collection(db, 'ServiceCategories');
-            const results = await getDocs(ref);
-            return results.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const categoryRef = doc(db, 'ServiceCategories', categoryId);
+            const categorySnap = await getDocs(query(collection(db, 'ServiceCategories'), where('__name__', '==', categoryId)));
+            if (!categorySnap.empty) {
+                const docData = categorySnap.docs[0];
+                return { id: docData.id, ...docData.data() };
+            } else {
+                return null;
+            }
         } catch (e) {
-            console.error('Error listing categories:', e);
-            return [];
+            console.error('Error fetching category by ID:', e);
+            return null;
         }
     }
 }

@@ -2,11 +2,15 @@ import CleaningService from '../entity/CleaningService';
 import { getCurrentUser } from '../Util';
 
 class CleanerTrackShortlistCountController {
+    constructor() {
+        this.cleanerService = new CleaningService();
+    }
+
     // Constants for business rules
     static MAX_SHORTLISTS_PER_DAY = 100;
     static SHORTLIST_COOLDOWN_MINUTES = 10;
 
-    async trackShortlistCount(serviceId) {
+    async trackShortlistCount(serviceId, viewType = 'monthly') {
         try {
             const currentUser = getCurrentUser();
             if (!currentUser) {
@@ -41,7 +45,7 @@ class CleanerTrackShortlistCountController {
             }
 
             // Delegate to entity
-            const result = await CleaningService.incrementShortlistCount(serviceId);
+            const result = await CleaningService.incrementShortlistCount(serviceId, viewType);
             if (!result) {
                 throw new Error('Failed to track shortlist count');
             }

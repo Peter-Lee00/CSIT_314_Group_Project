@@ -1,20 +1,18 @@
 import { db } from '../firebase';
-import { collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs } from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc, updateDoc, query, where, getDocs, deleteDoc } from 'firebase/firestore';
 
 class UserProfile {
-    constructor(profileName, description, profileType) {
+    constructor(profileName, description) {
         this.profileName = profileName;
         this.description = description;
-        this.profileType = profileType;
     }
 
-    async createUserProfile(profileName, description, profileType) {
+    async createUserProfile(profileName, description) {
         try {
             const profileRef = doc(db, 'UserProfiles', profileName);
             await setDoc(profileRef, {
                 profileName: profileName,
                 description: description,
-                profileType: profileType,
                 suspended: false
             });
             return true;
@@ -40,7 +38,7 @@ class UserProfile {
         }
     }
 
-    async updateUserProfile(profileName, description, profileType) {
+    async updateUserProfile(profileName, description) {
         try {
             const profilesRef = collection(db, 'UserProfiles');
             const q = query(profilesRef, where('profileName', '==', profileName));
@@ -49,8 +47,7 @@ class UserProfile {
             if (!querySnapshot.empty) {
                 const profileDoc = querySnapshot.docs[0].ref;
                 await updateDoc(profileDoc, {
-                    description,
-                    profileType
+                    description
                 });
                 return true;
             }
@@ -99,19 +96,27 @@ class UserProfile {
         }
     }
 
-    static async verifyUserProfile(profileName, selectedType) {
+    static async verifyUserProfile(profileName) {
         try {
             const profileDoc = await getDoc(doc(db, 'UserProfiles', profileName));
             if (profileDoc.exists()) {
                 const profileData = profileDoc.data();
-                if (profileData.suspended === true) {
-                    return false;
-                }
-                return profileData.profileType === selectedType;
+                return !profileData.suspended;
             }
             return false;
         } catch (error) {
             console.error("Error verifying user profile:", error);
+            return false;
+        }
+    }
+
+    static async deleteUserProfile(profileName) {
+        try {
+            const profileRef = doc(db, 'UserProfiles', profileName);
+            await deleteDoc(profileRef);
+            return true;
+        } catch (error) {
+            console.error("Error deleting profile:", error);
             return false;
         }
     }

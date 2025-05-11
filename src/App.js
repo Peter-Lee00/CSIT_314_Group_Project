@@ -7,7 +7,7 @@ import UserProfileManagementUI from './boundary/UserProfileManagementUI';
 import CleanerServiceUI from './boundary/CleanerServiceUI';
 import HomeOwnerCleaningServiceUI from './boundary/HomeOwnerCleaningServiceUI';
 import HomeOwnerShortlistCleaningServiceUI from './boundary/HomeOwnerShortlistCleaningServiceUI';
-import ServiceCategoryManagementUI from './boundary/ServiceCategoryManagementUI';
+import PlatformManagerServiceCategoryUI from './boundary/PlatformManagerServiceCategoryUI';
 // import ServiceCategoryUI from './boundary/ServiceCategoryUI';
 import './App.css';
 
@@ -23,7 +23,7 @@ function App() {
           <Route path="/cleaner/services" element={<CleanerServiceUI />} />
           <Route path="/homeowner/dashboard" element={<HomeOwnerCleaningServiceUI />} />
           <Route path="/my-shortlist" element={<HomeOwnerShortlistCleaningServiceUI />} />
-          <Route path="/platformmanager/dashboard" element={<ServiceCategoryManagementUI />} />
+          <Route path="/platformmanager/dashboard" element={<PlatformManagerServiceCategoryUI />} />
           {/* <Route path="/platformmanager/dashboard" element={<ServiceCategoryUI />} /> */}
         </Routes>
       </div>

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import ServiceCategoryController from '../controller/ServiceCategoryController';
+import { PlatformManagerServiceCategoryController } from '../controller/PlatformManagerServiceCategoryController';
 import Swal from 'sweetalert2';
 import { UserLogoutController } from '../controller/UserAuthController';
+import { useNavigate } from 'react-router-dom';
+import './PlatformManagerServiceCategoryUI.css';
 
-const ServiceCategoryManagementUI = () => {
+const PlatformManagerServiceCategoryUI = () => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
-    const controller = new ServiceCategoryController();
+    const controller = new PlatformManagerServiceCategoryController();
+    const navigate = useNavigate();
 
     const loadCategories = async () => {
         setLoading(true);
@@ -30,7 +33,7 @@ const ServiceCategoryManagementUI = () => {
                 confirmButtonText: 'Back to login',
                 timer: 1500
             }).then(() => {
-                window.location.href = "/";
+                navigate("/");
             });
         } else {
             Swal.fire({
@@ -108,27 +111,31 @@ const ServiceCategoryManagementUI = () => {
     };
 
     return (
-        <div style={{ maxWidth: 600, margin: '40px auto', background: '#fff', borderRadius: 8, padding: 24, boxShadow: '0 2px 8px #ccc', position: 'relative' }}>
-            <button onClick={handleLogout} style={{ position: 'absolute', top: 24, right: 24, padding: '8px 16px', background: '#333', color: '#fff', border: 'none', borderRadius: 4, fontWeight: 600 }}>Logout</button>
-            <h2>Manage Service Categories</h2>
-            <button onClick={handleAdd} style={{ marginBottom: 16, padding: '8px 16px', background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4 }}>+ Add Category</button>
-            {loading ? <div>Loading...</div> : (
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <div className="pmsc-container">
+            <div className="pmsc-header">
+                <h2 className="pmsc-title">Service Category Management</h2>
+                <button className="pmsc-logout-button" onClick={handleLogout}>Logout</button>
+            </div>
+            <button className="pmsc-add-button" onClick={handleAdd}>Add New Category</button>
+            {loading ? (
+                <div className="pmsc-loading">Loading...</div>
+            ) : (
+                <table className="pmsc-table">
                     <thead>
-                        <tr style={{ background: '#f5f5f5' }}>
-                            <th style={{ textAlign: 'left', padding: 8 }}>Name</th>
-                            <th style={{ textAlign: 'left', padding: 8 }}>Description</th>
-                            <th style={{ textAlign: 'left', padding: 8 }}>Actions</th>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {categories.map(cat => (
-                            <tr key={cat.id}>
-                                <td style={{ padding: 8 }}>{cat.name}</td>
-                                <td style={{ padding: 8 }}>{cat.description}</td>
-                                <td style={{ padding: 8 }}>
-                                    <button onClick={() => handleEdit(cat)} style={{ marginRight: 8, padding: '4px 12px', background: '#4caf50', color: '#fff', border: 'none', borderRadius: 4 }}>Edit</button>
-                                    <button onClick={() => handleDelete(cat)} style={{ padding: '4px 12px', background: '#e53935', color: '#fff', border: 'none', borderRadius: 4 }}>Delete</button>
+                        {categories.map((category) => (
+                            <tr key={category.id}>
+                                <td>{category.name}</td>
+                                <td>{category.description}</td>
+                                <td>
+                                    <button className="pmsc-edit-button" onClick={() => handleEdit(category)}>Edit</button>
+                                    <button className="pmsc-delete-button" onClick={() => handleDelete(category.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
@@ -139,4 +146,4 @@ const ServiceCategoryManagementUI = () => {
     );
 };
 
-export default ServiceCategoryManagementUI; 
+export default PlatformManagerServiceCategoryUI; 

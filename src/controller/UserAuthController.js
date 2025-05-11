@@ -20,6 +20,12 @@ export class UserLoginController {
                 return 'INVALID_CREDENTIALS';
             }
 
+            // Strictly check that the user's actual role matches the selected role
+            if (userProfile !== profileType) {
+                console.log("Role mismatch: user role is", userProfile, "but selected", profileType);
+                return 'INVALID_PROFILE';
+            }
+
             // Use UserProfile entity to verify profile type and suspension
             const profileVerified = await UserProfile.verifyUserProfile(profileDocId, profileType);
             if (!profileVerified) {

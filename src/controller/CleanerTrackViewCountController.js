@@ -2,11 +2,15 @@ import CleaningService from '../entity/CleaningService';
 import { getCurrentUser } from '../Util';
 
 class CleanerTrackViewCountController {
+    constructor() {
+        this.cleanerService = new CleaningService();
+    }
+
     // Constants for business rules
     static MAX_VIEWS_PER_DAY = 1000;
     static VIEW_COOLDOWN_MINUTES = 5;
 
-    async trackViewCount(serviceId) {
+    async trackViewCount(serviceId, viewType = 'monthly') {
         try {
             const currentUser = getCurrentUser();
             if (!currentUser) {
@@ -41,7 +45,7 @@ class CleanerTrackViewCountController {
             }
 
             // Delegate to entity
-            const result = await CleaningService.incrementViewCount(serviceId);
+            const result = await CleaningService.incrementViewCount(serviceId, viewType);
             if (!result) {
                 throw new Error('Failed to track view count');
             }

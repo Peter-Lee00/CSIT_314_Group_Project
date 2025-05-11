@@ -162,7 +162,7 @@ class OwnerCleaningServiceController {
             const result = await CleaningServiceRequest.createRequest(serviceId, homeownerId, cleanerId, message, requestedDate);
             if (!result) {
                 throw new Error('Failed to create service request');
-            }
+    }
             return result;
         } catch (error) {
             console.error('Error in createServiceRequest:', error);

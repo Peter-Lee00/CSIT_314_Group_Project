@@ -8,7 +8,8 @@ import {
   UACreateUserProfileController,
   UAUpdateUserProfileController,
   UASearchUserProfileController,
-  UASuspendUserProfileController
+  UASuspendUserProfileController,
+  UADeleteUserProfileController
 } from "../controller/AdminProfileController";
 import Swal from 'sweetalert2';
 
@@ -31,19 +32,11 @@ function UserProfileManagementUI() {
       const allProfiles = snapshot.docs.map(doc => ({
         profileName: doc.data().profileName,
         description: doc.data().description,
-        profileType: doc.data().profileType,
         suspended: doc.data().suspended
       }));
       setUserProfiles(allProfiles);
     }
   };
-
-  const availableTypes = [
-    { value: "UserAdmin", label: "User Admin" },
-    { value: "Cleaner", label: "Cleaner" },
-    { value: "HomeOwner", label: "Home Owner" },
-    { value: "PlatformManager", label: "Platform Manager" }
-  ];
 
   const openCreateModal = () => {
     Swal.fire({
@@ -58,13 +51,6 @@ function UserProfileManagementUI() {
             <label>Description</label>
             <input type="text" id="description" class="swal2-input" placeholder="Short note about role">
           </div>
-          <div class="item">
-            <label>Type</label>
-            <select id="profileType" class="swal2-select">
-              <option value="">Choose Type</option>
-              ${availableTypes.map(p => `<option value="${p.value}">${p.label}</option>`).join('')}
-            </select>
-          </div>
         </div>
       `,
       confirmButtonText: 'Create',
@@ -72,27 +58,22 @@ function UserProfileManagementUI() {
       preConfirm: () => {
         const name = document.getElementById('profileName').value;
         const desc = document.getElementById('description').value;
-        const type = document.getElementById('profileType').value;
-
-        if (!name || !desc || !type) {
+        if (!name || !desc) {
           Swal.showValidationMessage('Everything needs to be filled out!');
           return false;
         }
-
-        return { profileName: name, description: desc, profileType: type };
+        return { profileName: name, description: desc };
       }
     }).then(async (res) => {
       if (res.isConfirmed) {
         const controller = new UACreateUserProfileController();
         const success = await controller.createUserProfile(
           res.value.profileName,
-          res.value.description,
-          res.value.profileType
+          res.value.description
         );
-
         if (success) {
           Swal.fire('Done!', 'Profile created successfully', 'success');
-          initProfiles(); // refresh the list
+          initProfiles();
         } else {
           Swal.fire('Oops', 'Something went wrong creating the profile.', 'error');
         }
@@ -129,7 +110,6 @@ function UserProfileManagementUI() {
           <div style="text-align:left;line-height:1.6em;">
             <strong>Name:</strong> ${profile.profileName}<br>
             <strong>Description:</strong> ${profile.description}<br>
-            <strong>Type:</strong> ${profile.profileType}<br>
             <strong>Status:</strong> ${profile.suspended ? 'Suspended' : 'Active'}<br>
           </div>
         `,
@@ -160,31 +140,21 @@ function UserProfileManagementUI() {
             <label>Description</label>
             <input type="text" id="description" class="swal2-input" value="${profile.description}">
           </div>
-          <div class="item">
-            <label>Type</label>
-            <select id="profileType" class="swal2-select">
-              ${availableTypes.map(opt =>
-                `<option value="${opt.value}" ${opt.value === profile.profileType ? 'selected' : ''}>${opt.label}</option>`
-              ).join('')}
-            </select>
-          </div>
         </div>
       `,
       confirmButtonText: 'Save Changes',
       showCancelButton: true,
       preConfirm: () => {
         const desc = document.getElementById('description').value;
-        const type = document.getElementById('profileType').value;
 
-        if (!desc || !type) {
-          Swal.showValidationMessage('Don’t leave fields empty.');
+        if (!desc) {
+          Swal.showValidationMessage("Don't leave fields empty.");
           return false;
         }
 
         return {
           profileName: profile.profileName,
-          description: desc,
-          profileType: type
+          description: desc
         };
       }
     }).then(async (res) => {
@@ -192,8 +162,7 @@ function UserProfileManagementUI() {
         const controller = new UAUpdateUserProfileController();
         const updated = await controller.updateUserProfile(
           res.value.profileName,
-          res.value.description,
-          res.value.profileType
+          res.value.description
         );
 
         if (updated) {
@@ -215,6 +184,27 @@ function UserProfileManagementUI() {
       initProfiles();
     } else {
       Swal.fire('Error', 'Could not change status.', 'error');
+    }
+  };
+
+  const handleDelete = async (profileName) => {
+    const result = await Swal.fire({
+      title: 'Delete Role?',
+      text: `Are you sure you want to delete the role "${profileName}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    });
+    if (result.isConfirmed) {
+      const controller = new UADeleteUserProfileController();
+      const deleted = await controller.deleteUserProfile(profileName);
+      if (deleted) {
+        Swal.fire('Deleted!', 'Role deleted successfully.', 'success');
+        initProfiles();
+      } else {
+        Swal.fire('Error', 'Failed to delete role.', 'error');
+      }
     }
   };
 
@@ -260,15 +250,16 @@ function UserProfileManagementUI() {
         <div className="upm-list-header">
           <span>Profile Name</span>
           <span>Description</span>
-          <span>Type</span>
           <span>Action</span>
         </div>
         {userProfiles.map(profile => (
           <div key={profile.profileName} className="upm-list-row">
             <span>{profile.profileName}</span>
             <span>{profile.description}</span>
-            <span>{profile.profileType}</span>
-            <button onClick={() => handleView(profile.profileName)}>Edit</button>
+            <div style={{display:'flex',gap:'8px'}}>
+              <button onClick={() => handleView(profile.profileName)}>Edit</button>
+              <button onClick={() => handleDelete(profile.profileName)} style={{background:'#e53935',color:'#fff',border:'none',borderRadius:'4px',padding:'6px 12px',cursor:'pointer'}}>Delete</button>
+            </div>
           </div>
         ))}
       </div>

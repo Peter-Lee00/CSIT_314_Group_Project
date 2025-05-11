@@ -1,12 +1,13 @@
 import ServiceCategory from '../entity/ServiceCategory';
 
-class ServiceCategoryController {
+class PlatformManagerServiceCategoryController {
     async addCategory(name, description) {
-        return await ServiceCategory.addCategory(name, description);
+        const category = new ServiceCategory(name, description);
+        return await category.createCategory();
     }
 
     async editCategory(categoryId, updateFields) {
-        return await ServiceCategory.editCategory(categoryId, updateFields);
+        return await ServiceCategory.updateCategory(categoryId, updateFields);
     }
 
     async deleteCategory(categoryId) {
@@ -18,4 +19,4 @@ class ServiceCategoryController {
     }
 }
 
-export default ServiceCategoryController; 
+export { PlatformManagerServiceCategoryController }; 

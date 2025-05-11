@@ -15,7 +15,7 @@ export class CreateUserAccountController {
       );
 
       const created = await newUser.createUserAccount(); // save to DB
-      return created;
+      return created; // could be true, 'DUPLICATE_EMAIL', 'DUPLICATE_PHONE', or false
     } catch (err) {
       console.error('Error while creating user account:', err);
       return false; // fail-safe
@@ -46,10 +46,9 @@ export class ViewUserAccountController {
 }
 
 // Updates existing user
-export class UpdateUserAccountController {
+export class AdminAccountController {
   async updateUserAccount(firstName, lastName, password, phoneNumber, email, userProfile, address = null) {
     try {
-      // Not reusing instance unnecessarily – just calling static-style
       const result = await new UserAccount(
         firstName,
         lastName,
@@ -67,17 +66,14 @@ export class UpdateUserAccountController {
         userProfile,
         userProfile === 'HomeOwner' ? address : null
       );
-
       return result;
     } catch (err) {
       console.error("Update failed for user:", err);
       return false;
     }
   }
-}
 
-// Looks up a user
-export class SearchUserAccountController {
+  // Looks up a user
   async searchUserAccount(email) {
     try {
       return await UserAccount.searchUserAccount(email);
@@ -86,10 +82,7 @@ export class SearchUserAccountController {
       return null;
     }
   }
-}
 
-
-export class SuspendUserAccountController {
   async suspendUserAccount(email) {
     try {
       // First get the user data

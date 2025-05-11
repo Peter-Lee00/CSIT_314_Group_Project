@@ -1,10 +1,10 @@
 import UserProfile from '../entity/UserProfile';
 
 class UACreateUserProfileController {
-    async createUserProfile(profileName, description, profileType) {
+    async createUserProfile(profileName, description) {
         try {
             const profile = new UserProfile();
-            const success = await profile.createUserProfile(profileName, description, profileType);
+            const success = await profile.createUserProfile(profileName, description);
             return success;
         } catch (error) {
             console.log("Error:", error);
@@ -27,15 +27,15 @@ class UAViewUserProfileController {
 }
 
 class UAUpdateUserProfileController {
-    async updateUserProfile(profileName, description, profileType) {
+    async updateUserProfile(profileName, description) {
         try {
             const userProfile = new UserProfile();
-            const success = await userProfile.updateUserProfile(profileName, description, profileType);
+            const success = await userProfile.updateUserProfile(profileName, description);
             if (success) {
-                console.log("Success update user profile: ", profileName, description, profileType);
+                console.log("Success update user profile: ", profileName, description);
                 return true;
             } else {
-                console.log("Failed update user profile: ", profileName, description, profileType);
+                console.log("Failed update user profile: ", profileName, description);
                 return false;
             }
         } catch (error) {
@@ -68,10 +68,22 @@ class UASearchUserProfileController {
     }
 }
 
+class UADeleteUserProfileController {
+    async deleteUserProfile(profileName) {
+        try {
+            const success = await UserProfile.deleteUserProfile(profileName);
+            return success;
+        } catch (error) {
+            return false;
+        }
+    }
+}
+
 export { 
     UACreateUserProfileController, 
     UAViewUserProfileController, 
     UAUpdateUserProfileController, 
     UASuspendUserProfileController, 
-    UASearchUserProfileController 
+    UASearchUserProfileController,
+    UADeleteUserProfileController
 };

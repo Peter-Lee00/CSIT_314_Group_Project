@@ -370,129 +370,173 @@ const CleanerServiceUI = () => {
 
   const trackViewCount = async (serviceId) => {
     Swal.fire({
-      title: 'View Count History',
-      width: 800,
-      html: `
-        <canvas id="viewCountChart" width="400" height="200"></canvas>
-        <h3 id="viewCountChartLoading">Loading Chart...</h3>
-        <h3 id="viewCountErrorText" style="display: none;">View Count History Data Not Found!</h3>
-      `,
-      confirmButtonText: 'Close',
-      focusConfirm: false,
-      didOpen: async () => {
-        const cleanerTrackViewCountController = new CleanerTrackViewCountController();
-        const viewCountHistory = await cleanerTrackViewCountController.trackViewCount(serviceId);
+        title: 'View Count History',
+        width: 800,
+        html: `
+            <canvas id="viewCountChart" width="400" height="200"></canvas>
+            <h3 id="viewCountChartLoading">Loading Chart...</h3>
+            <h3 id="viewCountErrorText" style="display: none;">View Count History Data Not Found!</h3>
+        `,
+        confirmButtonText: 'Close',
+        focusConfirm: false,
+        didOpen: async () => {
+            const cleanerTrackViewCountController = new CleanerTrackViewCountController();
+            let chart = null;
 
-        if (viewCountHistory === undefined || viewCountHistory === null) {
-          document.getElementById("viewCountChart").style.display = "none";
-          document.getElementById("viewCountChartLoading").style.display = "none";
-          document.getElementById("viewCountErrorText").style.display = "block";
-        } else {
-          const orderedViewCountHistory = {};
-          Object.keys(viewCountHistory).sort().forEach(key => {
-            orderedViewCountHistory[key] = viewCountHistory[key];
-          });
+            const updateChart = async () => {
+                // Always use daily view
+                const viewType = 'daily';
+                const viewCountHistory = await cleanerTrackViewCountController.trackViewCount(serviceId, viewType);
 
-          const accumulatedViewCountHistory = {};
-          Object.keys(orderedViewCountHistory).forEach((key, index) => {
-            if (index === 0) {
-              accumulatedViewCountHistory[key] = orderedViewCountHistory[key];
-            } else {
-              accumulatedViewCountHistory[key] = orderedViewCountHistory[key] + accumulatedViewCountHistory[Object.keys(accumulatedViewCountHistory)[index - 1]];
-            }
-          });
+                if (viewCountHistory === undefined || viewCountHistory === null) {
+                    document.getElementById("viewCountChart").style.display = "none";
+                    document.getElementById("viewCountChartLoading").style.display = "none";
+                    document.getElementById("viewCountErrorText").style.display = "block";
+                } else {
+                    const orderedViewCountHistory = {};
+                    Object.keys(viewCountHistory).sort().forEach(key => {
+                        orderedViewCountHistory[key] = viewCountHistory[key];
+                    });
 
-          const ctx = document.getElementById('viewCountChart');
-          new Chart(ctx, {
-            data: {
-              labels: Object.keys(orderedViewCountHistory),
-              datasets: [{
-                type: 'line',
-                label: 'Monthly View Count',
-                data: Object.values(orderedViewCountHistory),
-                fill: false,
-                borderColor: 'rgb(230, 212, 110)',
-                tension: 0.1
-              }, {
-                type: 'line',
-                label: 'Cumulative View Count',
-                data: Object.values(accumulatedViewCountHistory),
-                fill: true,
-                showLine: false,
-                backgroundColor: 'rgba(110, 136, 229, 0.6)',
-                tension: 0.1
-              }]
-            }
-          });
+                    const accumulatedViewCountHistory = {};
+                    Object.keys(orderedViewCountHistory).forEach((key, index) => {
+                        if (index === 0) {
+                            accumulatedViewCountHistory[key] = orderedViewCountHistory[key];
+                        } else {
+                            accumulatedViewCountHistory[key] = orderedViewCountHistory[key] + accumulatedViewCountHistory[Object.keys(accumulatedViewCountHistory)[index - 1]];
+                        }
+                    });
 
-          document.getElementById("viewCountChartLoading").style.display = "none";
+                    const ctx = document.getElementById('viewCountChart');
+                    if (chart) {
+                        chart.destroy();
+                    }
+                    chart = new Chart(ctx, {
+                        data: {
+                            labels: Object.keys(orderedViewCountHistory),
+                            datasets: [{
+                                type: 'line',
+                                label: 'Daily View Count',
+                                data: Object.values(orderedViewCountHistory),
+                                fill: false,
+                                borderColor: 'rgb(230, 212, 110)',
+                                tension: 0.1
+                            }, {
+                                type: 'line',
+                                label: 'Cumulative View Count',
+                                data: Object.values(accumulatedViewCountHistory),
+                                fill: true,
+                                showLine: false,
+                                backgroundColor: 'rgba(110, 136, 229, 0.6)',
+                                tension: 0.1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                x: {
+                                    type: 'category',
+                                    title: {
+                                        display: true,
+                                        text: 'Date (Day)'
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    document.getElementById("viewCountChartLoading").style.display = "none";
+                }
+            };
+
+            await updateChart();
         }
-      }
     });
-  };
+};
 
-  const trackShortlistCount = async (serviceId) => {
+const trackShortlistCount = async (serviceId) => {
     Swal.fire({
-      title: 'Shortlist Count History',
-      width: 800,
-      html: `
-        <canvas id="shortlistCountChart" width="400" height="200"></canvas>
-        <h3 id="shortlistCountChartLoading">Loading Chart...</h3>
-        <h3 id="shortlistCountErrorText" style="display: none;">Shortlist Count History Data Not Found!</h3>
-      `,
-      confirmButtonText: 'Close',
-      focusConfirm: false,
-      didOpen: async () => {
-        const cleanerTrackShortlistCountController = new CleanerTrackShortlistCountController();
-        const shortlistCountHistory = await cleanerTrackShortlistCountController.trackShortlistCount(serviceId);
+        title: 'Shortlist Count History',
+        width: 800,
+        html: `
+            <canvas id="shortlistCountChart" width="400" height="200"></canvas>
+            <h3 id="shortlistCountChartLoading">Loading Chart...</h3>
+            <h3 id="shortlistCountErrorText" style="display: none;">Shortlist Count History Data Not Found!</h3>
+        `,
+        confirmButtonText: 'Close',
+        focusConfirm: false,
+        didOpen: async () => {
+            const cleanerTrackShortlistCountController = new CleanerTrackShortlistCountController();
+            let chart = null;
 
-        if (shortlistCountHistory === undefined || shortlistCountHistory === null) {
-          document.getElementById("shortlistCountChart").style.display = "none";
-          document.getElementById("shortlistCountChartLoading").style.display = "none";
-          document.getElementById("shortlistCountErrorText").style.display = "block";
-        } else {
-          const orderedShortlistCountHistory = {};
-          Object.keys(shortlistCountHistory).sort().forEach(key => {
-            orderedShortlistCountHistory[key] = shortlistCountHistory[key];
-          });
+            const updateChart = async () => {
+                // Always use daily view
+                const viewType = 'daily';
+                const shortlistCountHistory = await cleanerTrackShortlistCountController.trackShortlistCount(serviceId, viewType);
 
-          const accumulatedShortlistCountHistory = {};
-          Object.keys(orderedShortlistCountHistory).forEach((key, index) => {
-            if (index === 0) {
-              accumulatedShortlistCountHistory[key] = orderedShortlistCountHistory[key];
-            } else {
-              accumulatedShortlistCountHistory[key] = orderedShortlistCountHistory[key] + accumulatedShortlistCountHistory[Object.keys(accumulatedShortlistCountHistory)[index - 1]];
-            }
-          });
+                if (shortlistCountHistory === undefined || shortlistCountHistory === null) {
+                    document.getElementById("shortlistCountChart").style.display = "none";
+                    document.getElementById("shortlistCountChartLoading").style.display = "none";
+                    document.getElementById("shortlistCountErrorText").style.display = "block";
+                } else {
+                    const orderedShortlistCountHistory = {};
+                    Object.keys(shortlistCountHistory).sort().forEach(key => {
+                        orderedShortlistCountHistory[key] = shortlistCountHistory[key];
+                    });
 
-          const ctx = document.getElementById('shortlistCountChart');
-          new Chart(ctx, {
-            data: {
-              labels: Object.keys(orderedShortlistCountHistory),
-              datasets: [{
-                type: 'line',
-                label: 'Monthly Shortlist Count',
-                data: Object.values(orderedShortlistCountHistory),
-                fill: false,
-                borderColor: 'rgb(230, 212, 110)',
-                tension: 0.1
-              }, {
-                type: 'line',
-                label: 'Cumulative Shortlist Count',
-                data: Object.values(accumulatedShortlistCountHistory),
-                fill: true,
-                showLine: false,
-                backgroundColor: 'rgba(110, 136, 229, 0.6)',
-                tension: 0.1
-              }]
-            }
-          });
+                    const accumulatedShortlistCountHistory = {};
+                    Object.keys(orderedShortlistCountHistory).forEach((key, index) => {
+                        if (index === 0) {
+                            accumulatedShortlistCountHistory[key] = orderedShortlistCountHistory[key];
+                        } else {
+                            accumulatedShortlistCountHistory[key] = orderedShortlistCountHistory[key] + accumulatedShortlistCountHistory[Object.keys(accumulatedShortlistCountHistory)[index - 1]];
+                        }
+                    });
 
-          document.getElementById("shortlistCountChartLoading").style.display = "none";
+                    const ctx = document.getElementById('shortlistCountChart');
+                    if (chart) {
+                        chart.destroy();
+                    }
+                    chart = new Chart(ctx, {
+                        data: {
+                            labels: Object.keys(orderedShortlistCountHistory),
+                            datasets: [{
+                                type: 'line',
+                                label: 'Daily Shortlist Count',
+                                data: Object.values(orderedShortlistCountHistory),
+                                fill: false,
+                                borderColor: 'rgb(230, 212, 110)',
+                                tension: 0.1
+                            }, {
+                                type: 'line',
+                                label: 'Cumulative Shortlist Count',
+                                data: Object.values(accumulatedShortlistCountHistory),
+                                fill: true,
+                                showLine: false,
+                                backgroundColor: 'rgba(110, 136, 229, 0.6)',
+                                tension: 0.1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                x: {
+                                    type: 'category',
+                                    title: {
+                                        display: true,
+                                        text: 'Date (Day)'
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    document.getElementById("shortlistCountChartLoading").style.display = "none";
+                }
+            };
+
+            await updateChart();
         }
-      }
     });
-  };
+};
 
   const handleHistorySearch = () => {
     setShowHistory(true);

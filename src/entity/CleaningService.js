@@ -187,11 +187,13 @@ class CleaningService {
     static async increaseViewCount(serviceId) {
         try {
             const current_month = new Date().toISOString().slice(0, 7);
+            const current_day = new Date().toISOString().slice(0, 10);
             const serviceRef = doc(db, 'CleaningServices', serviceId);
 
             await updateDoc(serviceRef, {
                 view_count: increment(1),
-                [`view_history.${current_month}`]: increment(1)
+                [`view_history.${current_month}`]: increment(1),
+                [`view_history_daily.${current_day}`]: increment(1)
             });
 
             console.log(`Successfully incremented view count for service ID: ${serviceId}`);
@@ -205,11 +207,13 @@ class CleaningService {
     static async increaseShortlistCount(serviceId) {
         try {
             const current_month = new Date().toISOString().slice(0, 7);
+            const current_day = new Date().toISOString().slice(0, 10);
             const serviceRef = doc(db, 'CleaningServices', serviceId);
 
             await updateDoc(serviceRef, {
                 shortlist_count: increment(1),
-                [`shortlist_history.${current_month}`]: increment(1)
+                [`shortlist_history.${current_month}`]: increment(1),
+                [`shortlist_history_daily.${current_day}`]: increment(1)
             });
 
             console.log(`Successfully incremented shortlist count for service ID: ${serviceId}`);
@@ -220,13 +224,14 @@ class CleaningService {
         }
     }
 
-    static async trackViewCount(serviceId) {
+    static async trackViewCount(serviceId, viewType = 'monthly') {
         try {
             const serviceSnap = await getDocs(query(collection(db, 'CleaningServices'), where('__name__', '==', serviceId)));
             
             if (!serviceSnap.empty) {
                 const serviceData = serviceSnap.docs[0].data();
-                return serviceData.view_history || null;
+                const historyField = viewType === 'daily' ? 'view_history_daily' : 'view_history';
+                return serviceData[historyField] || null;
             }
             return null;
         } catch (error) {
@@ -235,13 +240,14 @@ class CleaningService {
         }
     }
 
-    static async trackShortlistCount(serviceId) {
+    static async trackShortlistCount(serviceId, viewType = 'monthly') {
         try {
             const serviceSnap = await getDocs(query(collection(db, 'CleaningServices'), where('__name__', '==', serviceId)));
             
             if (!serviceSnap.empty) {
                 const serviceData = serviceSnap.docs[0].data();
-                return serviceData.shortlist_history || null;
+                const historyField = viewType === 'daily' ? 'shortlist_history_daily' : 'shortlist_history';
+                return serviceData[historyField] || null;
             }
             return null;
         } catch (error) {

@@ -26,8 +26,22 @@ class UserAccount {
       this.statusMessage = 'Email cannot contain spaces.';
       return false;
     }
-    // 1) validate HomeOwner (no longer needed)
-    // 2) build payload
+    // Check for duplicate email
+    const usersCol = collection(db, 'Users');
+    const emailQuery = query(usersCol, where('email', '==', this.email.trim()));
+    const emailSnapshot = await getDocs(emailQuery);
+    if (!emailSnapshot.empty) {
+      this.statusMessage = 'Email already exists.';
+      return 'DUPLICATE_EMAIL';
+    }
+    // Check for duplicate phone number
+    const phoneQuery = query(usersCol, where('phoneNumber', '==', this.phoneNumber));
+    const phoneSnapshot = await getDocs(phoneQuery);
+    if (!phoneSnapshot.empty) {
+      this.statusMessage = 'Phone number already exists.';
+      return 'DUPLICATE_PHONE';
+    }
+    // build payload
     const payload = {
       firstName:   this.firstName,
       lastName:    this.lastName,

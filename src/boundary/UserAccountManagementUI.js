@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 // import all the controllers for User Account Management
 import {
+  AdminAccountController,
   CreateUserAccountController,
-  ViewUserAccountController,
-  UpdateUserAccountController,
-  SearchUserAccountController,
-  SuspendUserAccountController
+  ViewUserAccountController
 } from "../controller/AdminAccountController";
 import { UserLogoutController } from "../controller/UserAuthController";
+import { Util } from "../Util";
 import Cookies from "js-cookie";
 import "./UserAccountManagementUI.css";
 import Swal from 'sweetalert2';
@@ -15,11 +14,13 @@ import Swal from 'sweetalert2';
 function UserAccountManagementUI() {
   const [userList, setUserList] = useState([]);
   const [emailFilter, setEmailFilter] = useState('');
+  const [roleOptions, setRoleOptions] = useState([]);
   const activeUser = Cookies.get("username");
 
   useEffect(() => {
     // initial fetch of all users
     loadUsers();
+    loadRoles();
   }, []);
 
   // Only let user admins access this page
@@ -33,13 +34,21 @@ function UserAccountManagementUI() {
     setUserList(data || []);
   };
 
+  const loadRoles = async () => {
+    const snapshot = await Util.getUserProfiles();
+    if (snapshot) {
+      const roles = snapshot.docs.map(doc => doc.data().profileName);
+      setRoleOptions(roles);
+    }
+  };
+
   const runSearch = async () => {
     if (!emailFilter.trim()) {
       loadUsers(); // reset back to full list
       return;
     }
 
-    const controller = new SearchUserAccountController();
+    const controller = new AdminAccountController();
     const found = await controller.searchUserAccount(emailFilter);
 
     if (!found) {
@@ -85,9 +94,7 @@ function UserAccountManagementUI() {
             <label>User Profile</label>
             <select id="userProfile" class="swal2-select">
               <option value="">Choose role</option>
-              <option value="PlatformAdmin">Platform Admin</option>
-              <option value="Cleaner">Cleaner</option>
-              <option value="HomeOwner">Home Owner</option>
+              ${roleOptions.map(role => `<option value="${role}">${role}</option>`).join('')}
             </select>
           </div>
         </div>
@@ -133,7 +140,11 @@ function UserAccountManagementUI() {
       data.userProfile
     );
 
-    if (created) {
+    if (created === 'DUPLICATE_EMAIL') {
+      Swal.fire('Error!', 'Email already exists. Please use a different email.', 'error');
+    } else if (created === 'DUPLICATE_PHONE') {
+      Swal.fire('Error!', 'Phone number already exists. Please use a different phone number.', 'error');
+    } else if (created) {
       Swal.fire('Success!', 'New user created.', 'success');
       loadUsers();
     } else {
@@ -178,9 +189,7 @@ function UserAccountManagementUI() {
           <div class="item full-width">
             <label>User Profile</label>
             <select id="userProfile" class="swal2-select">
-              <option value="PlatformAdmin" ${user.userProfile === 'PlatformAdmin' ? 'selected' : ''}>Platform Admin</option>
-              <option value="Cleaner" ${user.userProfile === 'Cleaner' ? 'selected' : ''}>Cleaner</option>
-              <option value="HomeOwner" ${user.userProfile === 'HomeOwner' ? 'selected' : ''}>Home Owner</option>
+              ${roleOptions.map(role => `<option value="${role}" ${user.userProfile === role ? 'selected' : ''}>${role}</option>`).join('')}
             </select>
           </div>
         </div>
@@ -211,7 +220,7 @@ function UserAccountManagementUI() {
     if (!result.isConfirmed) return;
 
     const update = result.value;
-    const ctrl = new UpdateUserAccountController();
+    const ctrl = new AdminAccountController();
     const ok = await ctrl.updateUserAccount(
       update.firstName,
       update.lastName,
@@ -234,7 +243,7 @@ function UserAccountManagementUI() {
   };
 
   const handleSuspend = async (email) => {
-    const ctrl = new SuspendUserAccountController();
+    const ctrl = new AdminAccountController();
     const didSuspend = await ctrl.suspendUserAccount(email);
     if (didSuspend) {
       Swal.fire('Success!', 'User suspended Successfully.', 'success');
