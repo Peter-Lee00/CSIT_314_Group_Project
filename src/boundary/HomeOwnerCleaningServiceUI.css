@@ -4,21 +4,23 @@
     margin: 30px auto;
     padding: 20px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
+    border: 1px solid #444;
     border-radius: 16px;
-    background-color: #f9f9f9;
+    background-color: #1e1e1e;
     overflow-y: auto;
+    color: #e0e0e0;
 }
+hocContainer
 
 .hocSearch-container {
-    background: #fff;
+    background: #2d2d2d;
     border-radius: 16px;
     padding: 18px 16px;
     margin-bottom: 24px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     max-width: 100%;
     width: 100%;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #444;
 }
 
 .hocSearch-bar {
@@ -37,11 +39,20 @@
     height: 44px;
     padding: 0 12px;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #555;
     font-size: 16px;
-    background: #f7f7f7;
-    color: #222;
+    background: #333;
+    color: #e0e0e0;
     box-sizing: border-box;
+}
+
+.hocSearch-bar input::placeholder {
+    color: #999;
+}
+
+.hocSearch-bar select option {
+    background: #333;
+    color: #e0e0e0;
 }
 
 .hocSearch-bar button {
@@ -52,32 +63,32 @@
     font-size: 16px;
     padding: 0 18px;
     border: none;
-    background: #333;
+    background: #1976d2;
     color: #fff;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     transition: background 0.2s;
 }
 .hocSearch-bar button:hover {
-    background: #222;
+    background: #1565c0;
 }
 
 .hocService-table {
     display: grid;
     grid-template-columns: 2fr 3fr 2fr 1fr 1fr 1.5fr;
     gap: 10px;
-    background-color: #f4f4f4;
+    background-color: #252525;
     border-radius: 16px;
     padding: 16px;
     overflow-x: auto;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #444;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .hocTable-header {
     display: contents;
     font-weight: bold;
-    color: #333;
-    background-color: #f0f0f0;
+    color: #e0e0e0;
+    background-color: #333;
     padding: 10px 0;
     border-radius: 8px;
 }
@@ -85,7 +96,7 @@
 .hocTable-row {
     display: contents;
     padding: 10px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #444;
 }
 
 .hocNoResults {
@@ -106,7 +117,7 @@
     padding: 8px 16px;
     border: none;
     border-radius: 5px;
-    background-color: #333;
+    background-color: #d32f2f;
     color: #fff;
     cursor: pointer;
     font-size: 16px;
@@ -137,28 +148,29 @@
 .hocShortlist-modal {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.7);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
 .hocShortlist-modal-content {
-    background: #fff;
+    background: #2d2d2d;
     padding: 2em;
     border-radius: 10px;
     min-width: 300px;
     max-width: 90vw;
-    color: #222;
+    color: #e0e0e0;
+    border: 1px solid #444;
 }
 .hocShortlist-modal-content h3,
 .hocShortlist-modal-content li,
 .hocShortlist-modal-content p {
-    color: #222; 
+    color: #e0e0e0; 
 }
 .hocShortlist-close {
     float: right;
-    background: #333;
+    background: #d32f2f;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -177,20 +189,24 @@
     min-width: unset;
     height: unset;
 }
-.hocView-button:hover {
+.hocView-button {
     background-color: #1976D2;
+    color: white;
+}
+.hocView-button:hover {
+    background-color: #1565c0;
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hocShortlist-button:hover {
-    background-color: #d32f2f;
+    background-color: #1565c0;
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hocShortlist-remove-button {
-    background: #e53935;
+    background: #d32f2f;
 }
 .hocShortlist-remove-button:hover {
     background: #b71c1c;
@@ -207,7 +223,7 @@
     font-weight: 500;
     border: none;
     color: #fff;
-    background: #e53935;
+    background: #d32f2f;
     margin-left: 5px;
     cursor: pointer;
     transition: background 0.2s;
@@ -250,12 +266,12 @@
 }
 
 .hocContainer h2 {
-    color: #222;
+    color: #e0e0e0;
 }
 
 .hocService-table span,
 .hocTable-header span {
-    color: #222 !important;
+    color: #e0e0e0 !important;
     font-size: 16px;
     font-weight: 400;
 }

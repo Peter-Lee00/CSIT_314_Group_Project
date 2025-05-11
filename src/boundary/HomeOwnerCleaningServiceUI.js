@@ -207,7 +207,7 @@ function HomeOwnerCleaningServiceUI() {
             title: 'View Cleaning Service',
             width: 650,
             html: `
-                <div style="background:#fff; border-radius:12px; padding:18px;">
+                <div style=" border-radius:12px; padding:18px;">
                     <table style="width:100%; border-collapse:collapse;">
                         <tbody>
                             <tr><th style='text-align:left;padding:8px 6px;'>Service Name</th><td style='padding:8px 6px;'>${latestService.serviceName}</td></tr>
