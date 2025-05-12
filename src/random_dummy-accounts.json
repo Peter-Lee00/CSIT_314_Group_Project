@@ -1,0 +1,92 @@
+[
+  {
+    "email": "john.doe@example.com",
+    "firstname": "John",
+    "lastname": "Doe",
+    "password": "Pass123!",
+    "phoneNumber": "1234567890",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "jane.smith@example.com",
+    "firstname": "Jane",
+    "lastname": "Smith",
+    "password": "Secure456$",
+    "phoneNumber": "2345678901",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "mike.jordan@example.com",
+    "firstname": "Mike",
+    "lastname": "Jordan",
+    "password": "CleanIt789#",
+    "phoneNumber": "3456789012",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "lisa.wong@example.com",
+    "firstname": "Lisa",
+    "lastname": "Wong",
+    "password": "WipeDown@2023",
+    "phoneNumber": "4567890123",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "tom.hardy@example.com",
+    "firstname": "Tom",
+    "lastname": "Hardy",
+    "password": "DustyRoom1!",
+    "phoneNumber": "5678901234",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "anna.miles@example.com",
+    "firstname": "Anna",
+    "lastname": "Miles",
+    "password": "Sweep@Me2",
+    "phoneNumber": "6789012345",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "ryan.kim@example.com",
+    "firstname": "Ryan",
+    "lastname": "Kim",
+    "password": "ShinySurface3#",
+    "phoneNumber": "7890123456",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "claire.davis@example.com",
+    "firstname": "Claire",
+    "lastname": "Davis",
+    "password": "MopItUp@123",
+    "phoneNumber": "8901234567",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "david.lee@example.com",
+    "firstname": "David",
+    "lastname": "Lee",
+    "password": "Clean#Spot22",
+    "phoneNumber": "9012345678",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "nina.taylor@example.com",
+    "firstname": "Nina",
+    "lastname": "Taylor",
+    "password": "FreshRoom$9",
+    "phoneNumber": "0123456789",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  }
+]
