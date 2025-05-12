@@ -1,0 +1,92 @@
+[
+  {
+    "email": "jane.doe1@example.com",
+    "fName": "Jane",
+    "lName": "Doe",
+    "password": "Password123!",
+    "phoneNum": "123-456-7890",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "john.smith2@example.com",
+    "fName": "John",
+    "lName": "Smith",
+    "password": "SecurePass!45",
+    "phoneNum": "987-654-3210",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "lucy.jones3@example.com",
+    "fName": "Lucy",
+    "lName": "Jones",
+    "password": "LucyPass#78",
+    "phoneNum": "555-123-4567",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "michael.brown4@example.com",
+    "fName": "Michael",
+    "lName": "Brown",
+    "password": "Brownie$123",
+    "phoneNum": "444-987-1234",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "emma.wilson5@example.com",
+    "fName": "Emma",
+    "lName": "Wilson",
+    "password": "Emma2025!",
+    "phoneNum": "321-654-0987",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "david.miller6@example.com",
+    "fName": "David",
+    "lName": "Miller",
+    "password": "DMiller#123",
+    "phoneNum": "678-123-4567",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "sarah.davis7@example.com",
+    "fName": "Sarah",
+    "lName": "Davis",
+    "password": "Davis$456",
+    "phoneNum": "999-888-7777",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "chris.moore8@example.com",
+    "fName": "Chris",
+    "lName": "Moore",
+    "password": "ChrisM!789",
+    "phoneNum": "888-777-6666",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "laura.taylor9@example.com",
+    "fName": "Laura",
+    "lName": "Taylor",
+    "password": "Taylor2025@",
+    "phoneNum": "777-666-5555",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "brian.anderson10@example.com",
+    "fName": "Brian",
+    "lName": "Anderson",
+    "password": "BrianA#321",
+    "phoneNum": "666-555-4444",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  }
+]
