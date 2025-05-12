@@ -7,7 +7,7 @@ class ServiceCategory {
         this.description = description;
     }
 
-    async createCategory() {
+    async addCategory() {
         try {
             const categoryCollRef = collection(db, 'ServiceCategories');
             const result = await addDoc(categoryCollRef, {
@@ -36,7 +36,7 @@ class ServiceCategory {
         }
     }
 
-    static async updateCategory(categoryId, updateFields) {
+    static async editCategory(categoryId, updateFields) {
         try {
             const categoryRef = doc(db, 'ServiceCategories', categoryId);
             await updateDoc(categoryRef, {
@@ -63,7 +63,6 @@ class ServiceCategory {
 
     static async getCategoryById(categoryId) {
         try {
-            const categoryRef = doc(db, 'ServiceCategories', categoryId);
             const categorySnap = await getDocs(query(collection(db, 'ServiceCategories'), where('__name__', '==', categoryId)));
             if (!categorySnap.empty) {
                 const docData = categorySnap.docs[0];

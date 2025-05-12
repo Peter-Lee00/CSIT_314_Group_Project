@@ -6,6 +6,7 @@ import CleaningService from '../entity/CleaningService';
 import CleaningServiceRequest from '../entity/CleaningServiceRequest';
 import { UserLogoutController } from '../controller/UserAuthController';
 import ServiceCategory from '../entity/ServiceCategory';
+import OwnerServiceHistoryController from '../controller/OwnerServiceHistoryController';
 
 function HomeOwnerCleaningServiceUI() {
     const [services, setServices] = useState([]);
@@ -32,6 +33,13 @@ function HomeOwnerCleaningServiceUI() {
     });
     const [serviceDetails, setServiceDetails] = useState({});
     const [serviceTypes, setServiceTypes] = useState([]);
+    const [shortlistSearch, setShortlistSearch] = useState({
+        serviceName: '',
+        serviceType: '',
+        priceRange: '',
+        duration: ''
+    });
+    const [shortlistSearchPerformed, setShortlistSearchPerformed] = useState(false);
 
     // Add isShortlisted function
     const isShortlisted = (serviceId) => {
@@ -335,9 +343,10 @@ function HomeOwnerCleaningServiceUI() {
         }
     };
 
+    const historyController = new OwnerServiceHistoryController();
     const loadConfirmedServices = async () => {
         try {
-            const allRequests = await CleaningServiceRequest.getRequestsByHomeowner(username);
+            const allRequests = await historyController.getRequestsByHomeowner(username);
             const accepted = allRequests.filter(r => r.status === 'ACCEPTED');
             setConfirmedServices(accepted);
             // Fetch service details for each confirmed service
@@ -375,6 +384,47 @@ function HomeOwnerCleaningServiceUI() {
             );
             return matchesServiceName && matchesServiceType && matchesPrice && matchesDate && matchesSearch;
         });
+    };
+
+    // Add shortlist search handlers
+    const handleShortlistSearchInput = (e) => {
+        setShortlistSearch({ ...shortlistSearch, [e.target.name]: e.target.value });
+    };
+
+    const searchShortlist = async () => {
+        const controller = new OwnerCleaningServiceController();
+        let priceRange = shortlistSearch.priceRange ? shortlistSearch.priceRange.split('-') : [];
+        const filterCriteria = {
+            serviceName: shortlistSearch.serviceName,
+            serviceType: shortlistSearch.serviceType,
+            priceRange: priceRange,
+            duration: shortlistSearch.duration
+        };
+        const result = await controller.searchShortlistedServices(username, filterCriteria);
+        setShortlistedServices(result.map(doc => ({
+            id: doc.id,
+            serviceName: doc.serviceName,
+            description: doc.description,
+            serviceType: doc.serviceType,
+            price: doc.price,
+            duration: doc.duration,
+            serviceArea: doc.serviceArea,
+            specialEquipment: doc.specialEquipment,
+            numWorkers: doc.numWorkers,
+            includedTasks: doc.includedTasks,
+        })));
+        setShortlistSearchPerformed(true);
+    };
+
+    const clearShortlistSearch = async () => {
+        setShortlistSearch({
+            serviceName: '',
+            serviceType: '',
+            priceRange: '',
+            duration: ''
+        });
+        setShortlistSearchPerformed(false);
+        await handleViewShortlist();
     };
 
     return (
@@ -486,6 +536,51 @@ function HomeOwnerCleaningServiceUI() {
                     <div className="hocShortlist-modal-content">
                         <button className="hocShortlist-close" onClick={handleCloseShortlist}>Close</button>
                         <h3>My Shortlisted Cleaning Services</h3>
+                        {/* --- Shortlist Search Bar --- */}
+                        <div className="hscSearch-bar" style={{marginBottom: '16px'}}>
+                            <input
+                                name="serviceName"
+                                className="swal2-input custom-select"
+                                placeholder="Service Name"
+                                value={shortlistSearch.serviceName}
+                                onChange={handleShortlistSearchInput}
+                            />
+                            <select
+                                name="serviceType"
+                                className="swal2-input custom-select"
+                                value={shortlistSearch.serviceType}
+                                onChange={handleShortlistSearchInput}
+                            >
+                                <option value="">All Types</option>
+                                {serviceTypes.map(type => (
+                                    <option key={type} value={type}>{type}</option>
+                                ))}
+                            </select>
+                            <select
+                                name="priceRange"
+                                className="swal2-input custom-select"
+                                value={shortlistSearch.priceRange}
+                                onChange={handleShortlistSearchInput}
+                            >
+                                <option value="">All Prices</option>
+                                <option value="0-50">$0 - $50</option>
+                                <option value="51-100">$51 - $100</option>
+                                <option value="101-200">$101 - $200</option>
+                                <option value="201-500">$201 - $500</option>
+                            </select>
+                            <input
+                                name="duration"
+                                className="swal2-input custom-select"
+                                placeholder="Duration (hours)"
+                                type="number"
+                                min="1"
+                                value={shortlistSearch.duration}
+                                onChange={handleShortlistSearchInput}
+                            />
+                            <button onClick={searchShortlist} className="hscSearch-button">Search</button>
+                            <button onClick={clearShortlistSearch} className="hscSearch-button">Clear</button>
+                        </div>
+                        {/* --- End Shortlist Search Bar --- */}
                         {shortlistedServices.length === 0 ? (
                             <p>No shortlisted services.</p>
                         ) : (

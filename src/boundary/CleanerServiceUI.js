@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // So we can redirect if the user isn't a cleaner
 import Cookies from 'js-cookie';
-import { CleanerServiceController, CleanerTrackViewCountController, CleanerTrackShortlistCountController } from '../controller/CleanerServiceController';
+import { CleanerServiceController } from '../controller/CleanerServiceController';
+import CleanerTrackViewCountController from '../controller/CleanerTrackViewCountController';
+import CleanerTrackShortlistCountController from '../controller/CleanerTrackShortlistCountController';
 import { ServiceOffering } from '../entity/CleaningService';
 import Swal from 'sweetalert2';
 import Chart from 'chart.js/auto';
@@ -10,6 +12,10 @@ import CleaningServiceRequest from '../entity/CleaningServiceRequest';
 import CleaningService from '../entity/CleaningService';
 import ServiceCategory from '../entity/ServiceCategory';
 import { UserLogoutController } from '../controller/UserAuthController';
+import CleanerConfirmedMatchController from '../controller/CleanerConfirmedMatchController';
+import { FaEdit, FaTrash, FaEye, FaStar, FaHistory } from 'react-icons/fa';
+import { db } from '../firebase';
+import { collection, query, where, getDocs, doc, updateDoc, deleteDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const CleanerServiceUI = () => {
   const navigate = useNavigate();
@@ -44,6 +50,7 @@ const CleanerServiceUI = () => {
   });
 
   const controller = new CleanerServiceController();
+  const confirmedMatchController = new CleanerConfirmedMatchController();
 
   useEffect(() => {
     const email = Cookies.get('email');
@@ -125,14 +132,14 @@ const CleanerServiceUI = () => {
   const fetchServicesForCleaner = async (id) => {
     try {
       setLoading(true);
-      const serviceList = await controller.getCleanerServices(id);
+      const serviceList = await controller.readCleaningServices(id);
       setMyServices(serviceList || []);
       setFilteredServices((serviceList || []).filter(service => service.isOffering));
     } catch (e) {
       console.error('Uh-oh, problem getting services:', e);
       Swal.fire('Oops', 'Failed to load services. Try again later.', 'error');
     } finally {
-      setLoading(false); // loader goes away either way
+      setLoading(false);
     }
   };
 
@@ -143,50 +150,67 @@ const CleanerServiceUI = () => {
       html: `
         <div style="display: flex; flex-direction: column; gap: 10px;">
           <div style="display: flex; gap: 16px;">
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Service Name:</label><input id="serviceName" class="swal2-input" style="flex:1;" placeholder="Service Name"></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Service Name:</label><input id="serviceName" class="swal2-input" style="flex:1;" placeholder="Service Name" required></div>
             <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Type:</label><select id="serviceType" class="swal2-select" style="flex:1;">${availableTypes.map(type => `<option value="${type.name}">${type.name}</option>`).join('')}</select></div>
           </div>
           <div style="display: flex; align-items: center;">
             <label style="width: 120px;">Description:</label>
-            <textarea id="description" class="swal2-textarea" style="flex:1; min-height:60px;" placeholder="Short description"></textarea>
+            <textarea id="description" class="swal2-textarea" style="flex:1; min-height:60px;" placeholder="Short description" required></textarea>
           </div>
           <div style="display: flex; gap: 16px;">
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Price (SGD):</label><input id="price" type="number" class="swal2-input" style="flex:1;" placeholder="Price in SGD"></div>
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Duration (hrs):</label><input id="duration" type="number" class="swal2-input" style="flex:1;" placeholder="Duration (hrs)"></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Price (SGD):</label><input id="price" type="number" class="swal2-input" style="flex:1;" placeholder="Price in SGD" required></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Duration (hrs):</label><input id="duration" type="number" class="swal2-input" style="flex:1;" placeholder="Duration (hrs)" required></div>
           </div>
           <div style="display: flex; gap: 16px;">
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Service Area:</label><input id="serviceArea" class="swal2-input" style="flex:1;" placeholder="Service Area"></div>
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Special Equipment:</label><input id="specialEquipment" class="swal2-input" style="flex:1;" placeholder="Special Equipment Used"></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Service Area:</label><input id="serviceArea" class="swal2-input" style="flex:1;" placeholder="Service Area" required></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Special Equipment:</label><input id="specialEquipment" class="swal2-input" style="flex:1;" placeholder="Special Equipment Used" required></div>
           </div>
           <div style="display: flex; gap: 16px;">
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;"># of Workers:</label><input id="numWorkers" type="number" class="swal2-input" style="flex:1;" placeholder="Number of Workers"></div>
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Available From:</label><input id="serviceAvailableFrom" type="date" class="swal2-input" style="flex:1;"></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;"># of Workers:</label><input id="numWorkers" type="number" class="swal2-input" style="flex:1;" placeholder="Number of Workers" required></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Available From:</label><input id="serviceAvailableFrom" type="date" class="swal2-input" style="flex:1;" required></div>
           </div>
           <div style="display: flex; gap: 16px;">
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Available To:</label><input id="serviceAvailableTo" type="date" class="swal2-input" style="flex:1;"></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Available To:</label><input id="serviceAvailableTo" type="date" class="swal2-input" style="flex:1;" required></div>
           </div>
           <div style="display: flex; align-items: center;">
             <label style="width: 120px;">What's Included:</label>
-            <textarea id="includedTasks" class="swal2-textarea" style="flex:1; min-height:60px;" placeholder="What's Included (comma separated)"></textarea>
+            <textarea id="includedTasks" class="swal2-textarea" style="flex:1; min-height:60px;" placeholder="What's Included (comma separated)" required></textarea>
           </div>
         </div>
       `,
       showCancelButton: true,
       focusConfirm: false,
-      preConfirm: () => ({
-        serviceName: document.getElementById('serviceName').value,
-        serviceType: document.getElementById('serviceType').value,
-        description: document.getElementById('description').value,
-        price: document.getElementById('price').value,
-        duration: document.getElementById('duration').value,
-        serviceArea: document.getElementById('serviceArea').value,
-        specialEquipment: document.getElementById('specialEquipment').value,
-        numWorkers: document.getElementById('numWorkers').value,
-        includedTasks: document.getElementById('includedTasks').value.split(',').map(s => s.trim()),
-        serviceAvailableFrom: document.getElementById('serviceAvailableFrom').value,
-        serviceAvailableTo: document.getElementById('serviceAvailableTo').value,
-        isOffering: true
-      })
+      preConfirm: () => {
+        const serviceName = document.getElementById('serviceName').value.trim();
+        const serviceType = document.getElementById('serviceType').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const price = document.getElementById('price').value.trim();
+        const duration = document.getElementById('duration').value.trim();
+        const serviceArea = document.getElementById('serviceArea').value.trim();
+        const specialEquipment = document.getElementById('specialEquipment').value.trim();
+        const numWorkers = document.getElementById('numWorkers').value.trim();
+        const includedTasks = document.getElementById('includedTasks').value.trim();
+        const serviceAvailableFrom = document.getElementById('serviceAvailableFrom').value.trim();
+        const serviceAvailableTo = document.getElementById('serviceAvailableTo').value.trim();
+        if (!serviceName || !serviceType || !description || !price || !duration || !serviceArea || !specialEquipment || !numWorkers || !includedTasks || !serviceAvailableFrom || !serviceAvailableTo) {
+          Swal.showValidationMessage('All fields are required!');
+          return false;
+        }
+        return {
+          serviceName,
+          serviceType,
+          description,
+          price,
+          duration,
+          serviceArea,
+          specialEquipment,
+          numWorkers,
+          includedTasks: includedTasks.split(',').map(s => s.trim()),
+          serviceAvailableFrom,
+          serviceAvailableTo,
+          isOffering: true
+        };
+      }
     });
 
     if (newService) {
@@ -276,7 +300,6 @@ const CleanerServiceUI = () => {
           </div>
           <div style="display: flex; gap: 16px;">
             <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Available To:</label><input id="serviceAvailableTo" type="date" class="swal2-input" style="flex:1;" value="${existingService.serviceAvailableTo || ''}"></div>
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Status:</label><select id="isOffering" class="swal2-select" style="flex:1;"><option value="true" ${existingService.isOffering ? 'selected' : ''}>Available</option><option value="false" ${!existingService.isOffering ? 'selected' : ''}>Archive</option></select></div>
           </div>
           <div style="display: flex; align-items: center;">
             <label style="width: 120px;">What's Included:</label>
@@ -286,7 +309,6 @@ const CleanerServiceUI = () => {
       `,
       showCancelButton: true,
       preConfirm: () => {
-        const updatedOffering = document.getElementById('isOffering').value === 'true';
         const data = {
           serviceName: document.getElementById('serviceName').value,
           serviceType: document.getElementById('serviceType').value,
@@ -300,11 +322,6 @@ const CleanerServiceUI = () => {
           serviceAvailableFrom: document.getElementById('serviceAvailableFrom').value,
           serviceAvailableTo: document.getElementById('serviceAvailableTo').value
         };
-
-        // If offering status changed, handle it separately
-        if (updatedOffering !== existingService.isOffering) {
-          handleServiceOfferingChange(existingService.id, updatedOffering);
-        }
 
         return data;
       }
@@ -346,197 +363,131 @@ const CleanerServiceUI = () => {
     }
   };
 
-  const moveToHistory = async (service) => {
-    const updatedService = { ...service, isOffering: false };
-    const wasUpdated = await controller.updateService(service.id, updatedService);
-    if (wasUpdated) {
-      Swal.fire('Updated', 'Service moved to history', 'success');
-      fetchServicesForCleaner(currentCleanerId);
-    } else {
-      Swal.fire('Oops', 'Failed to move service to history', 'error');
-    }
-  };
-
-  const restoreService = async (service) => {
-    const updatedService = { ...service, isOffering: true };
-    const wasUpdated = await controller.updateService(service.id, updatedService);
-    if (wasUpdated) {
-      Swal.fire('Updated', 'Service restored to current offerings', 'success');
-      fetchServicesForCleaner(currentCleanerId);
-    } else {
-      Swal.fire('Oops', 'Failed to restore service', 'error');
-    }
-  };
-
-  const trackViewCount = async (serviceId) => {
-    Swal.fire({
+  const handleViewCount = async (serviceId) => {
+    try {
+      const viewCountController = new CleanerTrackViewCountController();
+      const viewCountHistory = await viewCountController.viewServiceViewCount(serviceId);
+      Swal.fire({
         title: 'View Count History',
         width: 800,
         html: `
-            <canvas id="viewCountChart" width="400" height="200"></canvas>
-            <h3 id="viewCountChartLoading">Loading Chart...</h3>
-            <h3 id="viewCountErrorText" style="display: none;">View Count History Data Not Found!</h3>
+          <canvas id="viewCountChart" width="400" height="200"></canvas>
+          <h3 id="viewCountChartLoading">Loading Chart...</h3>
+          <h3 id="viewCountErrorText" style="display: none;">View Count History Data Not Found!</h3>
         `,
         confirmButtonText: 'Close',
         focusConfirm: false,
         didOpen: async () => {
-            const cleanerTrackViewCountController = new CleanerTrackViewCountController();
-            let chart = null;
-
-            const updateChart = async () => {
-                // Always use daily view
-                const viewType = 'daily';
-                const viewCountHistory = await cleanerTrackViewCountController.trackViewCount(serviceId, viewType);
-
-                if (viewCountHistory === undefined || viewCountHistory === null) {
-                    document.getElementById("viewCountChart").style.display = "none";
-                    document.getElementById("viewCountChartLoading").style.display = "none";
-                    document.getElementById("viewCountErrorText").style.display = "block";
-                } else {
-                    const orderedViewCountHistory = {};
-                    Object.keys(viewCountHistory).sort().forEach(key => {
-                        orderedViewCountHistory[key] = viewCountHistory[key];
-                    });
-
-                    const accumulatedViewCountHistory = {};
-                    Object.keys(orderedViewCountHistory).forEach((key, index) => {
-                        if (index === 0) {
-                            accumulatedViewCountHistory[key] = orderedViewCountHistory[key];
-                        } else {
-                            accumulatedViewCountHistory[key] = orderedViewCountHistory[key] + accumulatedViewCountHistory[Object.keys(accumulatedViewCountHistory)[index - 1]];
-                        }
-                    });
-
-                    const ctx = document.getElementById('viewCountChart');
-                    if (chart) {
-                        chart.destroy();
-                    }
-                    chart = new Chart(ctx, {
-                        data: {
-                            labels: Object.keys(orderedViewCountHistory),
-                            datasets: [{
-                                type: 'line',
-                                label: 'Daily View Count',
-                                data: Object.values(orderedViewCountHistory),
-                                fill: false,
-                                borderColor: 'rgb(230, 212, 110)',
-                                tension: 0.1
-                            }, {
-                                type: 'line',
-                                label: 'Cumulative View Count',
-                                data: Object.values(accumulatedViewCountHistory),
-                                fill: true,
-                                showLine: false,
-                                backgroundColor: 'rgba(110, 136, 229, 0.6)',
-                                tension: 0.1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                x: {
-                                    type: 'category',
-                                    title: {
-                                        display: true,
-                                        text: 'Date (Day)'
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-                    document.getElementById("viewCountChartLoading").style.display = "none";
-                }
-            };
-
-            await updateChart();
+          if (!viewCountHistory || Object.keys(viewCountHistory).length === 0) {
+            document.getElementById("viewCountChart").style.display = "none";
+            document.getElementById("viewCountChartLoading").style.display = "none";
+            document.getElementById("viewCountErrorText").style.display = "block";
+          } else {
+            const orderedViewCountHistory = {};
+            Object.keys(viewCountHistory).sort().forEach(key => {
+              orderedViewCountHistory[key] = viewCountHistory[key];
+            });
+            const accumulatedViewCountHistory = {};
+            Object.keys(orderedViewCountHistory).forEach((key, index) => {
+              if (index === 0) {
+                accumulatedViewCountHistory[key] = orderedViewCountHistory[key];
+              } else {
+                accumulatedViewCountHistory[key] = orderedViewCountHistory[key] + accumulatedViewCountHistory[Object.keys(accumulatedViewCountHistory)[index - 1]];
+              }
+            });
+            const ctx = document.getElementById('viewCountChart');
+            new Chart(ctx, {
+              data: {
+                labels: Object.keys(orderedViewCountHistory),
+                datasets: [{
+                  type: 'line',
+                  label: 'Monthly View Count',
+                  data: Object.values(orderedViewCountHistory),
+                  fill: false,
+                  borderColor: 'rgb(230, 212, 110)',
+                  tension: 0.1
+                }, {
+                  type: 'line',
+                  label: 'Cumulative View Count',
+                  data: Object.values(accumulatedViewCountHistory),
+                  fill: true,
+                  showLine: false,
+                  backgroundColor: 'rgba(110, 136, 229, 0.6)',
+                  tension: 0.1
+                }]
+              }
+            });
+            document.getElementById("viewCountChartLoading").style.display = "none";
+          }
         }
-    });
-};
+      });
+    } catch (error) {
+      console.error("Error viewing service count:", error);
+    }
+  };
 
-const trackShortlistCount = async (serviceId) => {
-    Swal.fire({
+  const handleShortlistCount = async (serviceId) => {
+    try {
+      const shortlistCountController = new CleanerTrackShortlistCountController();
+      const shortlistCountHistory = await shortlistCountController.viewServiceShortlistCount(serviceId);
+      Swal.fire({
         title: 'Shortlist Count History',
         width: 800,
         html: `
-            <canvas id="shortlistCountChart" width="400" height="200"></canvas>
-            <h3 id="shortlistCountChartLoading">Loading Chart...</h3>
-            <h3 id="shortlistCountErrorText" style="display: none;">Shortlist Count History Data Not Found!</h3>
+          <canvas id="shortlistCountChart" width="400" height="200"></canvas>
+          <h3 id="shortlistCountChartLoading">Loading Chart...</h3>
+          <h3 id="shortlistCountErrorText" style="display: none;">Shortlist Count History Data Not Found!</h3>
         `,
         confirmButtonText: 'Close',
         focusConfirm: false,
         didOpen: async () => {
-            const cleanerTrackShortlistCountController = new CleanerTrackShortlistCountController();
-            let chart = null;
-
-            const updateChart = async () => {
-                // Always use daily view
-                const viewType = 'daily';
-                const shortlistCountHistory = await cleanerTrackShortlistCountController.trackShortlistCount(serviceId, viewType);
-
-                if (shortlistCountHistory === undefined || shortlistCountHistory === null) {
-                    document.getElementById("shortlistCountChart").style.display = "none";
-                    document.getElementById("shortlistCountChartLoading").style.display = "none";
-                    document.getElementById("shortlistCountErrorText").style.display = "block";
-                } else {
-                    const orderedShortlistCountHistory = {};
-                    Object.keys(shortlistCountHistory).sort().forEach(key => {
-                        orderedShortlistCountHistory[key] = shortlistCountHistory[key];
-                    });
-
-                    const accumulatedShortlistCountHistory = {};
-                    Object.keys(orderedShortlistCountHistory).forEach((key, index) => {
-                        if (index === 0) {
-                            accumulatedShortlistCountHistory[key] = orderedShortlistCountHistory[key];
-                        } else {
-                            accumulatedShortlistCountHistory[key] = orderedShortlistCountHistory[key] + accumulatedShortlistCountHistory[Object.keys(accumulatedShortlistCountHistory)[index - 1]];
-                        }
-                    });
-
-                    const ctx = document.getElementById('shortlistCountChart');
-                    if (chart) {
-                        chart.destroy();
-                    }
-                    chart = new Chart(ctx, {
-                        data: {
-                            labels: Object.keys(orderedShortlistCountHistory),
-                            datasets: [{
-                                type: 'line',
-                                label: 'Daily Shortlist Count',
-                                data: Object.values(orderedShortlistCountHistory),
-                                fill: false,
-                                borderColor: 'rgb(230, 212, 110)',
-                                tension: 0.1
-                            }, {
-                                type: 'line',
-                                label: 'Cumulative Shortlist Count',
-                                data: Object.values(accumulatedShortlistCountHistory),
-                                fill: true,
-                                showLine: false,
-                                backgroundColor: 'rgba(110, 136, 229, 0.6)',
-                                tension: 0.1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                x: {
-                                    type: 'category',
-                                    title: {
-                                        display: true,
-                                        text: 'Date (Day)'
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-                    document.getElementById("shortlistCountChartLoading").style.display = "none";
-                }
-            };
-
-            await updateChart();
+          if (!shortlistCountHistory || Object.keys(shortlistCountHistory).length === 0) {
+            document.getElementById("shortlistCountChart").style.display = "none";
+            document.getElementById("shortlistCountChartLoading").style.display = "none";
+            document.getElementById("shortlistCountErrorText").style.display = "block";
+          } else {
+            const orderedShortlistCountHistory = {};
+            Object.keys(shortlistCountHistory).sort().forEach(key => {
+              orderedShortlistCountHistory[key] = shortlistCountHistory[key];
+            });
+            const accumulatedShortlistCountHistory = {};
+            Object.keys(orderedShortlistCountHistory).forEach((key, index) => {
+              if (index === 0) {
+                accumulatedShortlistCountHistory[key] = orderedShortlistCountHistory[key];
+              } else {
+                accumulatedShortlistCountHistory[key] = orderedShortlistCountHistory[key] + accumulatedShortlistCountHistory[Object.keys(accumulatedShortlistCountHistory)[index - 1]];
+              }
+            });
+            const ctx = document.getElementById('shortlistCountChart');
+            new Chart(ctx, {
+              data: {
+                labels: Object.keys(orderedShortlistCountHistory),
+                datasets: [{
+                  type: 'line',
+                  label: 'Monthly Shortlist Count',
+                  data: Object.values(orderedShortlistCountHistory),
+                  fill: false,
+                  borderColor: 'rgb(230, 212, 110)',
+                  tension: 0.1
+                }, {
+                  type: 'line',
+                  label: 'Cumulative Shortlist Count',
+                  data: Object.values(accumulatedShortlistCountHistory),
+                  fill: true,
+                  showLine: false,
+                  backgroundColor: 'rgba(110, 136, 229, 0.6)',
+                  tension: 0.1
+                }]
+              }
+            });
+            document.getElementById("shortlistCountChartLoading").style.display = "none";
+          }
         }
-    });
-};
+      });
+    } catch (error) {
+      console.error("Error viewing shortlist count:", error);
+    }
+  };
 
   const handleHistorySearch = () => {
     setShowHistory(true);
@@ -592,10 +543,9 @@ const trackShortlistCount = async (serviceId) => {
     }
   };
 
-  const loadConfirmedRequests = async () => {
+  const loadConfirmedRequests = async (filters = {}) => {
     try {
-      const cleanerRequests = await CleaningServiceRequest.getRequestsByCleaner(currentCleanerId);
-      const accepted = cleanerRequests.filter(r => r.status === 'ACCEPTED');
+      const accepted = await confirmedMatchController.getConfirmedMatches(currentCleanerId, filters);
       setConfirmedRequests(accepted);
       // Fetch service details for each confirmed request
       const serviceIds = [...new Set(accepted.map(req => req.serviceId))];
@@ -614,6 +564,11 @@ const trackShortlistCount = async (serviceId) => {
   const getUnique = (arr, key) => [...new Set(arr.map(item => item[key]).filter(Boolean))];
 
   const filterConfirmedRequests = () => {
+    // Use the controller for filtering if filters are set, otherwise return all
+    if (Object.values(historyFilters).some(v => v)) {
+      // If any filter is set, reload with filters
+      loadConfirmedRequests(historyFilters);
+    }
     return confirmedRequests.filter(request => {
       const service = requestServiceDetails[request.serviceId] || {};
       const matchesServiceName = !historyFilters.serviceName || service.serviceName === historyFilters.serviceName;
@@ -678,13 +633,12 @@ const trackShortlistCount = async (serviceId) => {
             setShowHistoryModal(true);
             loadConfirmedRequests();
           }}>Confirmed Matches</button>
-          <button className="cs-history-button" onClick={handleHistorySearch}>Archived</button>
           <button className="cs-history-button" onClick={handleLogout}>Logout</button>
-        {!showHistory && (
-          <button className="cs-back-button" onClick={() => navigate(-1)}>
-            Home
-          </button>
-        )}
+          {!showHistory && (
+            <button className="cs-back-button" onClick={() => navigate(-1)}>
+              Home
+            </button>
+          )}
         </div>
       </div>
 
@@ -781,13 +735,13 @@ const trackShortlistCount = async (serviceId) => {
             </div>
             <span>
               <div className="counter-display">
-                <span onClick={() => trackViewCount(srv.id)} title="Click to track view count">
+                <span onClick={() => handleViewCount(srv.id)} title="Click to track view count">
                   <span title="View" className="csIcon">👁️</span>
-                  <span>{srv.view_count || 0}</span>
+                  <span>{srv.view_history ? Object.values(srv.view_history).reduce((a, b) => a + b, 0) : (srv.view_count || 0)}</span>
                 </span>
-                <span onClick={() => trackShortlistCount(srv.id)} title="Click to track shortlist count">
+                <span onClick={() => handleShortlistCount(srv.id)} title="Click to track shortlist count">
                   <span title="Shortlist" className="csIcon">⭐</span>
-                  <span>{srv.shortlist_count || 0}</span>
+                  <span>{srv.shortlist_history ? Object.values(srv.shortlist_history).reduce((a, b) => a + b, 0) : (srv.shortlist_count || 0)}</span>
                 </span>
               </div>
             </span>

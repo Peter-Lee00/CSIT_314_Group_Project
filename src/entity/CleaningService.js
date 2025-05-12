@@ -124,7 +124,7 @@ class CleaningService {
             const serviceColl = collection(db, 'CleaningServices');
             const conditions = [];
 
-            if (serviceName) conditions.push(where("serviceName", "==", serviceName));
+            // Remove exact match for serviceName
             if (serviceType) conditions.push(where("serviceType", "==", serviceType));
             if (priceRange && priceRange.length === 2) {
                 conditions.push(where("price", ">=", Number(priceRange[0])));
@@ -139,7 +139,17 @@ class CleaningService {
             const results = await getDocs(q);
 
             if (results.empty) return null;
-            return results.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            
+            // Get all results and filter by serviceName in memory if provided
+            let filteredResults = results.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            if (serviceName) {
+                const searchTerm = serviceName.toLowerCase();
+                filteredResults = filteredResults.filter(service => 
+                    service.serviceName.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            return filteredResults;
         } catch (err) {
             console.error("Error searching cleaning services:", err);
             return null;
@@ -224,7 +234,7 @@ class CleaningService {
         }
     }
 
-    static async trackViewCount(serviceId, viewType = 'monthly') {
+    static async viewServiceViewCount(serviceId, viewType = 'monthly') {
         try {
             const serviceSnap = await getDocs(query(collection(db, 'CleaningServices'), where('__name__', '==', serviceId)));
             
@@ -235,12 +245,12 @@ class CleaningService {
             }
             return null;
         } catch (error) {
-            console.error("Error tracking view count:", error);
+            console.error("Error viewing service view count:", error);
             return null;
         }
     }
 
-    static async trackShortlistCount(serviceId, viewType = 'monthly') {
+    static async viewServiceShortlistCount(serviceId, viewType = 'monthly') {
         try {
             const serviceSnap = await getDocs(query(collection(db, 'CleaningServices'), where('__name__', '==', serviceId)));
             
@@ -251,7 +261,7 @@ class CleaningService {
             }
             return null;
         } catch (error) {
-            console.error("Error tracking shortlist count:", error);
+            console.error("Error viewing service shortlist count:", error);
             return null;
         }
     }
@@ -286,6 +296,27 @@ class CleaningService {
             }));
         } catch (err) {
             console.error("Error getting all cleaning services:", err);
+            return [];
+        }
+    }
+
+    /**
+     * Read all cleaning services for a specific cleaner
+     * @param {string} cleanerId - The ID of the cleaner
+     * @returns {Promise<Array>} Array of cleaning services
+     */
+    static async readCleaningServices(cleanerId) {
+        try {
+            const servicesCol = collection(db, 'CleaningServices');
+            const q = query(servicesCol, where('cleanerId', '==', cleanerId));
+            const snapshot = await getDocs(q);
+            
+            return snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        } catch (error) {
+            console.error('Error reading cleaning services:', error);
             return [];
         }
     }

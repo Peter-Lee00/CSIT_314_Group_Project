@@ -1,40 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../controller/AuthController';
-import CleaningServiceRequest from '../entity/CleaningServiceRequest';
+import CleanerRequestController from '../controller/CleanerRequestController';
 import CleaningService from '../entity/CleaningService';
 import './CleanerRequestUI.css';
 
 function CleanerRequestUI() {
-    const { currentUser } = useAuth();
     const [requests, setRequests] = useState([]);
     const [services, setServices] = useState({});
+    const controller = new CleanerRequestController();
 
     useEffect(() => {
         loadRequests();
-    }, [currentUser]);
+    }, []);
 
     const loadRequests = async () => {
-        if (!currentUser) return;
-        
-        const cleanerRequests = await CleaningServiceRequest.getRequestsByCleaner(currentUser.uid);
+        const cleanerRequests = await controller.getRequestsByCleaner();
         setRequests(cleanerRequests);
 
         // Load service details for each request
         const serviceIds = [...new Set(cleanerRequests.map(req => req.serviceId))];
         const serviceDetails = {};
-        
         for (const serviceId of serviceIds) {
             const service = await CleaningService.getServiceById(serviceId);
             if (service) {
                 serviceDetails[serviceId] = service;
             }
         }
-        
         setServices(serviceDetails);
     };
 
     const handleAcceptRequest = async (requestId) => {
-        const success = await CleaningServiceRequest.updateRequestStatus(requestId, 'ACCEPTED');
+        const success = await controller.updateRequestStatus(requestId, 'ACCEPTED');
         if (success) {
             alert('Request accepted successfully!');
             loadRequests();
@@ -44,7 +39,7 @@ function CleanerRequestUI() {
     };
 
     const handleDeclineRequest = async (requestId) => {
-        const success = await CleaningServiceRequest.updateRequestStatus(requestId, 'DECLINED');
+        const success = await controller.updateRequestStatus(requestId, 'DECLINED');
         if (success) {
             alert('Request declined successfully!');
             loadRequests();

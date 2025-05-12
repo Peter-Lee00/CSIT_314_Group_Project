@@ -70,10 +70,10 @@ export class AdminAccountController {
     } catch (err) {
       console.error("Update failed for user:", err);
       return false;
-    }
   }
+}
 
-  // Looks up a user
+// Looks up a user
   async searchUserAccount(email) {
     try {
       return await UserAccount.searchUserAccount(email);

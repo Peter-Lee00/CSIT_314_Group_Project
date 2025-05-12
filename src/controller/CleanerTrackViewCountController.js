@@ -1,5 +1,5 @@
 import CleaningService from '../entity/CleaningService';
-import { getCurrentUser } from '../Util';
+import { Util } from '../Util';
 
 class CleanerTrackViewCountController {
     constructor() {
@@ -8,11 +8,11 @@ class CleanerTrackViewCountController {
 
     // Constants for business rules
     static MAX_VIEWS_PER_DAY = 1000;
-    static VIEW_COOLDOWN_MINUTES = 5;
+    static VIEW_COOLDOWN_MINUTES = 1;
 
     async trackViewCount(serviceId, viewType = 'monthly') {
         try {
-            const currentUser = getCurrentUser();
+            const currentUser = Util.getCurrentUser();
             if (!currentUser) {
                 throw new Error('User not authenticated');
             }
@@ -59,7 +59,7 @@ class CleanerTrackViewCountController {
 
     async getViewHistory(serviceId) {
         try {
-            const currentUser = getCurrentUser();
+            const currentUser = Util.getCurrentUser();
             if (!currentUser) {
                 throw new Error('User not authenticated');
             }
@@ -70,7 +70,7 @@ class CleanerTrackViewCountController {
                 throw new Error('Service not found');
             }
             if (service.cleanerId !== currentUser.username) {
-                throw new Error('Not authorized to view history for this service');
+                throw new Error('Not authorized to view view history for this service');
             }
 
             // Delegate to entity
@@ -87,6 +87,16 @@ class CleanerTrackViewCountController {
         } catch (error) {
             console.error('Error in getViewHistory:', error);
             throw error;
+        }
+    }
+
+    async viewServiceViewCount(serviceId) {
+        try {
+            const viewCountHistory = await CleaningService.viewServiceViewCount(serviceId);
+            return viewCountHistory;
+        } catch (error) {
+            console.error("Controller Error viewing service view count:", error);
+            return null;
         }
     }
 }

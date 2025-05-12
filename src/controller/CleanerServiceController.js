@@ -254,6 +254,20 @@ class CleanerServiceController {
             throw error;
         }
     }
+
+    /**
+     * Read all cleaning services for a cleaner
+     * @param {string} cleanerId - The ID of the cleaner
+     * @returns {Promise<Array>} Array of cleaning services
+     */
+    async readCleaningServices(cleanerId) {
+        try {
+            return await CleaningService.readCleaningServices(cleanerId);
+        } catch (error) {
+            console.error('Error in controller reading cleaning services:', error);
+            return [];
+        }
+    }
 }
 
 class CleanerTrackViewCountController {

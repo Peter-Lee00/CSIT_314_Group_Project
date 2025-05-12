@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PlatformManagerServiceCategoryController } from '../controller/PlatformManagerServiceCategoryController';
+import { PlatformManagerReportController } from '../controller/PlatformManagerReportController';
 import Swal from 'sweetalert2';
 import { UserLogoutController } from '../controller/UserAuthController';
 import { useNavigate } from 'react-router-dom';
@@ -110,11 +111,82 @@ const PlatformManagerServiceCategoryUI = () => {
         }
     };
 
+    // REPORT HANDLER
+    const handleGenerateReport = async (period) => {
+        try {
+            const reportController = new PlatformManagerReportController();
+            const report = await reportController.generateReport(period);
+            // Find the most viewed, most requested, and most shortlisted service categories
+            let mostViewedService = null;
+            let mostViewedCount = -1;
+            let mostRequestedService = null;
+            let mostRequestedCount = -1;
+            let mostShortlistedService = null;
+            let mostShortlistedCount = -1;
+            report.categories.forEach(row => {
+                if (row.totalViews > mostViewedCount) {
+                    mostViewedCount = row.totalViews;
+                    mostViewedService = row.categoryName;
+                }
+                if (row.totalRequests > mostRequestedCount) {
+                    mostRequestedCount = row.totalRequests;
+                    mostRequestedService = row.categoryName;
+                }
+                if (row.totalShortlists > mostShortlistedCount) {
+                    mostShortlistedCount = row.totalShortlists;
+                    mostShortlistedService = row.categoryName;
+                }
+            });
+            const summaryHtml = `
+              <div style='margin-top:16px;font-weight:bold;'>
+                The most viewed service is "${mostViewedService && mostViewedCount > 0 ? mostViewedService + ' (' + mostViewedCount + ' views)' : 'No data'}"<br/>
+                The service that got most requests is "${mostRequestedService && mostRequestedCount > 0 ? mostRequestedService + ' (' + mostRequestedCount + ' requests)' : 'No data'}"<br/>
+                The most shortlisted service is "${mostShortlistedService && mostShortlistedCount > 0 ? mostShortlistedService + ' (' + mostShortlistedCount + ' shortlists)' : 'No data'}"
+              </div>
+            `;
+            Swal.fire({
+                title: `${period.charAt(0).toUpperCase() + period.slice(1)} Report`,
+                html: `
+                  <table style="width:100%;text-align:left">
+                    <thead>
+                      <tr>
+                        <th>Category Name</th>
+                        <th>Total Views</th>
+                        <th>Total Requests</th>
+                        <th>Total Shortlists</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${report.categories.map(row => `
+                        <tr>
+                          <td>${row.categoryName}</td>
+                          <td>${row.totalViews}</td>
+                          <td>${row.totalRequests}</td>
+                          <td>${row.totalShortlists}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                  ${summaryHtml}
+                `,
+                width: 700
+            });
+        } catch (err) {
+            Swal.fire('Error', err.message || 'Failed to generate report', 'error');
+        }
+    };
+
     return (
         <div className="pmsc-container">
             <div className="pmsc-header">
                 <h2 className="pmsc-title">Service Category Management</h2>
                 <button className="pmsc-logout-button" onClick={handleLogout}>Logout</button>
+            </div>
+            {/* REPORT BUTTONS */}
+            <div className="pmsc-report-buttons">
+                <button className="pmsc-report-button" onClick={() => handleGenerateReport('daily')}>Generate Daily Report</button>
+                <button className="pmsc-report-button" onClick={() => handleGenerateReport('weekly')}>Generate Weekly Report</button>
+                <button className="pmsc-report-button" onClick={() => handleGenerateReport('monthly')}>Generate Monthly Report</button>
             </div>
             <button className="pmsc-add-button" onClick={handleAdd}>Add New Category</button>
             {loading ? (

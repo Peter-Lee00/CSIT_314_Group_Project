@@ -37,6 +37,31 @@ class Shortlist {
             return false;
         }
     }
+
+    static async searchShortlistedServices(username, { serviceName, serviceType, priceRange, duration }) {
+        try {
+            const servicesCol = collection(db, 'ShortlistedCleaningServices', username, 'services');
+            const snapshot = await getDocs(servicesCol);
+            let results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            if (serviceName) {
+                results = results.filter(s => s.serviceName && s.serviceName.toLowerCase().includes(serviceName.toLowerCase()));
+            }
+            if (serviceType) {
+                results = results.filter(s => s.serviceType === serviceType);
+            }
+            if (priceRange && priceRange.length === 2) {
+                const [min, max] = priceRange.map(Number);
+                results = results.filter(s => s.price >= min && s.price <= max);
+            }
+            if (duration) {
+                results = results.filter(s => String(s.duration) === String(duration));
+            }
+            return results;
+        } catch (error) {
+            console.error('Error searching shortlist:', error);
+            return [];
+        }
+    }
 }
 
 export default Shortlist; 

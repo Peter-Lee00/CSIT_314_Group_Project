@@ -278,6 +278,10 @@ class OwnerCleaningServiceController {
             return matchesServiceName && matchesServiceType && matchesPrice && matchesDate && matchesSearch;
         });
     }
+
+    async searchShortlistedServices(username, filters) {
+        return await Shortlist.searchShortlistedServices(username, filters);
+    }
 }
 
 export default OwnerCleaningServiceController;

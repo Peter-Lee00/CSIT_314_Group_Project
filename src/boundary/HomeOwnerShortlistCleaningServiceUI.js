@@ -61,32 +61,8 @@ function HomeOwnerShortlistCleaningServiceUI() {
         };
 
         const controller = new OwnerCleaningServiceController();
-        const searchResult = await controller.searchCleaningService(
-            filterCriteria.serviceName,
-            filterCriteria.serviceType,
-            filterCriteria.priceRange,
-            filterCriteria.duration,
-            undefined
-        );
-
-        if (searchResult === null) {
-            Swal.fire({
-                title: 'No Results',
-                text: 'No cleaning services found matching the search criteria.',
-                icon: 'info',
-                confirmButtonText: 'OK'
-            });
-        } else {
-            const shortlistData = searchResult.map(doc => ({
-                serviceId: doc.id,
-                serviceName: doc.serviceName,
-                serviceType: doc.serviceType,
-                description: doc.description,
-                price: doc.price,
-                duration: doc.duration
-            }));
-            setShortlist(shortlistData);
-        }
+        const shortlistData = await controller.searchShortlistedServices(username, filterCriteria);
+        setShortlist(shortlistData);
     };
 
     const viewService = async (serviceId) => {

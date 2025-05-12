@@ -1,5 +1,5 @@
 import CleaningService from '../entity/CleaningService';
-import { getCurrentUser } from '../Util';
+import { Util } from '../Util';
 
 class CleanerTrackShortlistCountController {
     constructor() {
@@ -12,7 +12,7 @@ class CleanerTrackShortlistCountController {
 
     async trackShortlistCount(serviceId, viewType = 'monthly') {
         try {
-            const currentUser = getCurrentUser();
+            const currentUser = Util.getCurrentUser();
             if (!currentUser) {
                 throw new Error('User not authenticated');
             }
@@ -59,7 +59,7 @@ class CleanerTrackShortlistCountController {
 
     async getShortlistHistory(serviceId) {
         try {
-            const currentUser = getCurrentUser();
+            const currentUser = Util.getCurrentUser();
             if (!currentUser) {
                 throw new Error('User not authenticated');
             }
@@ -87,6 +87,16 @@ class CleanerTrackShortlistCountController {
         } catch (error) {
             console.error('Error in getShortlistHistory:', error);
             throw error;
+        }
+    }
+
+    async viewServiceShortlistCount(serviceId) {
+        try {
+            const shortlistCountHistory = await CleaningService.viewServiceShortlistCount(serviceId);
+            return shortlistCountHistory;
+        } catch (error) {
+            console.error("Controller Error viewing service shortlist count:", error);
+            return null;
         }
     }
 }

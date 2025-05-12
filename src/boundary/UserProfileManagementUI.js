@@ -257,7 +257,7 @@ function UserProfileManagementUI() {
             <span>{profile.profileName}</span>
             <span>{profile.description}</span>
             <div style={{display:'flex',gap:'8px'}}>
-              <button onClick={() => handleView(profile.profileName)}>Edit</button>
+            <button onClick={() => handleView(profile.profileName)}>Edit</button>
               <button onClick={() => handleDelete(profile.profileName)} style={{background:'#e53935',color:'#fff',border:'none',borderRadius:'4px',padding:'6px 12px',cursor:'pointer'}}>Delete</button>
             </div>
           </div>
