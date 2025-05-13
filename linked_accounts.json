@@ -1,0 +1,902 @@
+[
+  {
+    "email": "kristin.huff@example.com",
+    "firstName": "Kristin",
+    "lastName": "Huff",
+    "password": "hashed_pw_5248",
+    "phoneNumber": "644.478.6928x55551",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "kyle.lee@example.com",
+    "firstName": "Kyle",
+    "lastName": "Lee",
+    "password": "hashed_pw_7892",
+    "phoneNumber": "+1-220-823-0191x125",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "amber.lawrence@example.com",
+    "firstName": "Amber",
+    "lastName": "Lawrence",
+    "password": "hashed_pw_1155",
+    "phoneNumber": "001-782-534-7213",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "amber.lane@example.com",
+    "firstName": "Amber",
+    "lastName": "Lane",
+    "password": "hashed_pw_8539",
+    "phoneNumber": "443-005-4736",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "jody.martin@example.com",
+    "firstName": "Jody",
+    "lastName": "Martin",
+    "password": "hashed_pw_2740",
+    "phoneNumber": "400.697.4170",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "andrew.tucker@example.com",
+    "firstName": "Andrew",
+    "lastName": "Tucker",
+    "password": "hashed_pw_2660",
+    "phoneNumber": "(596)347-5856x87078",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "julia.silva@example.com",
+    "firstName": "Julia",
+    "lastName": "Silva",
+    "password": "hashed_pw_9069",
+    "phoneNumber": "001-643-070-1223x98306",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "william.farley@example.com",
+    "firstName": "William",
+    "lastName": "Farley",
+    "password": "hashed_pw_3557",
+    "phoneNumber": "001-759-231-9695",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "james.turner@example.com",
+    "firstName": "James",
+    "lastName": "Turner",
+    "password": "hashed_pw_1821",
+    "phoneNumber": "992-770-7489x57847",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "kevin.pratt@example.com",
+    "firstName": "Kevin",
+    "lastName": "Pratt",
+    "password": "hashed_pw_2608",
+    "phoneNumber": "514-452-9619",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "william.myers@example.com",
+    "firstName": "William",
+    "lastName": "Myers",
+    "password": "hashed_pw_7344",
+    "phoneNumber": "+1-583-043-9724x7924",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "zachary.romero@example.com",
+    "firstName": "Zachary",
+    "lastName": "Romero",
+    "password": "hashed_pw_1855",
+    "phoneNumber": "359-982-3033",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "david.berry@example.com",
+    "firstName": "David",
+    "lastName": "Berry",
+    "password": "hashed_pw_4206",
+    "phoneNumber": "424.093.2323",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "stephanie.reed@example.com",
+    "firstName": "Stephanie",
+    "lastName": "Reed",
+    "password": "hashed_pw_9717",
+    "phoneNumber": "805-405-9650x115",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "monica.garcia@example.com",
+    "firstName": "Monica",
+    "lastName": "Garcia",
+    "password": "hashed_pw_8076",
+    "phoneNumber": "460.367.1611x0639",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "stefanie.castillo@example.com",
+    "firstName": "Stefanie",
+    "lastName": "Castillo",
+    "password": "hashed_pw_8365",
+    "phoneNumber": "605-985-4480x887",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "michelle.vega@example.com",
+    "firstName": "Michelle",
+    "lastName": "Vega",
+    "password": "hashed_pw_7472",
+    "phoneNumber": "889.045.8840x61526",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "joy.washington@example.com",
+    "firstName": "Joy",
+    "lastName": "Washington",
+    "password": "hashed_pw_1137",
+    "phoneNumber": "581.346.0772",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "benjamin.summers@example.com",
+    "firstName": "Benjamin",
+    "lastName": "Summers",
+    "password": "hashed_pw_2847",
+    "phoneNumber": "9623409426",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "nicole.burton@example.com",
+    "firstName": "Nicole",
+    "lastName": "Burton",
+    "password": "hashed_pw_4531",
+    "phoneNumber": "001-662-416-3958",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "taylor.martinez@example.com",
+    "firstName": "Taylor",
+    "lastName": "Martinez",
+    "password": "hashed_pw_4071",
+    "phoneNumber": "001-214-181-3580x6879",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "stacie.boyer@example.com",
+    "firstName": "Stacie",
+    "lastName": "Boyer",
+    "password": "hashed_pw_7103",
+    "phoneNumber": "436-719-0014",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "scott.noble@example.com",
+    "firstName": "Scott",
+    "lastName": "Noble",
+    "password": "hashed_pw_7558",
+    "phoneNumber": "033.300.4297x276",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "joseph.copeland@example.com",
+    "firstName": "Joseph",
+    "lastName": "Copeland",
+    "password": "hashed_pw_4917",
+    "phoneNumber": "001-013-649-9764x766",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "heather.butler@example.com",
+    "firstName": "Heather",
+    "lastName": "Butler",
+    "password": "hashed_pw_2630",
+    "phoneNumber": "(784)553-1281x8874",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "william.hughes@example.com",
+    "firstName": "William",
+    "lastName": "Hughes",
+    "password": "hashed_pw_6462",
+    "phoneNumber": "+1-079-564-2263",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "samuel.clay@example.com",
+    "firstName": "Samuel",
+    "lastName": "Clay",
+    "password": "hashed_pw_4581",
+    "phoneNumber": "001-415-327-7796x24510",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "joseph.scott@example.com",
+    "firstName": "Joseph",
+    "lastName": "Scott",
+    "password": "hashed_pw_6076",
+    "phoneNumber": "661-078-8391x411",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "victoria.meyer@example.com",
+    "firstName": "Victoria",
+    "lastName": "Meyer",
+    "password": "hashed_pw_7611",
+    "phoneNumber": "001-652-289-7436",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "sean.wilkerson@example.com",
+    "firstName": "Sean",
+    "lastName": "Wilkerson",
+    "password": "hashed_pw_8707",
+    "phoneNumber": "810.727.2213x78658",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "cole.murray@example.com",
+    "firstName": "Cole",
+    "lastName": "Murray",
+    "password": "hashed_pw_6036",
+    "phoneNumber": "001-620-040-4715x622",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "jacob.rodriguez@example.com",
+    "firstName": "Jacob",
+    "lastName": "Rodriguez",
+    "password": "hashed_pw_2903",
+    "phoneNumber": "063.746.8301",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "nathaniel.turner@example.com",
+    "firstName": "Nathaniel",
+    "lastName": "Turner",
+    "password": "hashed_pw_9397",
+    "phoneNumber": "+1-806-658-4049x875",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "eric.smith@example.com",
+    "firstName": "Eric",
+    "lastName": "Smith",
+    "password": "hashed_pw_5922",
+    "phoneNumber": "+1-402-958-9365x9862",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "timothy.kelly@example.com",
+    "firstName": "Timothy",
+    "lastName": "Kelly",
+    "password": "hashed_pw_4090",
+    "phoneNumber": "(269)392-2782",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "pamela.bright@example.com",
+    "firstName": "Pamela",
+    "lastName": "Bright",
+    "password": "hashed_pw_5626",
+    "phoneNumber": "616.124.9901x0799",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "mark.davis@example.com",
+    "firstName": "Mark",
+    "lastName": "Davis",
+    "password": "hashed_pw_4409",
+    "phoneNumber": "001-057-517-9052x585",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "sandra.cox@example.com",
+    "firstName": "Sandra",
+    "lastName": "Cox",
+    "password": "hashed_pw_6979",
+    "phoneNumber": "358-290-6038x34597",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "laura.coleman@example.com",
+    "firstName": "Laura",
+    "lastName": "Coleman",
+    "password": "hashed_pw_1806",
+    "phoneNumber": "289-895-4000x522",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "joseph.beck@example.com",
+    "firstName": "Joseph",
+    "lastName": "Beck",
+    "password": "hashed_pw_1242",
+    "phoneNumber": "+1-824-667-3619x927",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "kaitlin.anderson@example.com",
+    "firstName": "Kaitlin",
+    "lastName": "Anderson",
+    "password": "hashed_pw_9855",
+    "phoneNumber": "(744)671-9744x1825",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "tracey.williams@example.com",
+    "firstName": "Tracey",
+    "lastName": "Williams",
+    "password": "hashed_pw_6891",
+    "phoneNumber": "001-025-788-3812",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "jaime.howard@example.com",
+    "firstName": "Jaime",
+    "lastName": "Howard",
+    "password": "hashed_pw_5307",
+    "phoneNumber": "419.749.2031x9467",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "david.franco@example.com",
+    "firstName": "David",
+    "lastName": "Franco",
+    "password": "hashed_pw_2992",
+    "phoneNumber": "063.123.8888x192",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "clarence.lee@example.com",
+    "firstName": "Clarence",
+    "lastName": "Lee",
+    "password": "hashed_pw_1800",
+    "phoneNumber": "6282978496",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "cindy.phillips@example.com",
+    "firstName": "Cindy",
+    "lastName": "Phillips",
+    "password": "hashed_pw_7919",
+    "phoneNumber": "7575098654",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "lance.nguyen@example.com",
+    "firstName": "Lance",
+    "lastName": "Nguyen",
+    "password": "hashed_pw_2862",
+    "phoneNumber": "001-873-744-8092x8774",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "james.russell@example.com",
+    "firstName": "James",
+    "lastName": "Russell",
+    "password": "hashed_pw_7589",
+    "phoneNumber": "001-970-742-0741x66327",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "dawn.lewis@example.com",
+    "firstName": "Dawn",
+    "lastName": "Lewis",
+    "password": "hashed_pw_5318",
+    "phoneNumber": "(654)437-0991x7862",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "david.alvarez@example.com",
+    "firstName": "David",
+    "lastName": "Alvarez",
+    "password": "hashed_pw_1926",
+    "phoneNumber": "3446846717",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "marie.rogers@example.com",
+    "firstName": "Marie",
+    "lastName": "Rogers",
+    "password": "hashed_pw_6045",
+    "phoneNumber": "337.603.3670x339",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "scott.miller@example.com",
+    "firstName": "Scott",
+    "lastName": "Miller",
+    "password": "hashed_pw_4048",
+    "phoneNumber": "(528)250-4069",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "daniel.freeman@example.com",
+    "firstName": "Daniel",
+    "lastName": "Freeman",
+    "password": "hashed_pw_8538",
+    "phoneNumber": "(293)067-0389",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "ivan.garcia@example.com",
+    "firstName": "Ivan",
+    "lastName": "Garcia",
+    "password": "hashed_pw_4669",
+    "phoneNumber": "3655475239",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "paul.smith@example.com",
+    "firstName": "Paul",
+    "lastName": "Smith",
+    "password": "hashed_pw_6921",
+    "phoneNumber": "285.655.4113x760",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "steven.morales@example.com",
+    "firstName": "Steven",
+    "lastName": "Morales",
+    "password": "hashed_pw_7494",
+    "phoneNumber": "+1-927-182-1988",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "joseph.thomas@example.com",
+    "firstName": "Joseph",
+    "lastName": "Thomas",
+    "password": "hashed_pw_8462",
+    "phoneNumber": "+1-502-163-4460",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "yolanda.haney@example.com",
+    "firstName": "Yolanda",
+    "lastName": "Haney",
+    "password": "hashed_pw_2726",
+    "phoneNumber": "740.270.0663x7552",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "mark.nichols@example.com",
+    "firstName": "Mark",
+    "lastName": "Nichols",
+    "password": "hashed_pw_8702",
+    "phoneNumber": "890-895-7277x5995",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "crystal.guzman@example.com",
+    "firstName": "Crystal",
+    "lastName": "Guzman",
+    "password": "hashed_pw_4415",
+    "phoneNumber": "001-595-440-2185x74910",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "melinda.morrison@example.com",
+    "firstName": "Melinda",
+    "lastName": "Morrison",
+    "password": "hashed_pw_9883",
+    "phoneNumber": "(427)767-4160",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "daniel.long@example.com",
+    "firstName": "Daniel",
+    "lastName": "Long",
+    "password": "hashed_pw_5730",
+    "phoneNumber": "186.595.8619",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "daniel.herrera@example.com",
+    "firstName": "Daniel",
+    "lastName": "Herrera",
+    "password": "hashed_pw_8693",
+    "phoneNumber": "+1-988-092-6778x503",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "madison.stewart@example.com",
+    "firstName": "Madison",
+    "lastName": "Stewart",
+    "password": "hashed_pw_7027",
+    "phoneNumber": "2992026459",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "james.flores@example.com",
+    "firstName": "James",
+    "lastName": "Flores",
+    "password": "hashed_pw_9679",
+    "phoneNumber": "(232)868-1408",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "kara.mcdaniel@example.com",
+    "firstName": "Kara",
+    "lastName": "Mcdaniel",
+    "password": "hashed_pw_2527",
+    "phoneNumber": "001-419-746-6684x6235",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "william.robinson@example.com",
+    "firstName": "William",
+    "lastName": "Robinson",
+    "password": "hashed_pw_6427",
+    "phoneNumber": "+1-000-043-9518",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "kirsten.torres@example.com",
+    "firstName": "Kirsten",
+    "lastName": "Torres",
+    "password": "hashed_pw_7063",
+    "phoneNumber": "(290)275-6522",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "mary.taylor@example.com",
+    "firstName": "Mary",
+    "lastName": "Taylor",
+    "password": "hashed_pw_8539",
+    "phoneNumber": "+1-944-112-5913x34073",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "john.cooper@example.com",
+    "firstName": "John",
+    "lastName": "Cooper",
+    "password": "hashed_pw_1562",
+    "phoneNumber": "856.077.6223x6443",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "james.wright@example.com",
+    "firstName": "James",
+    "lastName": "Wright",
+    "password": "hashed_pw_6790",
+    "phoneNumber": "921-197-2576x51011",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "marvin.rice@example.com",
+    "firstName": "Marvin",
+    "lastName": "Rice",
+    "password": "hashed_pw_7456",
+    "phoneNumber": "(507)543-2405x28767",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "shane.gilmore@example.com",
+    "firstName": "Shane",
+    "lastName": "Gilmore",
+    "password": "hashed_pw_7974",
+    "phoneNumber": "001-611-242-6406x877",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "katherine.golden@example.com",
+    "firstName": "Katherine",
+    "lastName": "Golden",
+    "password": "hashed_pw_4519",
+    "phoneNumber": "001-150-366-9176x8287",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "elizabeth.banks@example.com",
+    "firstName": "Elizabeth",
+    "lastName": "Banks",
+    "password": "hashed_pw_4135",
+    "phoneNumber": "+1-897-127-5961",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "james.golden@example.com",
+    "firstName": "James",
+    "lastName": "Golden",
+    "password": "hashed_pw_5241",
+    "phoneNumber": "316-847-5303x7615",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "maria.martin@example.com",
+    "firstName": "Maria",
+    "lastName": "Martin",
+    "password": "hashed_pw_8392",
+    "phoneNumber": "001-241-615-1345x3463",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "laura.wells@example.com",
+    "firstName": "Laura",
+    "lastName": "Wells",
+    "password": "hashed_pw_7170",
+    "phoneNumber": "(199)739-8086x826",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "william.davis@example.com",
+    "firstName": "William",
+    "lastName": "Davis",
+    "password": "hashed_pw_3073",
+    "phoneNumber": "(818)301-6402x13851",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "anna.johnson@example.com",
+    "firstName": "Anna",
+    "lastName": "Johnson",
+    "password": "hashed_pw_9865",
+    "phoneNumber": "+1-101-848-8643",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "ricky.grant@example.com",
+    "firstName": "Ricky",
+    "lastName": "Grant",
+    "password": "hashed_pw_7728",
+    "phoneNumber": "448-747-6186x6404",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "amy.scott@example.com",
+    "firstName": "Amy",
+    "lastName": "Scott",
+    "password": "hashed_pw_7612",
+    "phoneNumber": "876-439-1652x97261",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "glen.duncan@example.com",
+    "firstName": "Glen",
+    "lastName": "Duncan",
+    "password": "hashed_pw_3182",
+    "phoneNumber": "736-194-9933",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "elizabeth.bennett@example.com",
+    "firstName": "Elizabeth",
+    "lastName": "Bennett",
+    "password": "hashed_pw_9620",
+    "phoneNumber": "(077)176-4599x2194",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "david.castillo@example.com",
+    "firstName": "David",
+    "lastName": "Castillo",
+    "password": "hashed_pw_8525",
+    "phoneNumber": "715.410.2059",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "roy.smith@example.com",
+    "firstName": "Roy",
+    "lastName": "Smith",
+    "password": "hashed_pw_6181",
+    "phoneNumber": "+1-401-841-8232x167",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "jennifer.castillo@example.com",
+    "firstName": "Jennifer",
+    "lastName": "Castillo",
+    "password": "hashed_pw_4741",
+    "phoneNumber": "001-181-193-3078x21752",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "justin.ryan@example.com",
+    "firstName": "Justin",
+    "lastName": "Ryan",
+    "password": "hashed_pw_1496",
+    "phoneNumber": "(472)540-2942x3756",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "betty.romero@example.com",
+    "firstName": "Betty",
+    "lastName": "Romero",
+    "password": "hashed_pw_4010",
+    "phoneNumber": "(006)863-6694x2351",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "evan.harris@example.com",
+    "firstName": "Evan",
+    "lastName": "Harris",
+    "password": "hashed_pw_9836",
+    "phoneNumber": "027-826-8143",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "ariel.russell@example.com",
+    "firstName": "Ariel",
+    "lastName": "Russell",
+    "password": "hashed_pw_1487",
+    "phoneNumber": "795-192-2367x43753",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "jacqueline.rodgers@example.com",
+    "firstName": "Jacqueline",
+    "lastName": "Rodgers",
+    "password": "hashed_pw_6459",
+    "phoneNumber": "533-325-6591x6391",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "connor.sexton@example.com",
+    "firstName": "Connor",
+    "lastName": "Sexton",
+    "password": "hashed_pw_8784",
+    "phoneNumber": "+1-490-084-0725",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "ashley.navarro@example.com",
+    "firstName": "Ashley",
+    "lastName": "Navarro",
+    "password": "hashed_pw_9851",
+    "phoneNumber": "105.191.4396x28482",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "justin.forbes@example.com",
+    "firstName": "Justin",
+    "lastName": "Forbes",
+    "password": "hashed_pw_9753",
+    "phoneNumber": "374.995.9434x4170",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "dana.castaneda@example.com",
+    "firstName": "Dana",
+    "lastName": "Castaneda",
+    "password": "hashed_pw_8927",
+    "phoneNumber": "(300)421-5670",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "alexandra.santos@example.com",
+    "firstName": "Alexandra",
+    "lastName": "Santos",
+    "password": "hashed_pw_3200",
+    "phoneNumber": "(194)125-8031x688",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "david.gibson@example.com",
+    "firstName": "David",
+    "lastName": "Gibson",
+    "password": "hashed_pw_7034",
+    "phoneNumber": "352-624-0684x1117",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "patrick.braun@example.com",
+    "firstName": "Patrick",
+    "lastName": "Braun",
+    "password": "hashed_pw_5679",
+    "phoneNumber": "556-110-6402x59135",
+    "suspended": false,
+    "userProfile": "Cleaner"
+  },
+  {
+    "email": "amanda.robinson@example.com",
+    "firstName": "Amanda",
+    "lastName": "Robinson",
+    "password": "hashed_pw_1520",
+    "phoneNumber": "7427943932",
+    "suspended": true,
+    "userProfile": "Cleaner"
+  }
+]
