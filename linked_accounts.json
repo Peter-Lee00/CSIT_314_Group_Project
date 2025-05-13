@@ -1,5 +1,104 @@
 [
   {
+    "email": "minsoo.kim@example.com",
+    "firstName": "Minsoo",
+    "lastName": "Kim",
+    "password": "Pass123!",
+    "phoneNumber": "010-1234-5678",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "jihye.lee@example.com",
+    "firstName": "Jihye",
+    "lastName": "Lee",
+    "password": "Pass123!",
+    "phoneNumber": "010-2234-5678",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "taeyang.choi@example.com",
+    "firstName": "Taeyang",
+    "lastName": "Choi",
+    "password": "Pass123!",
+    "phoneNumber": "010-3234-5678",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "yuna.park@example.com",
+    "firstName": "Yuna",
+    "lastName": "Park",
+    "password": "Pass123!",
+    "phoneNumber": "010-4234-5678",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "hyunwoo.jung@example.com",
+    "firstName": "Hyunwoo",
+    "lastName": "Jung",
+    "password": "Pass123!",
+    "phoneNumber": "010-5234-5678",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "sujin.han@example.com",
+    "firstName": "Sujin",
+    "lastName": "Han",
+    "password": "Pass123!",
+    "phoneNumber": "010-6234-5678",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "donghyun.kang@example.com",
+    "firstName": "Donghyun",
+    "lastName": "Kang",
+    "password": "Pass123!",
+    "phoneNumber": "010-7234-5678",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "nari.koo@example.com",
+    "firstName": "Nari",
+    "lastName": "Koo",
+    "password": "Pass123!",
+    "phoneNumber": "010-8234-5678",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "seojun.lim@example.com",
+    "firstName": "Seojun",
+    "lastName": "Lim",
+    "password": "Pass123!",
+    "phoneNumber": "010-9234-5678",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "minji.baek@example.com",
+    "firstName": "Minji",
+    "lastName": "Baek",
+    "password": "Pass123!",
+    "phoneNumber": "010-1334-5678",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "hyeonseo.kim@example.com",
+    "firstName": "Hyeonseo",
+    "lastName": "Kim",
+    "password": "Pass123!",
+    "phoneNumber": "010-2334-5678",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
     "email": "kristin.huff@example.com",
     "firstName": "Kristin",
     "lastName": "Huff",
@@ -53,6 +152,70 @@
     "suspended": true,
     "userProfile": "Cleaner"
   },
+ {
+    "email": "agus.prasetyo01@example.com",
+    "firstName": "Agus",
+    "lastName": "Prasetyo",
+    "password": "Agus@123",
+    "phoneNumber": "+6281234567801",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "siti.hapsari02@example.com",
+    "firstName": "Siti",
+    "lastName": "Hapsari",
+    "password": "Siti@123",
+    "phoneNumber": "+6281234567802",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "budi.santoso03@example.com",
+    "firstName": "Budi",
+    "lastName": "Santoso",
+    "password": "Budi@123",
+    "phoneNumber": "+6281234567803",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "rina.wulandari04@example.com",
+    "firstName": "Rina",
+    "lastName": "Wulandari",
+    "password": "Rina@123",
+    "phoneNumber": "+6281234567804",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "dedi.susanto05@example.com",
+    "firstName": "Dedi",
+    "lastName": "Susanto",
+    "password": "Dedi@123",
+    "phoneNumber": "+6281234567805",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "nina.rahma06@example.com",
+    "firstName": "Nina",
+    "lastName": "Rahma",
+    "password": "Nina@123",
+    "phoneNumber": "+6281234567806",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+  {
+    "email": "eka.pratama07@example.com",
+    "firstName": "Eka",
+    "lastName": "Pratama",
+    "password": "Eka@123",
+    "phoneNumber": "+6281234567807",
+    "suspended": false,
+    "userProfile": "UserAdmin"
+  },
+
   {
     "email": "julia.silva@example.com",
     "firstName": "Julia",
@@ -898,5 +1061,1805 @@
     "phoneNumber": "7427943932",
     "suspended": true,
     "userProfile": "Cleaner"
+  },
+  {
+    "email": "mei.heng1@example.com",
+    "firstName": "Mei",
+    "lastName": "Heng",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6587347060",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "kai.ng2@example.com",
+    "firstName": "Kai",
+    "lastName": "Ng",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6597954899",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "kai.goh3@example.com",
+    "firstName": "Kai",
+    "lastName": "Goh",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6588758375",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "tian.foo4@example.com",
+    "firstName": "Tian",
+    "lastName": "Foo",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6592339789",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "yi.goh5@example.com",
+    "firstName": "Yi",
+    "lastName": "Goh",
+    "password": "Hello@2024",
+    "phoneNumber": "+6594404167",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "tian.sim6@example.com",
+    "firstName": "Tian",
+    "lastName": "Sim",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6590223605",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "en.pang7@example.com",
+    "firstName": "En",
+    "lastName": "Pang",
+    "password": "Secure@2025",
+    "phoneNumber": "+6582650604",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "bo.liu8@example.com",
+    "firstName": "Bo",
+    "lastName": "Liu",
+    "password": "Secure@2025",
+    "phoneNumber": "+6598961321",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "jing.pang9@example.com",
+    "firstName": "Jing",
+    "lastName": "Pang",
+    "password": "Test123$",
+    "phoneNumber": "+6588140031",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "xiu.sim10@example.com",
+    "firstName": "Xiu",
+    "lastName": "Sim",
+    "password": "Secure@2025",
+    "phoneNumber": "+6589889379",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "jing.chan11@example.com",
+    "firstName": "Jing",
+    "lastName": "Chan",
+    "password": "Secure@2025",
+    "phoneNumber": "+6597813897",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "bo.liu12@example.com",
+    "firstName": "Bo",
+    "lastName": "Liu",
+    "password": "Test123$",
+    "phoneNumber": "+6584078179",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "bo.heng13@example.com",
+    "firstName": "Bo",
+    "lastName": "Heng",
+    "password": "Test123$",
+    "phoneNumber": "+6591740812",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "liang.liu14@example.com",
+    "firstName": "Liang",
+    "lastName": "Liu",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6588826887",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "fang.low15@example.com",
+    "firstName": "Fang",
+    "lastName": "Low",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6599617355",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "hui.low16@example.com",
+    "firstName": "Hui",
+    "lastName": "Low",
+    "password": "Secure@2025",
+    "phoneNumber": "+6587836884",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "qing.loh17@example.com",
+    "firstName": "Qing",
+    "lastName": "Loh",
+    "password": "Test123$",
+    "phoneNumber": "+6584115995",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "zhi.ng18@example.com",
+    "firstName": "Zhi",
+    "lastName": "Ng",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6586185171",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "hui.liu19@example.com",
+    "firstName": "Hui",
+    "lastName": "Liu",
+    "password": "Test123$",
+    "phoneNumber": "+6583647982",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "xiu.toh20@example.com",
+    "firstName": "Xiu",
+    "lastName": "Toh",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6580400193",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "fang.koh21@example.com",
+    "firstName": "Fang",
+    "lastName": "Koh",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6583729682",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "cheng.liu22@example.com",
+    "firstName": "Cheng",
+    "lastName": "Liu",
+    "password": "Hello@2024",
+    "phoneNumber": "+6595952770",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "shan.cheong23@example.com",
+    "firstName": "Shan",
+    "lastName": "Cheong",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6593303138",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "bo.toh24@example.com",
+    "firstName": "Bo",
+    "lastName": "Toh",
+    "password": "Hello@2024",
+    "phoneNumber": "+6586074387",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "kai.foo25@example.com",
+    "firstName": "Kai",
+    "lastName": "Foo",
+    "password": "Secure@2025",
+    "phoneNumber": "+6598959611",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "hui.goh26@example.com",
+    "firstName": "Hui",
+    "lastName": "Goh",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6597576549",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "kai.lim27@example.com",
+    "firstName": "Kai",
+    "lastName": "Lim",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6597459947",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "xiu.lee28@example.com",
+    "firstName": "Xiu",
+    "lastName": "Lee",
+    "password": "Hello@2024",
+    "phoneNumber": "+6580788690",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "tian.sim29@example.com",
+    "firstName": "Tian",
+    "lastName": "Sim",
+    "password": "Secure@2025",
+    "phoneNumber": "+6597383289",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "mei.goh30@example.com",
+    "firstName": "Mei",
+    "lastName": "Goh",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6581888024",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "en.liu31@example.com",
+    "firstName": "En",
+    "lastName": "Liu",
+    "password": "Hello@2024",
+    "phoneNumber": "+6590332986",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "jing.chua32@example.com",
+    "firstName": "Jing",
+    "lastName": "Chua",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6599415469",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "cheng.yong33@example.com",
+    "firstName": "Cheng",
+    "lastName": "Yong",
+    "password": "Secure@2025",
+    "phoneNumber": "+6587066801",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "wei.tan34@example.com",
+    "firstName": "Wei",
+    "lastName": "Tan",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6589503139",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "ying.liu35@example.com",
+    "firstName": "Ying",
+    "lastName": "Liu",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6586906403",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "hui.heng36@example.com",
+    "firstName": "Hui",
+    "lastName": "Heng",
+    "password": "Test123$",
+    "phoneNumber": "+6587211959",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "zhi.lim37@example.com",
+    "firstName": "Zhi",
+    "lastName": "Lim",
+    "password": "Secure@2025",
+    "phoneNumber": "+6588342555",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "hui.heng38@example.com",
+    "firstName": "Hui",
+    "lastName": "Heng",
+    "password": "Secure@2025",
+    "phoneNumber": "+6591749812",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "jie.koh39@example.com",
+    "firstName": "Jie",
+    "lastName": "Koh",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6598953223",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "ming.goh40@example.com",
+    "firstName": "Ming",
+    "lastName": "Goh",
+    "password": "Secure@2025",
+    "phoneNumber": "+6582301845",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "en.cheong41@example.com",
+    "firstName": "En",
+    "lastName": "Cheong",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6581635167",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "liang.ng42@example.com",
+    "firstName": "Liang",
+    "lastName": "Ng",
+    "password": "Hello@2024",
+    "phoneNumber": "+6594969136",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "fang.foo43@example.com",
+    "firstName": "Fang",
+    "lastName": "Foo",
+    "password": "Secure@2025",
+    "phoneNumber": "+6582525865",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "bo.pang44@example.com",
+    "firstName": "Bo",
+    "lastName": "Pang",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6594112364",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "fang.foo45@example.com",
+    "firstName": "Fang",
+    "lastName": "Foo",
+    "password": "Test123$",
+    "phoneNumber": "+6582074932",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "ming.yong46@example.com",
+    "firstName": "Ming",
+    "lastName": "Yong",
+    "password": "Test123$",
+    "phoneNumber": "+6581613798",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "qing.teo47@example.com",
+    "firstName": "Qing",
+    "lastName": "Teo",
+    "password": "Hello@2024",
+    "phoneNumber": "+6597706466",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "bo.chua48@example.com",
+    "firstName": "Bo",
+    "lastName": "Chua",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6594136807",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "qing.pang49@example.com",
+    "firstName": "Qing",
+    "lastName": "Pang",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6587897893",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "yi.teo50@example.com",
+    "firstName": "Yi",
+    "lastName": "Teo",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6596045372",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "jing.cheong51@example.com",
+    "firstName": "Jing",
+    "lastName": "Cheong",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6594597288",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "xiu.lee52@example.com",
+    "firstName": "Xiu",
+    "lastName": "Lee",
+    "password": "Hello@2024",
+    "phoneNumber": "+6586641821",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "jun.chua53@example.com",
+    "firstName": "Jun",
+    "lastName": "Chua",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6588067088",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "zhi.heng54@example.com",
+    "firstName": "Zhi",
+    "lastName": "Heng",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6593394168",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "xiu.heng55@example.com",
+    "firstName": "Xiu",
+    "lastName": "Heng",
+    "password": "Hello@2024",
+    "phoneNumber": "+6595976482",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "wei.goh56@example.com",
+    "firstName": "Wei",
+    "lastName": "Goh",
+    "password": "Hello@2024",
+    "phoneNumber": "+6589000923",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "liang.yong57@example.com",
+    "firstName": "Liang",
+    "lastName": "Yong",
+    "password": "Test123$",
+    "phoneNumber": "+6590734010",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "cheng.goh58@example.com",
+    "firstName": "Cheng",
+    "lastName": "Goh",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6593989925",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "shan.chan59@example.com",
+    "firstName": "Shan",
+    "lastName": "Chan",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6588062294",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "ying.foo60@example.com",
+    "firstName": "Ying",
+    "lastName": "Foo",
+    "password": "Hello@2024",
+    "phoneNumber": "+6583354962",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "qing.sim61@example.com",
+    "firstName": "Qing",
+    "lastName": "Sim",
+    "password": "Hello@2024",
+    "phoneNumber": "+6584136035",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "wei.chan62@example.com",
+    "firstName": "Wei",
+    "lastName": "Chan",
+    "password": "Secure@2025",
+    "phoneNumber": "+6585266783",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "liang.ng63@example.com",
+    "firstName": "Liang",
+    "lastName": "Ng",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6582996376",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "zhi.liu64@example.com",
+    "firstName": "Zhi",
+    "lastName": "Liu",
+    "password": "Hello@2024",
+    "phoneNumber": "+6598687474",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "zhi.lim65@example.com",
+    "firstName": "Zhi",
+    "lastName": "Lim",
+    "password": "Hello@2024",
+    "phoneNumber": "+6594925741",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "xiu.sim66@example.com",
+    "firstName": "Xiu",
+    "lastName": "Sim",
+    "password": "Secure@2025",
+    "phoneNumber": "+6584297174",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "xiu.liu67@example.com",
+    "firstName": "Xiu",
+    "lastName": "Liu",
+    "password": "Secure@2025",
+    "phoneNumber": "+6591298304",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "zhi.foo68@example.com",
+    "firstName": "Zhi",
+    "lastName": "Foo",
+    "password": "Hello@2024",
+    "phoneNumber": "+6588942325",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "bo.tan69@example.com",
+    "firstName": "Bo",
+    "lastName": "Tan",
+    "password": "Hello@2024",
+    "phoneNumber": "+6587604516",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "shan.lim70@example.com",
+    "firstName": "Shan",
+    "lastName": "Lim",
+    "password": "Hello@2024",
+    "phoneNumber": "+6592128924",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "tian.toh71@example.com",
+    "firstName": "Tian",
+    "lastName": "Toh",
+    "password": "Test123$",
+    "phoneNumber": "+6584851842",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "jun.low72@example.com",
+    "firstName": "Jun",
+    "lastName": "Low",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6583569126",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "qing.sim73@example.com",
+    "firstName": "Qing",
+    "lastName": "Sim",
+    "password": "Test123$",
+    "phoneNumber": "+6580446458",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "jing.ng74@example.com",
+    "firstName": "Jing",
+    "lastName": "Ng",
+    "password": "Test123$",
+    "phoneNumber": "+6588081619",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "mei.tan75@example.com",
+    "firstName": "Mei",
+    "lastName": "Tan",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6599835445",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "jun.koh76@example.com",
+    "firstName": "Jun",
+    "lastName": "Koh",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6598748090",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "shan.goh77@example.com",
+    "firstName": "Shan",
+    "lastName": "Goh",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6593664560",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "ming.lim78@example.com",
+    "firstName": "Ming",
+    "lastName": "Lim",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6582770073",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "bo.lee79@example.com",
+    "firstName": "Bo",
+    "lastName": "Lee",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6581430056",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "zhi.low80@example.com",
+    "firstName": "Zhi",
+    "lastName": "Low",
+    "password": "Hello@2024",
+    "phoneNumber": "+6592985655",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "ying.toh81@example.com",
+    "firstName": "Ying",
+    "lastName": "Toh",
+    "password": "Secure@2025",
+    "phoneNumber": "+6582664642",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "mei.foo82@example.com",
+    "firstName": "Mei",
+    "lastName": "Foo",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6584658612",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "zhi.toh83@example.com",
+    "firstName": "Zhi",
+    "lastName": "Toh",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6585500490",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "tian.cheong84@example.com",
+    "firstName": "Tian",
+    "lastName": "Cheong",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6586886809",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "tian.low85@example.com",
+    "firstName": "Tian",
+    "lastName": "Low",
+    "password": "Test123$",
+    "phoneNumber": "+6588760011",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "mei.ng86@example.com",
+    "firstName": "Mei",
+    "lastName": "Ng",
+    "password": "Test123$",
+    "phoneNumber": "+6586687300",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "kai.foo87@example.com",
+    "firstName": "Kai",
+    "lastName": "Foo",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6586982750",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "kai.sim88@example.com",
+    "firstName": "Kai",
+    "lastName": "Sim",
+    "password": "Secure@2025",
+    "phoneNumber": "+6599321562",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "liang.teo89@example.com",
+    "firstName": "Liang",
+    "lastName": "Teo",
+    "password": "Test123$",
+    "phoneNumber": "+6591496694",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "liang.goh90@example.com",
+    "firstName": "Liang",
+    "lastName": "Goh",
+    "password": "Test123$",
+    "phoneNumber": "+6590886637",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "ming.sim91@example.com",
+    "firstName": "Ming",
+    "lastName": "Sim",
+    "password": "Test123$",
+    "phoneNumber": "+6599074487",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "wei.cheong92@example.com",
+    "firstName": "Wei",
+    "lastName": "Cheong",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6596428507",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "kai.lim93@example.com",
+    "firstName": "Kai",
+    "lastName": "Lim",
+    "password": "Test123$",
+    "phoneNumber": "+6586919502",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "jing.yong94@example.com",
+    "firstName": "Jing",
+    "lastName": "Yong",
+    "password": "Test123$",
+    "phoneNumber": "+6582079342",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "en.pang95@example.com",
+    "firstName": "En",
+    "lastName": "Pang",
+    "password": "Test123$",
+    "phoneNumber": "+6588636482",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "kai.pang96@example.com",
+    "firstName": "Kai",
+    "lastName": "Pang",
+    "password": "P@ssw0rd123!",
+    "phoneNumber": "+6582422337",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "jing.goh97@example.com",
+    "firstName": "Jing",
+    "lastName": "Goh",
+    "password": "Test123$",
+    "phoneNumber": "+6585079316",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "qing.heng98@example.com",
+    "firstName": "Qing",
+    "lastName": "Heng",
+    "password": "Hello@2024",
+    "phoneNumber": "+6594796192",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "mei.toh99@example.com",
+    "firstName": "Mei",
+    "lastName": "Toh",
+    "password": "Hello@2024",
+    "phoneNumber": "+6598967719",
+    "suspended": true,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "tian.liu100@example.com",
+    "firstName": "Tian",
+    "lastName": "Liu",
+    "password": "Welcome#2025",
+    "phoneNumber": "+6593922660",
+    "suspended": false,
+    "userProfile": "PlatformManager"
+  },
+  {
+    "email": "coxduncan@davidson.co.uk",
+    "firstName": "Janice",
+    "lastName": "Hopkins",
+    "password": "4P&0Ac4Vl!ld",
+    "phoneNumber": "(0306) 999 0511",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "evansleigh@hotmail.co.uk",
+    "firstName": "Arthur",
+    "lastName": "Gough",
+    "password": "y+S7Rpde$49^",
+    "phoneNumber": "+441514960525",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "vanessaphillips@outlook.com",
+    "firstName": "Eileen",
+    "lastName": "Hammond",
+    "password": "627Rc4Bi%xl_",
+    "phoneNumber": "+441214960376",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "arthurdavidson@outlook.com",
+    "firstName": "Chelsea",
+    "lastName": "Powell",
+    "password": "94zPN$(s+J%G",
+    "phoneNumber": "+4429 2018 0184",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "harrischarles@yahoo.co.uk",
+    "firstName": "Paul",
+    "lastName": "Watson",
+    "password": "+4qAZQ+yRjR!",
+    "phoneNumber": "+441314960430",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "cunninghamdanielle@stewart.com",
+    "firstName": "Scott",
+    "lastName": "Knowles",
+    "password": "(23IgqBzaKQ(",
+    "phoneNumber": "+4420 7496 0839",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "hammondjulia@wilson.com",
+    "firstName": "Steven",
+    "lastName": "Lewis",
+    "password": "%7UMklr*JJGf",
+    "phoneNumber": "+441632 960 513",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "paulapatterson@akhtar-hall.com",
+    "firstName": "Angela",
+    "lastName": "Mann",
+    "password": "znxu10BuH%G(",
+    "phoneNumber": "+441632 960872",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "charlie09@freeman.org",
+    "firstName": "Lesley",
+    "lastName": "Kerr",
+    "password": "^1W2Bqr6(XJV",
+    "phoneNumber": "(029) 2018 0534",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "vanessaberry@yahoo.co.uk",
+    "firstName": "Guy",
+    "lastName": "Murray",
+    "password": "tz^37vrr@0Oe",
+    "phoneNumber": "0292018841",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "connor18@sharpe.com",
+    "firstName": "Glenn",
+    "lastName": "Martin",
+    "password": "4p$Yn$C)_+KQ",
+    "phoneNumber": "01164960805",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "tclarke@sutton-coles.com",
+    "firstName": "Sarah",
+    "lastName": "Kelly",
+    "password": "Tqy$u5yl1I1L",
+    "phoneNumber": "+441184960216",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "dmorton@rogers-james.com",
+    "firstName": "Francis",
+    "lastName": "Brown",
+    "password": "$68ZKyRv(i1x",
+    "phoneNumber": "(0151) 496 0556",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "msutton@thomas-williams.net",
+    "firstName": "Shannon",
+    "lastName": "Holmes",
+    "password": "^b+BofnAIH3L",
+    "phoneNumber": "028 9018946",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "mitchell36@jenkins.co.uk",
+    "firstName": "Allan",
+    "lastName": "Lewis",
+    "password": "9+X&w5Vc_$2X",
+    "phoneNumber": "(020) 7496 0367",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "seanlynch@gmail.com",
+    "firstName": "Kenneth",
+    "lastName": "Marsh",
+    "password": "Q$6oLlZw$wr2",
+    "phoneNumber": "(0116) 4960774",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "maria73@williams-edwards.com",
+    "firstName": "Abdul",
+    "lastName": "Goodwin",
+    "password": "(de%ISEeJ1Vd",
+    "phoneNumber": "+44131 496 0466",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "blloyd@day-holt.co.uk",
+    "firstName": "Carol",
+    "lastName": "Wood",
+    "password": "@*T#2_TrG3Ci",
+    "phoneNumber": "(0113) 4960805",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "porternaomi@mitchell.com",
+    "firstName": "Michael",
+    "lastName": "Johnson",
+    "password": "(wM6PWvfj$2U",
+    "phoneNumber": "(0141)4960319",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "harrisonjosh@foster.com",
+    "firstName": "Denis",
+    "lastName": "Kent",
+    "password": "Z!JOKECq_5Qa",
+    "phoneNumber": "+44808 1570945",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "whitebarbara@banks.org",
+    "firstName": "Aimee",
+    "lastName": "Lamb",
+    "password": "OE7KWrTf257!",
+    "phoneNumber": "01632960770",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "ross63@adams-connolly.net",
+    "firstName": "Melanie",
+    "lastName": "Ward",
+    "password": "el6(K(Ri+8Nf",
+    "phoneNumber": "+44(0)808 157 0343",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "joshbrown@hotmail.co.uk",
+    "firstName": "Malcolm",
+    "lastName": "Robertson",
+    "password": "v!h*!9Jwx8p(",
+    "phoneNumber": "(028)9018022",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "turnerterence@hotmail.co.uk",
+    "firstName": "Helen",
+    "lastName": "Butler",
+    "password": "G3YqJU%x)iY7",
+    "phoneNumber": "+44114 4960206",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "oharris@hotmail.com",
+    "firstName": "Diana",
+    "lastName": "Bird",
+    "password": "ukYaVJSht*^1",
+    "phoneNumber": "+44115 4960746",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "mwilliams@gmail.com",
+    "firstName": "Ann",
+    "lastName": "Hunter",
+    "password": "4b4VAicUi)QK",
+    "phoneNumber": "+4428 9018 0717",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "qross@gmail.com",
+    "firstName": "Shaun",
+    "lastName": "Sheppard",
+    "password": "+mSJBBvH7zaS",
+    "phoneNumber": "+441314960977",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "vincentparry@williams-harrison.com",
+    "firstName": "Matthew",
+    "lastName": "Simpson",
+    "password": "A@I3o(Wf)v9e",
+    "phoneNumber": "0116 4960639",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "whiteelizabeth@mcdonald-buckley.com",
+    "firstName": "Lawrence",
+    "lastName": "Wood",
+    "password": ")LNCiVpqy5G9",
+    "phoneNumber": "0161 4960662",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "clarkemarie@hotmail.com",
+    "firstName": "Oliver",
+    "lastName": "Cameron",
+    "password": "@_qx^QoY*^1b",
+    "phoneNumber": "(01632) 960 780",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "juliarichardson@turner-morris.biz",
+    "firstName": "Nigel",
+    "lastName": "Carter",
+    "password": "ds$O9FfRT+1^",
+    "phoneNumber": "+44161 4960923",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "kelly40@yahoo.co.uk",
+    "firstName": "Gerard",
+    "lastName": "Davies",
+    "password": "#AxdlAzp*G1O",
+    "phoneNumber": "(0141)4960409",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "slee@jenkins.com",
+    "firstName": "Heather",
+    "lastName": "Bates",
+    "password": "sZ2KUd&9%0)R",
+    "phoneNumber": "(0118)4960745",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "jrobson@taylor.co.uk",
+    "firstName": "Patricia",
+    "lastName": "Morgan",
+    "password": "H7)ChzGZ(5MX",
+    "phoneNumber": "+44(0)28 9018 0174",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "davidsonian@hotmail.com",
+    "firstName": "Valerie",
+    "lastName": "Clark",
+    "password": "$bg8Jm+I*OIE",
+    "phoneNumber": "(0151)4960735",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "paige50@white-morgan.info",
+    "firstName": "George",
+    "lastName": "Adams",
+    "password": "_6ATbi339C_s",
+    "phoneNumber": "(0118) 4960210",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "evansfrank@turnbull.biz",
+    "firstName": "Kerry",
+    "lastName": "Clark",
+    "password": "E@L4XfOyAZ7z",
+    "phoneNumber": "01632960711",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "garyclarke@hotmail.co.uk",
+    "firstName": "Ashleigh",
+    "lastName": "Grant",
+    "password": "RLW*d5Mtf3L+",
+    "phoneNumber": "0115 496 0565",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "carl71@gmail.com",
+    "firstName": "Graham",
+    "lastName": "Green",
+    "password": "T5TC)Zbh@exW",
+    "phoneNumber": "+44117 496 0273",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "suzanne51@allen-gough.net",
+    "firstName": "Brenda",
+    "lastName": "Osborne",
+    "password": "_871dAD!qTAt",
+    "phoneNumber": "(0191) 496 0366",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "charles54@outlook.com",
+    "firstName": "Victor",
+    "lastName": "O'Donnell",
+    "password": "+h$&KJWb)9C(",
+    "phoneNumber": "0292018403",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "baileyjosh@yahoo.com",
+    "firstName": "Ashley",
+    "lastName": "Miller",
+    "password": "O%)R55aEHDKM",
+    "phoneNumber": "02074960664",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "ubrown@roberts.info",
+    "firstName": "Hollie",
+    "lastName": "Bell",
+    "password": "KH@qhhj^YR6D",
+    "phoneNumber": "0118 496 0124",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "mandygould@tucker.info",
+    "firstName": "Lynne",
+    "lastName": "Carter",
+    "password": "*9xBUuYkVE^M",
+    "phoneNumber": "+44(0)28 9018 0199",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "yjackson@outlook.com",
+    "firstName": "Luke",
+    "lastName": "Power",
+    "password": "N+K*steP)3KK",
+    "phoneNumber": "+44(0)1314960466",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "pearsoneileen@hotmail.com",
+    "firstName": "Gary",
+    "lastName": "Sheppard",
+    "password": "f6tqJViD(dHW",
+    "phoneNumber": "+44289018528",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "bbuckley@herbert-watson.com",
+    "firstName": "Danielle",
+    "lastName": "Lucas",
+    "password": "o*2nr#Cj)#0C",
+    "phoneNumber": "+44(0)1134960653",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "lucy38@yahoo.com",
+    "firstName": "Dylan",
+    "lastName": "Morgan",
+    "password": "w3M8Gvxm*_6L",
+    "phoneNumber": "0909 879 0814",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "abdulpatterson@kennedy.com",
+    "firstName": "Barbara",
+    "lastName": "Young",
+    "password": "P56F#uomk!9B",
+    "phoneNumber": "0113 4960104",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "lorrainesingh@hill.com",
+    "firstName": "Adrian",
+    "lastName": "Parker",
+    "password": "c9W@QO_J&5Ib",
+    "phoneNumber": "(0141) 496 0706",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "andrew51@hotmail.com",
+    "firstName": "Cameron",
+    "lastName": "Hope",
+    "password": "_C$1Y0jsdYm%",
+    "phoneNumber": "+44(0)1134960305",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "iscott@yahoo.co.uk",
+    "firstName": "Howard",
+    "lastName": "Sims",
+    "password": "p3a8JlHK_D1d",
+    "phoneNumber": "+441632 960 616",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "danny11@benson-rogers.org",
+    "firstName": "Rachel",
+    "lastName": "Thompson",
+    "password": "*tOKZk%bI5b+",
+    "phoneNumber": "+443069990702",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "leahowen@wells-higgins.com",
+    "firstName": "Josephine",
+    "lastName": "Power",
+    "password": "^_F^8x@yQ5(O",
+    "phoneNumber": "0121 4960731",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "pricelouise@barker.co.uk",
+    "firstName": "Denis",
+    "lastName": "Ellis",
+    "password": "pe8ZkJ(j(k@S",
+    "phoneNumber": "028 9018 0114",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "xcarey@yahoo.co.uk",
+    "firstName": "Beverley",
+    "lastName": "Ford",
+    "password": "cD1^ZoxKt%)O",
+    "phoneNumber": "(0131) 4960841",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "heatherandrews@hotmail.com",
+    "firstName": "Malcolm",
+    "lastName": "Johnson",
+    "password": "ZVUCqsCu$)8w",
+    "phoneNumber": "(0306) 9990969",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "igregory@graham-atkins.com",
+    "firstName": "Lydia",
+    "lastName": "Stevenson",
+    "password": "+*M1_WBbDHiQ",
+    "phoneNumber": "+44115 4960473",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "bentleyjacqueline@fletcher.com",
+    "firstName": "Melissa",
+    "lastName": "Atkinson",
+    "password": "MrO&PL5q$82o",
+    "phoneNumber": "01134960162",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "sophie50@yahoo.co.uk",
+    "firstName": "Lee",
+    "lastName": "Tyler",
+    "password": "^PRjzc(y$5Dv",
+    "phoneNumber": "+44141 496 0800",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "brettroberts@murphy.com",
+    "firstName": "Molly",
+    "lastName": "Newton",
+    "password": "&PPOTN@C(9Xj",
+    "phoneNumber": "0161 4960499",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "jacksonronald@johnson.com",
+    "firstName": "Gail",
+    "lastName": "Smith",
+    "password": "KII3PXGa)e1T",
+    "phoneNumber": "+441214960278",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "sian49@yahoo.co.uk",
+    "firstName": "Alex",
+    "lastName": "Andrews",
+    "password": "vy8edJhT%f9U",
+    "phoneNumber": "01214960041",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "vlynch@yahoo.co.uk",
+    "firstName": "Allan",
+    "lastName": "Howell",
+    "password": "((R5$sw54CMc",
+    "phoneNumber": "+44(0)289018773",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "mitchell01@outlook.com",
+    "firstName": "Marion",
+    "lastName": "Barnes",
+    "password": "r+uz0Fvnuq!U",
+    "phoneNumber": "+44289018887",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "zsharpe@butcher.info",
+    "firstName": "Eileen",
+    "lastName": "Smith",
+    "password": "#Ui0XknQ&b1_",
+    "phoneNumber": "01414960374",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "carole90@hotmail.com",
+    "firstName": "Hilary",
+    "lastName": "Evans",
+    "password": "M+0uriddv$4V",
+    "phoneNumber": "+44(0)1314960687",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "gailmitchell@carey.com",
+    "firstName": "Martin",
+    "lastName": "Bell",
+    "password": "@R0pKcRqs0%)",
+    "phoneNumber": "+44(0)1914960740",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "paul39@gmail.com",
+    "firstName": "Jordan",
+    "lastName": "Douglas",
+    "password": "v1v#Iiby+JRG",
+    "phoneNumber": "+44(0)115 4960512",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "francislee@gmail.com",
+    "firstName": "Joel",
+    "lastName": "Hall",
+    "password": "+8MN1qi#arvr",
+    "phoneNumber": "+44151 496 0903",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "iwilliams@mitchell.com",
+    "firstName": "Stephanie",
+    "lastName": "Turner",
+    "password": "WbBA_aKs$w9t",
+    "phoneNumber": "0114 496 0568",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "tmiles@yahoo.co.uk",
+    "firstName": "Jeffrey",
+    "lastName": "Mitchell",
+    "password": "p3M%IjRG*C^H",
+    "phoneNumber": "+448081570304",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "wongroy@hotmail.co.uk",
+    "firstName": "Vanessa",
+    "lastName": "Moore",
+    "password": "w@vx3zKj*3tS",
+    "phoneNumber": "+44(0)28 9018544",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "zhall@outlook.com",
+    "firstName": "Pauline",
+    "lastName": "Carter",
+    "password": "IT4_7LUk^C3n",
+    "phoneNumber": "(0118)4960777",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "leslie28@gallagher-gregory.co.uk",
+    "firstName": "Darren",
+    "lastName": "Barry",
+    "password": "@o5e!PaX0XNY",
+    "phoneNumber": "+44(0)118 4960840",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "kennethbell@hotmail.co.uk",
+    "firstName": "Kieran",
+    "lastName": "Smith",
+    "password": "78FITzIl)api",
+    "phoneNumber": "01144960021",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "vberry@hotmail.co.uk",
+    "firstName": "Neil",
+    "lastName": "Bowen",
+    "password": "r!$^Gsw#uBx3",
+    "phoneNumber": "(0116)4960939",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "jacqueline21@hotmail.co.uk",
+    "firstName": "Denis",
+    "lastName": "Collier",
+    "password": "WkWxCYCL4&31",
+    "phoneNumber": "(0306)9990943",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "phillipsjessica@leonard.com",
+    "firstName": "Kenneth",
+    "lastName": "Green",
+    "password": "7%1LLIyE&WC7",
+    "phoneNumber": "+44(0)1914960398",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "rthompson@phillips-lane.com",
+    "firstName": "Tracy",
+    "lastName": "White",
+    "password": "EvfOX7ZcHo%p",
+    "phoneNumber": "+442074960245",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "zmclean@harris-booth.info",
+    "firstName": "Beverley",
+    "lastName": "Gill",
+    "password": "H^TVSczwMe6I",
+    "phoneNumber": "+44161 4960243",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "marypearson@gmail.com",
+    "firstName": "Lucy",
+    "lastName": "Scott",
+    "password": "Pu9SkrsRZ*Ma",
+    "phoneNumber": "+44(0)1134960965",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "boylegarry@yahoo.com",
+    "firstName": "Denise",
+    "lastName": "Morris",
+    "password": "4F(cWszN9u&9",
+    "phoneNumber": "(0131) 496 0738",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "alice17@outlook.com",
+    "firstName": "Bethan",
+    "lastName": "Price",
+    "password": "@@B(luzQSC4M",
+    "phoneNumber": "+441632960937",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "nburgess@yahoo.com",
+    "firstName": "Ricky",
+    "lastName": "Mitchell",
+    "password": "q19L7pRzW@DD",
+    "phoneNumber": "01632 960 499",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "terryhardy@hardy-patel.com",
+    "firstName": "Denise",
+    "lastName": "McCarthy",
+    "password": ")O2Su00m1oXq",
+    "phoneNumber": "(0808) 1570688",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "arichardson@outlook.com",
+    "firstName": "Louise",
+    "lastName": "Jones",
+    "password": "998R0zgi@((A",
+    "phoneNumber": "(0151) 4960836",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "joelgardiner@power.com",
+    "firstName": "Jennifer",
+    "lastName": "Taylor",
+    "password": "gc@XGzkmlUR3",
+    "phoneNumber": "01214960948",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "victoriabell@taylor-clarke.com",
+    "firstName": "Frederick",
+    "lastName": "Lane",
+    "password": "^_YYFYkvH3dq",
+    "phoneNumber": "+44909 879 0175",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "blloyd@hughes.com",
+    "firstName": "Tom",
+    "lastName": "French",
+    "password": "Dc9*zM)pK!#P",
+    "phoneNumber": "(0116) 4960415",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "patelfrancesca@yahoo.com",
+    "firstName": "Lee",
+    "lastName": "Frost",
+    "password": "&%33VQNuD(pd",
+    "phoneNumber": "+44(0)114 4960115",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "ashley62@outlook.com",
+    "firstName": "Sian",
+    "lastName": "Wilkins",
+    "password": "aK(9+Atp&*hV",
+    "phoneNumber": "+44(0)118 4960138",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "bakerkaty@hotmail.com",
+    "firstName": "Russell",
+    "lastName": "Weston",
+    "password": "9%3wOXmVR(zv",
+    "phoneNumber": "+44191 4960271",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "brownrobin@preston.net",
+    "firstName": "Mitchell",
+    "lastName": "Johnson",
+    "password": "H(R+w^uy+C6N",
+    "phoneNumber": "(0151) 496 0303",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "nclark@hartley.com",
+    "firstName": "Trevor",
+    "lastName": "Brown",
+    "password": "w0jfp)j7#j#F",
+    "phoneNumber": "(020) 7496 0177",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "knightkirsty@yahoo.com",
+    "firstName": "Laura",
+    "lastName": "Fraser",
+    "password": "(g!@!$xu1x9V",
+    "phoneNumber": "+44(0)121 4960365",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "bradshawtrevor@hotmail.co.uk",
+    "firstName": "Ellie",
+    "lastName": "Poole",
+    "password": "yw^38ZCq!#TA",
+    "phoneNumber": "+4420 74960738",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "thomasbegum@barnes.co.uk",
+    "firstName": "Annette",
+    "lastName": "Shaw",
+    "password": "FgA3yYvx^8$0",
+    "phoneNumber": "+44(0)151 496 0191",
+    "suspended": false,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "ktucker@williams.com",
+    "firstName": "Iain",
+    "lastName": "Smith",
+    "password": "C^56Wi(xLB(E",
+    "phoneNumber": "+44(0)1144960249",
+    "suspended": true,
+    "userProfile": "HomeOwner"
+  },
+  {
+    "email": "tobybray@smith.co.uk",
+    "firstName": "Clifford",
+    "lastName": "Smith",
+    "password": "T#**M(%j4o0c",
+    "phoneNumber": "(0808) 1570101",
+    "suspended": false,
+    "userProfile": "HomeOwner"
   }
 ]

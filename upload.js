@@ -12,11 +12,11 @@ admin.initializeApp({
 const db = admin.firestore();
 
 // Load your JSON data
-const data = JSON.parse(fs.readFileSync('random_dummy-accounts.json', 'utf8'));
+const data = JSON.parse(fs.readFileSync('linked_accounts.json', 'utf8'));
 
 // Loop through the data and upload
 async function uploadData() {
-  const collectionName = 'CleaningServices'; 
+  const collectionName = 'Users'; 
 
   for (const [docId, docData] of Object.entries(data)) {
     try {
