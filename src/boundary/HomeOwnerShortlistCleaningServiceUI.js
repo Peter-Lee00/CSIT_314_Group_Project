@@ -1,32 +1,42 @@
 import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import "./HomeOwnerShortlistCleaningServiceUI.css";
-import { Util } from "../Util";
 import { UserLogoutController } from "../controller/UserAuthController";
 import Swal from 'sweetalert2';
 import {
-  OwnerSaveShortlistController,
-  OwnerSearchShortlistController,
-  OwnerViewShortlistController,
-  OwnerDeleteShortlistController
-} from '../controller/OwnerShortlistController';
+  OwnerGetShortlistedServicesController,
+  OwnerSearchShortlistedServicesController,
+  OwnerRemoveFromShortlistController
+} from '../controller/OwnerCleaningServiceController';
 
 function HomeOwnerShortlistCleaningServiceUI() {
-    const [username] = useState(Cookies.get("username"));
+    const username = localStorage.getItem('username') || 'testuser';
     const [shortlist, setShortlist] = useState([]);
 
-    // Fetch shortlist using the search controller with empty filters
     const fetchShortlist = async () => {
-        const controller = new OwnerSearchShortlistController();
-        const result = await controller.searchShortlist(username, '', '', [], '');
-        setShortlist(result || []);
+        const controller = new OwnerGetShortlistedServicesController();
+        const result = await controller.getShortlistedServices(username);
+        if (!result || result.length === 0) {
+            setShortlist([]);
+        } else {
+            setShortlist(result.map(doc => ({
+                id: doc.id,
+                serviceName: doc.serviceName,
+                description: doc.description && doc.description.length > 150 ? doc.description.substring(0, 150) + "..." : doc.description,
+                fullDescription: doc.description,
+                serviceType: doc.serviceType,
+                price: doc.price,
+                duration: doc.duration,
+                serviceArea: doc.serviceArea,
+                cleanerId: doc.cleanerId,
+            })));
+        }
     };
 
     useEffect(() => {
         fetchShortlist();
     }, []);
 
-    const clearSearch = async () => {
+    const clearSearch = () => {
         document.getElementById('service_name_search_input').value = '';
         document.getElementById('serviceType_search_input').value = '';
         document.getElementById('priceRange_search_input').value = '';
@@ -35,67 +45,43 @@ function HomeOwnerShortlistCleaningServiceUI() {
     };
 
     const searchShortlist = async () => {
-        const serviceNameInput = document.getElementById('service_name_search_input');
-        const serviceTypeInput = document.getElementById('serviceType_search_input');
-        const priceRangeInput = document.getElementById('priceRange_search_input');
-        const durationInput = document.getElementById('duration_search_input');
+        const name = document.getElementById('service_name_search_input').value;
+        const type = document.getElementById('serviceType_search_input').value;
+        const priceRange = document.getElementById('priceRange_search_input').value.split('-');
+        const duration = document.getElementById('duration_search_input').value;
 
-        let priceRange = priceRangeInput.value.toString().split("-");
+        const controller = new OwnerSearchShortlistedServicesController();
+        const result = await controller.searchShortlistedServices(username, {
+            serviceName: name,
+            serviceType: type,
+            priceRange,
+            duration
+        });
 
-        const serviceName = serviceNameInput ? serviceNameInput.value : '';
-        const serviceType = serviceTypeInput.value;
-        const duration = durationInput.value;
-
-        const controller = new OwnerSearchShortlistController();
-        const shortlistData = await controller.searchShortlist(username, serviceName, serviceType, priceRange, duration);
-        setShortlist(shortlistData || []);
-    };
-
-    const viewService = async (serviceId) => {
-        console.log('Fetching cleaning service for:', serviceId);
-        const controller = new OwnerViewShortlistController();
-        const service = await controller.viewServiceFromShortlist(serviceId);
-
-        if (service) {
+        if (!result || result.length === 0) {
             Swal.fire({
-                title: 'View Cleaning Service',
-                width: 800,
-                html: `
-                    <div style="text-align: left;">
-                        <div class="uclService-contents">
-                            <strong>Service Name:</strong> ${service.serviceName}
-                        </div>
-                        <div class="uclService-contents">
-                            <strong>Type:</strong> ${service.serviceType}
-                        </div>
-                        <div class="uclService-contents">
-                            <strong>Price:</strong> $${service.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                        </div>
-                        <div class="uclService-contents">
-                            <strong>Duration:</strong> ${service.duration} hours
-                        </div>
-                        <div class="uclService-contents">
-                            <strong>Description:</strong> ${service.description}
-                        </div>
-                        <div class="uclService-contents">
-                            <strong>Cleaner ID:</strong> ${service.cleanerId}
-                        </div>
-                    </div>
-                `,
-                confirmButtonText: 'Close',
-                focusConfirm: false
+                title: 'No Results',
+                text: 'No services found matching the search criteria.',
+                icon: 'info',
+                confirmButtonText: 'OK'
             });
+            setShortlist([]);
         } else {
-            Swal.fire({
-                title: 'Error',
-                text: 'Failed to load service information.',
-                icon: 'error',
-                confirmButtonText: 'Close'
-            });
+            setShortlist(result.map(doc => ({
+                id: doc.id,
+                serviceName: doc.serviceName,
+                description: doc.description && doc.description.length > 150 ? doc.description.substring(0, 150) + "..." : doc.description,
+                fullDescription: doc.description,
+                serviceType: doc.serviceType,
+                price: doc.price,
+                duration: doc.duration,
+                serviceArea: doc.serviceArea,
+                cleanerId: doc.cleanerId,
+            })));
         }
     };
 
-    const handleRemoveFromShortlist = async (shortlistId) => {
+    const handleRemoveFromShortlist = (serviceId) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You will not be able to recover this service from your shortlist!",
@@ -105,14 +91,10 @@ function HomeOwnerShortlistCleaningServiceUI() {
             cancelButtonText: 'No, keep it'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const controller = new OwnerDeleteShortlistController();
-                const isSuccess = await controller.deleteShortlist(shortlistId);
-                if (isSuccess && isSuccess.success) {
-                    Swal.fire('Removed!', 'The service has been removed from your shortlist.', 'success');
-                    fetchShortlist();
-                } else {
-                    Swal.fire('Error', 'Failed to remove service from shortlist.', 'error');
-                }
+                const controller = new OwnerRemoveFromShortlistController();
+                await controller.removeFromShortlist(username, serviceId);
+                Swal.fire('Removed!', 'The service has been removed from your shortlist.', 'success');
+                fetchShortlist();
             }
         });
     };
@@ -145,92 +127,98 @@ function HomeOwnerShortlistCleaningServiceUI() {
         window.history.back();
     };
 
-    return (
-        <div className="shortlist-page">
-            <div className="shortlist-container">
-                <div className="hscHeader">
-                    <button onClick={handleBack} className="hscBack-button">
-                        Back
-                    </button>
-                    <div className="hscProfile-picture">
-                        <img
-                            src={"https://placehold.co/40x40?text=" + Cookies.get("username")}
-                            alt="Profile"
-                        />
-                    </div>
-                    <span className="hscUsername">{username}</span>
-                    <button onClick={handleLogout} className="hscLogout-button">
-                        Logout
-                    </button>
-                </div>
-
-                <div className="hscSearch-bar">
-                    <span>
-                        <input id="service_name_search_input" className="swal2-input custom-select" placeholder="Service Name"></input>
-
-                        <select id="serviceType_search_input" className="swal2-input custom-select">
-                            <option value="">Select Service Type</option>
-                            <option value="Basic Cleaning">Basic Cleaning</option>
-                            <option value="Deep Cleaning">Deep Cleaning</option>
-                            <option value="Move In/Out Cleaning">Move In/Out Cleaning</option>
-                            <option value="Office Cleaning">Office Cleaning</option>
-                            <option value="Window Cleaning">Window Cleaning</option>
-                            <option value="Carpet Cleaning">Carpet Cleaning</option>
-                            <option value="Post Renovation Cleaning">Post Renovation Cleaning</option>
-                            <option value="Disinfection Service">Disinfection Service</option>
-                        </select>
-
-                        <select id="priceRange_search_input" className="swal2-input custom-select">
-                            <option value="">Select price range</option>
-                            <option value="0-50">$0 - $50</option>
-                            <option value="51-100">$51 - $100</option>
-                            <option value="101-200">$101 - $200</option>
-                            <option value="201-500">$201 - $500</option>
-                        </select>
-
-                        <input id="duration_search_input" className="swal2-input custom-select" placeholder="Duration (hours)" type="number" min="1"></input>
-
-                        <button onClick={searchShortlist} className="hscSearch-button">
-                            Search
-                        </button>
-                        <button onClick={clearSearch} className="hscSearch-button">
-                            Clear
-                        </button>
-                    </span>
-                </div>
-                <div className="hscUser-table">
-                    <table className="hscTable">
-                        <thead>
-                            <tr>
-                                <th>Service Name</th>
-                                <th>Description</th>
-                                <th>Type</th>
-                                <th>Price</th>
-                                <th>Duration</th>
-                                <th></th>
-                            </tr>
-                        </thead>
+    const handleView = (service) => {
+        Swal.fire({
+            title: service.serviceName,
+            width: 650,
+            html: `
+                <div style="border-radius:12px; padding:18px; text-align:left;">
+                    <table style="width:100%; border-collapse:collapse;">
                         <tbody>
-                            {shortlist.map((service) => (
-                                <tr key={service.shortlistId}>
-                                    <td>{service.serviceName}</td>
-                                    <td>{service.description}</td>
-                                    <td>{service.serviceType}</td>
-                                    <td>${service.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                    <td>{service.duration} hrs</td>
-                                    <td style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                                        <button className="shortlistViewButton" onClick={() => viewService(service.serviceId)}>
-                                            View
-                                        </button>
-                                        <button className="shortlistRemoveButton" onClick={() => handleRemoveFromShortlist(service.shortlistId)}>
-                                            Remove
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                            <tr><th style='text-align:left;padding:8px 6px;'>Service Name</th><td style='padding:8px 6px;'>${service.serviceName}</td></tr>
+                            <tr><th style='text-align:left;padding:8px 6px;'>Description</th><td style='padding:8px 6px;'>${service.fullDescription || service.description}</td></tr>
+                            <tr><th style='text-align:left;padding:8px 6px;'>Type</th><td style='padding:8px 6px;'>${service.serviceType}</td></tr>
+                            <tr><th style='text-align:left;padding:8px 6px;'>Price</th><td style='padding:8px 6px;'>$${service.price}</td></tr>
+                            <tr><th style='text-align:left;padding:8px 6px;'>Duration</th><td style='padding:8px 6px;'>${service.duration} hrs</td></tr>
+                            <tr><th style='text-align:left;padding:8px 6px;'>Service Area</th><td style='padding:8px 6px;'>${service.serviceArea || 'N/A'}</td></tr>
+                            <tr><th style='text-align:left;padding:8px 6px;'>Cleaner ID</th><td style='padding:8px 6px;'>${service.cleanerId || 'N/A'}</td></tr>
                         </tbody>
                     </table>
                 </div>
+            `,
+            showCancelButton: true,
+            cancelButtonText: 'Close',
+            confirmButtonText: 'Remove from Shortlist',
+            showDenyButton: false,
+            focusConfirm: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleRemoveFromShortlist(service.id);
+            }
+        });
+    };
+
+    return (
+        <div className="bsContainer">
+            <div className="bsHeader">
+                <button onClick={handleBack} className="bsBack-button">Back</button>
+                <div className="bsProfile-picture">
+                    <img
+                        src={"https://placehold.co/40x40?text=" + username}
+                        alt="Profile"
+                    />
+                </div>
+                <span className="bsUsername">{username}</span>
+                <button onClick={handleLogout} className="bsLogout-button">Logout</button>
+            </div>
+            <div className="bsSearch-bar">
+                <span>
+                    <input id="service_name_search_input" className="swal2-input custom-select" placeholder="Service Name" />
+                    <select id="serviceType_search_input" className="swal2-input custom-select">
+                        <option value="">All Types</option>
+                        <option value="Standard">Standard</option>
+                        <option value="Deep">Deep</option>
+                    </select>
+                    <select id="priceRange_search_input" className="swal2-input custom-select">
+                        <option value="">All Prices</option>
+                        <option value="0-50">$0 - $50</option>
+                        <option value="51-100">$51 - $100</option>
+                        <option value="101-200">$101 - $200</option>
+                        <option value="201-500">$201 - $500</option>
+                    </select>
+                    <input id="duration_search_input" className="swal2-input custom-select" placeholder="Duration (hours)" type="number" min="1" />
+                    <button onClick={searchShortlist} className="bsSearch-button">Search</button>
+                    <button onClick={clearSearch} className="bsSearch-button">Clear</button>
+                </span>
+            </div>
+            <div className="bsUser-table">
+                <div className="bsTable-header">
+                    <span>Service Name</span>
+                    <span>Description</span>
+                    <span>Type</span>
+                    <span>Price</span>
+                    <span>Duration</span>
+                    <span>Service Area</span>
+                    <span></span>
+                </div>
+                {shortlist.map((service) => (
+                    <div key={service.id} className="bsTable-row">
+                        <span>{service.serviceName}</span>
+                        <span>{service.description}</span>
+                        <span>{service.serviceType}</span>
+                        <span>${service.price}</span>
+                        <span>{service.duration} hrs</span>
+                        <span>{service.serviceArea || 'N/A'}</span>
+                        <span>
+                            <button onClick={() => handleView(service)} className="bsView-button">
+                                View
+                            </button>
+                            <button onClick={() => handleRemoveFromShortlist(service.id)} className="bsRFS-button">
+                                Remove
+                            </button>
+                        </span>
+                    </div>
+                ))}
             </div>
         </div>
     );

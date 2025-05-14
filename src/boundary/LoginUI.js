@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import './LoginUI.css';
 import { UserLoginController } from "../controller/UserAuthController";
 import Swal from 'sweetalert2'; 

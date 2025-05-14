@@ -1,10 +1,5 @@
 import Report from '../entity/Report';
 
-function getTotalFromHistory(historyObj, fallback) {
-  if (!historyObj) return fallback || 0;
-  return Object.values(historyObj).reduce((a, b) => a + b, 0);
-}
-
 function getWeeklySum(historyMap) {
   if (!historyMap) return 0;
   const today = new Date();

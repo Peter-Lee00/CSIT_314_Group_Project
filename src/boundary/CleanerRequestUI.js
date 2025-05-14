@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Swal from 'sweetalert2';
 import ServiceCategory from '../entity/ServiceCategory';
 
 const CleanerRequestUI = ({ requests, requestServiceDetails, onAccept, onDecline, onClose }) => {

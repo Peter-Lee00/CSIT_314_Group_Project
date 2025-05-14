@@ -11,7 +11,6 @@ import {
   CleanerTrackShortlistCountController,
   CleanerReadCleaningServicesController
 } from '../controller/CleanerServiceController';
-import { ServiceOffering } from '../entity/CleaningService';
 import Swal from 'sweetalert2';
 import Chart from 'chart.js/auto';
 import './CleanerServiceUI.css';
@@ -20,9 +19,6 @@ import CleaningService from '../entity/CleaningService';
 import ServiceCategory from '../entity/ServiceCategory';
 import { UserLogoutController } from '../controller/UserAuthController';
 import CleanerConfirmedMatchController from '../controller/CleanerConfirmedMatchController';
-import { FaEdit, FaTrash, FaEye, FaStar, FaHistory } from 'react-icons/fa';
-import { db } from '../firebase';
-import { collection, query, where, getDocs, doc, updateDoc, deleteDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 import CleanerRequestUI from './CleanerRequestUI';
 import CleanerConfirmedMatchesUI from './CleanerConfirmedMatchesUI';
 
@@ -42,7 +38,6 @@ const CleanerServiceUI = () => {
     startDate: '',
     endDate: ''
   });
-  const [historyResults, setHistoryResults] = useState([]);
   const [searchType, setSearchType] = useState('');
   const [searchPriceRange, setSearchPriceRange] = useState('');
   const [showRequests, setShowRequests] = useState(false);
@@ -244,130 +239,6 @@ const CleanerServiceUI = () => {
         fetchServicesForCleaner(currentCleanerId); // refresh list
       } else {
         Swal.fire('Oops', 'Failed to add service', 'error');
-      }
-    }
-  };
-
-  const handleServiceOfferingChange = async (serviceId, newOfferingStatus) => {
-    try {
-      const result = await updateServiceOfferingController.updateServiceOffering(serviceId, newOfferingStatus);
-      
-      if (result === null) {
-        // Failed to update
-        Swal.fire({
-          icon: 'error',
-          title: 'Update Failed',
-          text: 'Failed to update service offering status. Please try again.',
-        });
-        return;
-      }
-
-      // Success case
-      Swal.fire({
-        icon: 'success',
-        title: 'Status Updated',
-        text: `Service has been ${newOfferingStatus ? 'restored to current offerings' : 'moved to history'}.`,
-      });
-      
-      // Refresh the service list
-      await fetchServicesForCleaner(currentCleanerId);
-    } catch (error) {
-      console.error("UI error handling service offering update:", error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'An unexpected error occurred. Please try again.',
-      });
-    }
-  };
-
-  const promptEditService = async (existingService) => {
-    const { value: updatedInfo } = await Swal.fire({
-      title: 'Edit Service',
-      width: 800,
-      html: `
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-          <div style="display: flex; gap: 16px;">
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Service Name:</label><input id="serviceName" class="swal2-input" style="flex:1;" value="${existingService.serviceName}"></div>
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Type:</label><select id="serviceType" class="swal2-select" style="flex:1;">${availableTypes.map(type => `<option value="${type.name}" ${type.name === existingService.serviceType ? 'selected' : ''}>${type.name}</option>`).join('')}</select></div>
-          </div>
-          <div style="display: flex; align-items: center;">
-            <label style="width: 120px;">Description:</label>
-            <textarea id="description" class="swal2-textarea" style="flex:1; min-height:60px;" >${existingService.description || ''}</textarea>
-          </div>
-          <div style="display: flex; gap: 16px;">
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Price (SGD):</label><input id="price" class="swal2-input" type="number" style="flex:1;" value="${existingService.price}"></div>
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Duration (hrs):</label><input id="duration" class="swal2-input" type="number" style="flex:1;" value="${existingService.duration}"></div>
-          </div>
-          <div style="display: flex; gap: 16px;">
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Service Area:</label><input id="serviceArea" class="swal2-input" style="flex:1;" value="${existingService.serviceArea || ''}"></div>
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Special Equipment:</label><input id="specialEquipment" class="swal2-input" style="flex:1;" value="${existingService.specialEquipment || ''}"></div>
-          </div>
-          <div style="display: flex; gap: 16px;">
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;"># of Workers:</label><input id="numWorkers" class="swal2-input" type="number" style="flex:1;" value="${existingService.numWorkers || ''}"></div>
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Available From:</label><input id="serviceAvailableFrom" type="date" class="swal2-input" style="flex:1;" value="${existingService.serviceAvailableFrom || ''}"></div>
-          </div>
-          <div style="display: flex; gap: 16px;">
-            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Available To:</label><input id="serviceAvailableTo" type="date" class="swal2-input" style="flex:1;" value="${existingService.serviceAvailableTo || ''}"></div>
-          </div>
-          <div style="display: flex; align-items: center;">
-            <label style="width: 120px;">What's Included:</label>
-            <textarea id="includedTasks" class="swal2-textarea" style="flex:1; min-height:60px;">${existingService.includedTasks ? existingService.includedTasks.join(', ') : ''}</textarea>
-          </div>
-        </div>
-      `,
-      showCancelButton: true,
-      preConfirm: () => {
-        const data = {
-          serviceName: document.getElementById('serviceName').value,
-          serviceType: document.getElementById('serviceType').value,
-          description: document.getElementById('description').value,
-          price: document.getElementById('price').value,
-          duration: document.getElementById('duration').value,
-          serviceArea: document.getElementById('serviceArea').value,
-          specialEquipment: document.getElementById('specialEquipment').value,
-          numWorkers: document.getElementById('numWorkers').value,
-          includedTasks: document.getElementById('includedTasks').value.split(',').map(s => s.trim()),
-          serviceAvailableFrom: document.getElementById('serviceAvailableFrom').value,
-          serviceAvailableTo: document.getElementById('serviceAvailableTo').value
-        };
-
-        return data;
-      }
-    });
-
-    if (updatedInfo) {
-      const wasUpdated = await updateServiceController.updateService(existingService.id, updatedInfo);
-      if (wasUpdated) {
-        Swal.fire('Updated', 'Your service has been modified', 'success');
-        fetchServicesForCleaner(currentCleanerId);
-      } else {
-        Swal.fire('Oops', 'Failed to update the service', 'error');
-      }
-    }
-  };
-
-  const confirmDeleteService = async (serviceId) => {
-    const result = await Swal.fire({
-      title: 'Delete Service?',
-      text: "This will permanently remove the service.",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it'
-    });
-
-    if (result.isConfirmed) {
-      try {
-        const deleted = await deleteServiceController.deleteService(serviceId);
-        if (deleted) {
-          Swal.fire('Deleted!', 'Service has been removed.', 'success');
-          fetchServicesForCleaner(currentCleanerId);
-        }
-      } catch (e) {
-        console.warn('Failed deleting service:', e);
-        Swal.fire('Error', 'Could not delete the service.', 'error');
       }
     }
   };
@@ -584,6 +455,108 @@ const CleanerServiceUI = () => {
     }
   };
 
+  // Add missing edit and delete functions for services
+  const promptEditService = async (srv) => {
+    const { value: updatedService } = await Swal.fire({
+      title: 'Edit Service',
+      width: 800,
+      html: `
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; gap: 16px;">
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Service Name:</label><input id="serviceName" class="swal2-input" style="flex:1;" placeholder="Service Name" value="${srv.serviceName || ''}" required></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Type:</label><select id="serviceType" class="swal2-select" style="flex:1;">${availableTypes.map(type => `<option value="${type.name}" ${type.name === srv.serviceType ? 'selected' : ''}>${type.name}</option>`).join('')}</select></div>
+          </div>
+          <div style="display: flex; align-items: center;">
+            <label style="width: 120px;">Description:</label>
+            <textarea id="description" class="swal2-textarea" style="flex:1; min-height:60px;" placeholder="Short description" required>${srv.description || ''}</textarea>
+          </div>
+          <div style="display: flex; gap: 16px;">
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Price (SGD):</label><input id="price" type="number" class="swal2-input" style="flex:1;" placeholder="Price in SGD" value="${srv.price || ''}" required></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Duration (hrs):</label><input id="duration" type="number" class="swal2-input" style="flex:1;" placeholder="Duration (hrs)" value="${srv.duration || ''}" required></div>
+          </div>
+          <div style="display: flex; gap: 16px;">
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Service Area:</label><input id="serviceArea" class="swal2-input" style="flex:1;" placeholder="Service Area" value="${srv.serviceArea || ''}" required></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Special Equipment:</label><input id="specialEquipment" class="swal2-input" style="flex:1;" placeholder="Special Equipment Used" value="${srv.specialEquipment || ''}" required></div>
+          </div>
+          <div style="display: flex; gap: 16px;">
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;"># of Workers:</label><input id="numWorkers" type="number" class="swal2-input" style="flex:1;" placeholder="Number of Workers" value="${srv.numWorkers || ''}" required></div>
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Available From:</label><input id="serviceAvailableFrom" type="date" class="swal2-input" style="flex:1;" value="${srv.serviceAvailableFrom || ''}" required></div>
+          </div>
+          <div style="display: flex; gap: 16px;">
+            <div style="flex:1; display: flex; align-items: center;"><label style="width: 120px;">Available To:</label><input id="serviceAvailableTo" type="date" class="swal2-input" style="flex:1;" value="${srv.serviceAvailableTo || ''}" required></div>
+          </div>
+          <div style="display: flex; align-items: center;">
+            <label style="width: 120px;">What's Included:</label>
+            <textarea id="includedTasks" class="swal2-textarea" style="flex:1; min-height:60px;" placeholder="What's Included (comma separated)" required>${(srv.includedTasks || []).join(', ')}</textarea>
+          </div>
+        </div>
+      `,
+      showCancelButton: true,
+      focusConfirm: false,
+      preConfirm: () => {
+        const serviceName = document.getElementById('serviceName').value.trim();
+        const serviceType = document.getElementById('serviceType').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const price = document.getElementById('price').value.trim();
+        const duration = document.getElementById('duration').value.trim();
+        const serviceArea = document.getElementById('serviceArea').value.trim();
+        const specialEquipment = document.getElementById('specialEquipment').value.trim();
+        const numWorkers = document.getElementById('numWorkers').value.trim();
+        const includedTasks = document.getElementById('includedTasks').value.trim();
+        const serviceAvailableFrom = document.getElementById('serviceAvailableFrom').value.trim();
+        const serviceAvailableTo = document.getElementById('serviceAvailableTo').value.trim();
+        if (!serviceName || !serviceType || !description || !price || !duration || !serviceArea || !specialEquipment || !numWorkers || !includedTasks || !serviceAvailableFrom || !serviceAvailableTo) {
+          Swal.showValidationMessage('All fields are required!');
+          return false;
+        }
+        return {
+          serviceName,
+          serviceType,
+          description,
+          price,
+          duration,
+          serviceArea,
+          specialEquipment,
+          numWorkers,
+          includedTasks: includedTasks.split(',').map(s => s.trim()),
+          serviceAvailableFrom,
+          serviceAvailableTo,
+          isOffering: srv.isOffering
+        };
+      }
+    });
+
+    if (updatedService) {
+      const isUpdated = await updateServiceController.updateService(srv.id, updatedService);
+      if (isUpdated) {
+        Swal.fire('Done!', 'Service updated successfully', 'success');
+        fetchServicesForCleaner(currentCleanerId); // refresh list
+      } else {
+        Swal.fire('Oops', 'Failed to update service', 'error');
+      }
+    }
+  };
+
+  const confirmDeleteService = async (serviceId) => {
+    const result = await Swal.fire({
+      title: 'Delete Service?',
+      text: 'Are you sure you want to delete this service? This action cannot be undone.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    });
+    if (result.isConfirmed) {
+      const isDeleted = await deleteServiceController.deleteService(serviceId);
+      if (isDeleted) {
+        Swal.fire('Deleted!', 'Service deleted successfully.', 'success');
+        fetchServicesForCleaner(currentCleanerId); // refresh list
+      } else {
+        Swal.fire('Oops', 'Failed to delete service', 'error');
+      }
+    }
+  };
+
   // Layout below is mostly left intact
   return (
     <div className="cs-container">
@@ -604,11 +577,6 @@ const CleanerServiceUI = () => {
             loadConfirmedRequests();
           }}>Confirmed Matches</button>
           <button className="cs-history-button" onClick={handleLogout}>Logout</button>
-        {!showHistory && (
-          <button className="cs-back-button" onClick={() => navigate(-1)}>
-            Home
-          </button>
-        )}
         </div>
       </div>
 

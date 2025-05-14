@@ -1,5 +1,4 @@
 import CleaningService from '../entity/CleaningService';
-import Cookies from 'js-cookie';
 import { Util } from '../Util';
 
 class CleanerGetServicesController {

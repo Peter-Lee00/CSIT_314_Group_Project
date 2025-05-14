@@ -5,7 +5,6 @@ import {
     DeleteCategoryController,
     ListCategoriesController,
     SearchCategoriesController,
-    GetCategoryByIdController
 } from '../controller/PMserviceCategoryController';
 import {
     GenerateDailyReportController,

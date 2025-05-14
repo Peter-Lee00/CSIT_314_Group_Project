@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import CleaningService from '../entity/CleaningService';
-import CleaningServiceRequest from '../entity/CleaningServiceRequest';
 import { UserLogoutController } from '../controller/UserAuthController';
 import ServiceCategory from '../entity/ServiceCategory';
 import {
@@ -10,7 +8,6 @@ import {
   OwnerSaveShortlistController,
   OwnerGetShortlistedServicesController,
   OwnerRemoveFromShortlistController,
-  OwnerCreateServiceRequestController,
   OwnerGetServiceHistoryController,
   OwnerUpdateRequestStatusController,
   OwnerGetConfirmedMatchesController,
@@ -51,6 +48,15 @@ function HomeOwnerCleaningServiceUI() {
         duration: ''
     });
     const [shortlistSearchPerformed, setShortlistSearchPerformed] = useState(false);
+    const [filteredShortlistedServices, setFilteredShortlistedServices] = useState([]);
+    const [historySearch, setHistorySearch] = useState({
+        serviceName: '',
+        serviceType: '',
+        priceRange: '',
+        date: ''
+    });
+    const [historySearchPerformed, setHistorySearchPerformed] = useState(false);
+    const [filteredConfirmedServices, setFilteredConfirmedServices] = useState([]);
 
     const searchController = new OwnerSearchCleaningServiceController();
     const saveShortlistController = new OwnerSaveShortlistController();
@@ -100,6 +106,21 @@ function HomeOwnerCleaningServiceUI() {
         });
         fetchServices();
     }, []);
+
+    useEffect(() => {
+        // Reset filtered list when modal opens or shortlist changes
+        if (showShortlist) {
+            setFilteredShortlistedServices(shortlistedServices);
+            setShortlistSearchPerformed(false);
+        }
+    }, [showShortlist, shortlistedServices]);
+
+    useEffect(() => {
+        if (showHistoryModal) {
+            setFilteredConfirmedServices(confirmedServices);
+            setHistorySearchPerformed(false);
+        }
+    }, [showHistoryModal, confirmedServices]);
 
     const fetchServices = async (filters = {}) => {
         const result = await searchController.searchCleaningService(
@@ -160,7 +181,6 @@ function HomeOwnerCleaningServiceUI() {
 
     const handleShortlist = async (service) => {
         const username = localStorage.getItem('username') || 'testuser';
-        
         // Check if service is already in shortlist
         if (isShortlisted(service.id)) {
             Swal.fire({
@@ -172,26 +192,43 @@ function HomeOwnerCleaningServiceUI() {
             });
             return;
         }
-        
-        // Increment shortlist count when service is added to shortlist
-        await CleaningService.increaseShortlistCount(service.id);
-        
-        const result = await saveShortlistController.saveToShortlist(username, service);
-        if (result) {
-            Swal.fire({
-                title: 'Added!',
-                text: 'Service added to shortlist!',
-                icon: 'success',
-                confirmButtonText: 'OK',
-                timer: 1500
-            });
-        } else {
-            Swal.fire({
-                title: 'Failed!',
-                text: 'Service failed to add to shortlist.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
+        try {
+            // Increment shortlist count when service is added to shortlist
+            await CleaningService.increaseShortlistCount(service.id);
+            const result = await saveShortlistController.saveToShortlist(username, service);
+            if (result) {
+                Swal.fire({
+                    title: 'Added!',
+                    text: 'Service added to shortlist!',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    timer: 1500
+                });
+            } else {
+                Swal.fire({
+                    title: 'Failed!',
+                    text: 'Service failed to add to shortlist.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        } catch (error) {
+            if (error.message && error.message.includes('already in your shortlist')) {
+                Swal.fire({
+                    title: 'Already Shortlisted',
+                    text: 'This service is already in your shortlist!',
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                    timer: 1500
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to add service to shortlist.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
         }
     };
 
@@ -206,9 +243,6 @@ function HomeOwnerCleaningServiceUI() {
             price: doc.price,
             duration: doc.duration,
             serviceArea: doc.serviceArea,
-            specialEquipment: doc.specialEquipment,
-            numWorkers: doc.numWorkers,
-            includedTasks: doc.includedTasks,
         })));
         setShowShortlist(true);
     };
@@ -375,67 +409,68 @@ function HomeOwnerCleaningServiceUI() {
         }
     };
 
-    const getUnique = (arr, key) => [...new Set(arr.map(item => item[key]).filter(Boolean))];
-
-    const filterConfirmedServices = () => {
-        return confirmedServices.filter(request => {
-            const service = serviceDetails[request.serviceId] || {};
-            const matchesServiceName = !historyFilters.serviceName || service.serviceName === historyFilters.serviceName;
-            const matchesServiceType = !historyFilters.serviceType || service.serviceType === historyFilters.serviceType;
-            const matchesPrice = !historyFilters.priceRange || (() => {
-                if (!service.price) return false;
-                const [min, max] = historyFilters.priceRange.split('-').map(Number);
-                return service.price >= min && service.price <= max;
-            })();
-            const matchesDate = !historyFilters.date || request.requestedDate === historyFilters.date;
-            const matchesSearch = !historyFilters.search || (
-                (service.serviceName && service.serviceName.toLowerCase().includes(historyFilters.search.toLowerCase())) ||
-                (service.serviceType && service.serviceType.toLowerCase().includes(historyFilters.search.toLowerCase())) ||
-                (service.price && String(service.price).includes(historyFilters.search)) ||
-                (service.serviceArea && service.serviceArea.toLowerCase().includes(historyFilters.search.toLowerCase()))
-            );
-            return matchesServiceName && matchesServiceType && matchesPrice && matchesDate && matchesSearch;
-        });
-    };
-
     // Add shortlist search handlers
     const handleShortlistSearchInput = (e) => {
         setShortlistSearch({ ...shortlistSearch, [e.target.name]: e.target.value });
     };
 
-    const searchShortlist = async () => {
-        let priceRange = shortlistSearch.priceRange ? shortlistSearch.priceRange.split('-') : [];
-        const filterCriteria = {
-            serviceName: shortlistSearch.serviceName,
-            serviceType: shortlistSearch.serviceType,
-            priceRange: priceRange,
-            duration: shortlistSearch.duration
-        };
-        const result = await searchShortlistedServicesController.searchShortlistedServices(username, filterCriteria);
-        setShortlistedServices(result.map(doc => ({
-            id: doc.id,
-            serviceName: doc.serviceName,
-            description: doc.description,
-            serviceType: doc.serviceType,
-            price: doc.price,
-            duration: doc.duration,
-            serviceArea: doc.serviceArea,
-            specialEquipment: doc.specialEquipment,
-            numWorkers: doc.numWorkers,
-            includedTasks: doc.includedTasks,
-        })));
+    const handleShortlistSearch = () => {
+        const filtered = shortlistedServices.filter(service => {
+            const matchesName = !shortlistSearch.serviceName || (service.serviceName && service.serviceName.toLowerCase().includes(shortlistSearch.serviceName.toLowerCase()));
+            const matchesType = !shortlistSearch.serviceType || service.serviceType === shortlistSearch.serviceType;
+            const matchesPrice = !shortlistSearch.priceRange || (() => {
+                if (!service.price) return false;
+                const [min, max] = shortlistSearch.priceRange.split('-').map(Number);
+                return service.price >= min && service.price <= max;
+            })();
+            const matchesDuration = !shortlistSearch.duration || String(service.duration) === String(shortlistSearch.duration);
+            return matchesName && matchesType && matchesPrice && matchesDuration;
+        });
+        setFilteredShortlistedServices(filtered);
         setShortlistSearchPerformed(true);
     };
 
-    const clearShortlistSearch = async () => {
+    const clearShortlistSearch = () => {
         setShortlistSearch({
             serviceName: '',
             serviceType: '',
             priceRange: '',
             duration: ''
         });
+        setFilteredShortlistedServices(shortlistedServices);
         setShortlistSearchPerformed(false);
-        await handleViewShortlist();
+    };
+
+    const handleHistorySearchInput = (e) => {
+        setHistorySearch({ ...historySearch, [e.target.name]: e.target.value });
+    };
+
+    const handleHistorySearch = () => {
+        const filtered = confirmedServices.filter(request => {
+            const service = serviceDetails[request.serviceId] || {};
+            const matchesName = !historySearch.serviceName || (service.serviceName && service.serviceName.toLowerCase().includes(historySearch.serviceName.toLowerCase()));
+            const matchesType = !historySearch.serviceType || service.serviceType === historySearch.serviceType;
+            const matchesPrice = !historySearch.priceRange || (() => {
+                if (!service.price) return false;
+                const [min, max] = historySearch.priceRange.split('-').map(Number);
+                return service.price >= min && service.price <= max;
+            })();
+            const matchesDate = !historySearch.date || request.requestedDate === historySearch.date;
+            return matchesName && matchesType && matchesPrice && matchesDate;
+        });
+        setFilteredConfirmedServices(filtered);
+        setHistorySearchPerformed(true);
+    };
+
+    const clearHistorySearch = () => {
+        setHistorySearch({
+            serviceName: '',
+            serviceType: '',
+            priceRange: '',
+            date: ''
+        });
+        setFilteredConfirmedServices(confirmedServices);
+        setHistorySearchPerformed(false);
     };
 
     return (
@@ -545,58 +580,67 @@ function HomeOwnerCleaningServiceUI() {
                 </table>
             </div>
             {showShortlist ? (
-                <div className="modal-overlay">
-                    <div className="modal-container">
-                        <button className="modal-close" onClick={handleCloseShortlist}>×</button>
-                        <h3>My Shortlisted Cleaning Services</h3>
-                        <div className="hscSearch-bar" style={{marginBottom: '16px'}}>
-                            <input
-                                name="serviceName"
-                                className="swal2-input custom-select"
-                                placeholder="Service Name"
-                                value={shortlistSearch.serviceName}
-                                onChange={handleShortlistSearchInput}
-                            />
-                            <select
-                                name="serviceType"
-                                className="swal2-input custom-select"
-                                value={shortlistSearch.serviceType}
-                                onChange={handleShortlistSearchInput}
-                            >
-                                <option value="">All Types</option>
-                                {serviceTypes.map(type => (
-                                    <option key={type} value={type}>{type}</option>
-                                ))}
-                            </select>
-                            <select
-                                name="priceRange"
-                                className="swal2-input custom-select"
-                                value={shortlistSearch.priceRange}
-                                onChange={handleShortlistSearchInput}
-                            >
-                                <option value="">All Prices</option>
-                                <option value="0-50">$0 - $50</option>
-                                <option value="51-100">$51 - $100</option>
-                                <option value="101-200">$101 - $200</option>
-                                <option value="201-500">$201 - $500</option>
-                            </select>
-                            <input
-                                name="duration"
-                                className="swal2-input custom-select"
-                                placeholder="Duration (hours)"
-                                type="number"
-                                min="1"
-                                value={shortlistSearch.duration}
-                                onChange={handleShortlistSearchInput}
-                            />
-                            <button onClick={searchShortlist} className="hscSearch-button">Search</button>
-                            <button onClick={clearShortlistSearch} className="hscSearch-button">Clear</button>
+                <div className="cs-modal">
+                    <div className="cs-modal-content">
+                        <div className="cs-modal-header">
+                            <h2>My Shortlisted Cleaning Services</h2>
+                            <button className="cs-modal-close" onClick={handleCloseShortlist}>×</button>
                         </div>
-                        {shortlistedServices.length === 0 ? (
-                            <p>No shortlisted services.</p>
-                        ) : (
-                            <div className="cs-requests-list">
-                                {shortlistedServices.map(service => (
+                        <div className="cs-search-section" style={{flexDirection: 'column', gap: '8px'}}>
+                            <div className="cs-search-main" style={{gap: '8px', alignItems: 'center'}}>
+                                <input
+                                    type="text"
+                                    name="serviceName"
+                                    placeholder="Search by service name"
+                                    value={shortlistSearch.serviceName}
+                                    onChange={handleShortlistSearchInput}
+                                    className="cs-search-input"
+                                />
+                                <button onClick={handleShortlistSearch} className="cs-search-button">Search</button>
+                                <button onClick={clearShortlistSearch} className="cs-reset-button">Clear</button>
+                            </div>
+                            <div className="cs-search-filters" style={{gap: '8px', alignItems: 'center'}}>
+                                <select
+                                    name="serviceType"
+                                    value={shortlistSearch.serviceType}
+                                    onChange={handleShortlistSearchInput}
+                                    className="cs-search-input"
+                                    style={{ minWidth: '140px' }}
+                                >
+                                    <option value="">All Types</option>
+                                    {serviceTypes.map(type => (
+                                        <option key={type} value={type}>{type}</option>
+                                    ))}
+                                </select>
+                                <select
+                                    name="priceRange"
+                                    value={shortlistSearch.priceRange}
+                                    onChange={handleShortlistSearchInput}
+                                    className="cs-search-input"
+                                    style={{ minWidth: '140px' }}
+                                >
+                                    <option value="">All Prices</option>
+                                    <option value="0-50">$0 - $50</option>
+                                    <option value="51-100">$51 - $100</option>
+                                    <option value="101-200">$101 - $200</option>
+                                    <option value="201-500">$201 - $500</option>
+                                </select>
+                                <input
+                                    type="number"
+                                    name="duration"
+                                    placeholder="Duration (hours)"
+                                    value={shortlistSearch.duration}
+                                    onChange={handleShortlistSearchInput}
+                                    className="cs-search-input"
+                                    style={{ minWidth: '120px' }}
+                                />
+                            </div>
+                        </div>
+                        <div className="cs-requests-list">
+                            {(shortlistSearchPerformed ? filteredShortlistedServices : shortlistedServices).length === 0 ? (
+                                <p>No shortlisted services.</p>
+                            ) : (
+                                (shortlistSearchPerformed ? filteredShortlistedServices : shortlistedServices).map(service => (
                                     <div key={service.id} className="cs-request-card">
                                         <div className="cs-request-header">
                                             <h3>{service.serviceName}</h3>
@@ -614,68 +658,75 @@ function HomeOwnerCleaningServiceUI() {
                                             <p><strong>Type:</strong> {service.serviceType}</p>
                                             <p><strong>Price:</strong> ${service.price}</p>
                                             <p><strong>Duration:</strong> {service.duration} hrs</p>
+                                            <p><strong>Service Area:</strong> {service.serviceArea || 'N/A'}</p>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        )}
+                                ))
+                            )}
+                        </div>
                     </div>
                 </div>
             ) : showHistoryModal ? (
-                <div className="modal-overlay">
-                    <div className="modal-container">
-                        <div className="hocModal-header-bar">
-                            <button className="modal-close" onClick={() => setShowHistoryModal(false)}>×</button>
+                <div className="cs-modal">
+                    <div className="cs-modal-content">
+                        <div className="cs-modal-header">
+                            <h2>Service History</h2>
+                            <button className="cs-modal-close" onClick={() => setShowHistoryModal(false)}>×</button>
                         </div>
-                        <h3>Service History</h3>
-                        <div className="hocSearch-bar" style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' }}>
-                            <input
-                                type="text"
-                                placeholder="Search by service name"
-                                value={historyFilters.search}
-                                onChange={e => setHistoryFilters(f => ({ ...f, search: e.target.value }))}
-                                className="hocSearch-input"
-                            />
-                            <select
-                                value={historyFilters.serviceType}
-                                onChange={e => setHistoryFilters(f => ({ ...f, serviceType: e.target.value }))}
-                                className="hocSelect"
-                            >
-                                <option value="">All Types</option>
-                                {serviceTypes.map(type => (
-                                    <option key={type} value={type}>{type}</option>
-                                ))}
-                            </select>
-                            <select
-                                value={historyFilters.priceRange}
-                                onChange={e => setHistoryFilters(f => ({ ...f, priceRange: e.target.value }))}
-                                className="hocSelect"
-                            >
-                                <option value="">All Prices</option>
-                                <option value="0-50">$0 - $50</option>
-                                <option value="51-100">$51 - $100</option>
-                                <option value="101-200">$101 - $200</option>
-                                <option value="201-500">$201 - $500</option>
-                            </select>
-                            <input
-                                type="date"
-                                value={historyFilters.date}
-                                onChange={e => setHistoryFilters(f => ({ ...f, date: e.target.value }))}
-                                className="hocSearch-input"
-                            />
-                            <button onClick={() => setHistoryFilters({
-                                serviceName: '',
-                                serviceType: '',
-                                priceRange: '',
-                                date: '',
-                                search: ''
-                            })} className="hocSearch-button">Clear</button>
+                        <div className="cs-search-section" style={{flexDirection: 'column', gap: '8px'}}>
+                            <div className="cs-search-main" style={{gap: '8px', alignItems: 'center'}}>
+                                <input
+                                    type="text"
+                                    name="serviceName"
+                                    placeholder="Search by service name"
+                                    value={historySearch.serviceName}
+                                    onChange={handleHistorySearchInput}
+                                    className="cs-search-input"
+                                />
+                                <button onClick={handleHistorySearch} className="cs-search-button">Search</button>
+                                <button onClick={clearHistorySearch} className="cs-reset-button">Clear</button>
+                            </div>
+                            <div className="cs-search-filters" style={{gap: '8px', alignItems: 'center'}}>
+                                <select
+                                    name="serviceType"
+                                    value={historySearch.serviceType}
+                                    onChange={handleHistorySearchInput}
+                                    className="cs-search-input"
+                                    style={{ minWidth: '140px' }}
+                                >
+                                    <option value="">All Types</option>
+                                    {serviceTypes.map(type => (
+                                        <option key={type} value={type}>{type}</option>
+                                    ))}
+                                </select>
+                                <select
+                                    name="priceRange"
+                                    value={historySearch.priceRange}
+                                    onChange={handleHistorySearchInput}
+                                    className="cs-search-input"
+                                    style={{ minWidth: '140px' }}
+                                >
+                                    <option value="">All Prices</option>
+                                    <option value="0-50">$0 - $50</option>
+                                    <option value="51-100">$51 - $100</option>
+                                    <option value="101-200">$101 - $200</option>
+                                    <option value="201-500">$201 - $500</option>
+                                </select>
+                                <input
+                                    type="date"
+                                    name="date"
+                                    value={historySearch.date}
+                                    onChange={handleHistorySearchInput}
+                                    className="cs-search-input"
+                                    style={{ minWidth: '120px' }}
+                                />
+                            </div>
                         </div>
                         <div className="cs-requests-list">
-                            {filterConfirmedServices().length === 0 ? (
+                            {(historySearchPerformed ? filteredConfirmedServices : confirmedServices).length === 0 ? (
                                 <p>No service history found.</p>
                             ) : (
-                                filterConfirmedServices().map(request => {
+                                (historySearchPerformed ? filteredConfirmedServices : confirmedServices).map(request => {
                                     const service = serviceDetails[request.serviceId] || {};
                                     return (
                                         <div key={request.id} className="cs-request-card">
