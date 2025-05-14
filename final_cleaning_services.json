@@ -1,0 +1,2602 @@
+[
+  {
+    "cleanerId": "kristin.huff@example.com",
+    "createdAt": "2024-12-21T03:09:25",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "dusting",
+      "sanitizing",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 31.47,
+    "serviceArea": "Millerfort",
+    "serviceAvailableFrom": "2025-04-24",
+    "serviceAvailableTo": "2025-04-26",
+    "serviceName": "User-friendly user-facing installation",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "industrial duster"
+    ],
+    "view_count": 23,
+    "view_history": 23
+  },
+  {
+    "cleanerId": "kyle.lee@example.com",
+    "createdAt": "2024-05-15T22:37:19",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "mopping",
+      "sanitizing",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 100.43,
+    "serviceArea": "Port Jasmine",
+    "serviceAvailableFrom": "2025-05-05",
+    "serviceAvailableTo": "2025-05-10",
+    "serviceName": "Profit-focused homogeneous moderator",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "vacuum"
+    ],
+    "view_count": 30,
+    "view_history": 30
+  },
+  {
+    "cleanerId": "amber.lawrence@example.com",
+    "createdAt": "2025-02-20T17:12:56",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "dusting",
+      "sweeping",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 95.13,
+    "serviceArea": "Smithville",
+    "serviceAvailableFrom": "2025-05-10",
+    "serviceAvailableTo": "2025-05-11",
+    "serviceName": "Implemented zero tolerance benchmark",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "industrial duster"
+    ],
+    "view_count": 16,
+    "view_history": 16
+  },
+  {
+    "cleanerId": "amber.lane@example.com",
+    "createdAt": "2024-05-20T07:47:55",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "sanitizing",
+      "mopping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 145.16,
+    "serviceArea": "Markstad",
+    "serviceAvailableFrom": "2025-04-16",
+    "serviceAvailableTo": "2025-05-13",
+    "serviceName": "Centralized dynamic collaboration",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "vacuum"
+    ],
+    "view_count": 5,
+    "view_history": 5
+  },
+  {
+    "cleanerId": "jody.martin@example.com",
+    "createdAt": "2024-07-16T11:17:18",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "sweeping",
+      "vacuuming",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 130.54,
+    "serviceArea": "Nicholsmouth",
+    "serviceAvailableFrom": "2025-04-24",
+    "serviceAvailableTo": "2025-05-13",
+    "serviceName": "Universal tertiary monitoring",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 26,
+    "view_history": 26
+  },
+  {
+    "cleanerId": "andrew.tucker@example.com",
+    "createdAt": "2024-06-09T21:39:00",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "vacuuming",
+      "mopping",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 45.39,
+    "serviceArea": "South Judith",
+    "serviceAvailableFrom": "2025-04-14",
+    "serviceAvailableTo": "2025-04-20",
+    "serviceName": "Right-sized solution-oriented moratorium",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 22,
+    "view_history": 22
+  },
+  {
+    "cleanerId": "julia.silva@example.com",
+    "createdAt": "2024-12-02T13:12:08",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "sanitizing",
+      "mopping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 39.71,
+    "serviceArea": "East Becky",
+    "serviceAvailableFrom": "2025-05-12",
+    "serviceAvailableTo": "2025-05-24",
+    "serviceName": "Pre-emptive bi-directional leverage",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 22,
+    "view_history": 22
+  },
+  {
+    "cleanerId": "william.farley@example.com",
+    "createdAt": "2024-09-27T02:41:30",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "sweeping",
+      "mopping",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 34.88,
+    "serviceArea": "Port David",
+    "serviceAvailableFrom": "2025-05-10",
+    "serviceAvailableTo": "2025-06-06",
+    "serviceName": "Object-based encompassing projection",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "vacuum",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 14,
+    "view_history": 14
+  },
+  {
+    "cleanerId": "james.turner@example.com",
+    "createdAt": "2024-09-02T13:22:10",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "vacuuming",
+      "dusting",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 92.99,
+    "serviceArea": "Lopezland",
+    "serviceAvailableFrom": "2025-04-30",
+    "serviceAvailableTo": "2025-05-07",
+    "serviceName": "Progressive intermediate success",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "industrial duster",
+      "steam mop"
+    ],
+    "view_count": 19,
+    "view_history": 19
+  },
+  {
+    "cleanerId": "kevin.pratt@example.com",
+    "createdAt": "2025-03-10T10:08:41",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "sanitizing",
+      "vacuuming",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 61.89,
+    "serviceArea": "Port Bradley",
+    "serviceAvailableFrom": "2025-05-04",
+    "serviceAvailableTo": "2025-05-07",
+    "serviceName": "Virtual radical toolset",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "vacuum"
+    ],
+    "view_count": 10,
+    "view_history": 10
+  },
+  {
+    "cleanerId": "william.myers@example.com",
+    "createdAt": "2024-07-16T10:30:07",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "dusting",
+      "mopping",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 106.05,
+    "serviceArea": "North Christophermouth",
+    "serviceAvailableFrom": "2025-05-07",
+    "serviceAvailableTo": "2025-06-05",
+    "serviceName": "Managed foreground encryption",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "vacuum"
+    ],
+    "view_count": 15,
+    "view_history": 15
+  },
+  {
+    "cleanerId": "zachary.romero@example.com",
+    "createdAt": "2024-12-06T14:14:46",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "vacuuming",
+      "sweeping",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 74.58,
+    "serviceArea": "Navarroland",
+    "serviceAvailableFrom": "2025-05-08",
+    "serviceAvailableTo": "2025-05-12",
+    "serviceName": "Configurable leadingedge standardization",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "vacuum"
+    ],
+    "view_count": 24,
+    "view_history": 24
+  },
+  {
+    "cleanerId": "david.berry@example.com",
+    "createdAt": "2024-10-24T04:27:24",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "sweeping",
+      "vacuuming",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 88.65,
+    "serviceArea": "Petersontown",
+    "serviceAvailableFrom": "2025-04-14",
+    "serviceAvailableTo": "2025-04-30",
+    "serviceName": "Robust 5thgeneration hub",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 7,
+    "view_history": 7
+  },
+  {
+    "cleanerId": "stephanie.reed@example.com",
+    "createdAt": "2024-09-08T07:03:56",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "sweeping",
+      "dusting",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 48.22,
+    "serviceArea": "Tonyfurt",
+    "serviceAvailableFrom": "2025-04-21",
+    "serviceAvailableTo": "2025-05-14",
+    "serviceName": "Cross-platform content-based access",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "industrial duster"
+    ],
+    "view_count": 14,
+    "view_history": 14
+  },
+  {
+    "cleanerId": "monica.garcia@example.com",
+    "createdAt": "2025-02-10T02:44:31",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "sweeping",
+      "sanitizing",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 113.21,
+    "serviceArea": "Reneeton",
+    "serviceAvailableFrom": "2025-04-14",
+    "serviceAvailableTo": "2025-04-21",
+    "serviceName": "Advanced empowering moratorium",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "vacuum"
+    ],
+    "view_count": 10,
+    "view_history": 10
+  },
+  {
+    "cleanerId": "stefanie.castillo@example.com",
+    "createdAt": "2025-01-26T13:43:01",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "vacuuming",
+      "sweeping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 135.2,
+    "serviceArea": "Jenniferside",
+    "serviceAvailableFrom": "2025-04-30",
+    "serviceAvailableTo": "2025-05-24",
+    "serviceName": "Open-source local adapter",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "vacuum"
+    ],
+    "view_count": 33,
+    "view_history": 33
+  },
+  {
+    "cleanerId": "michelle.vega@example.com",
+    "createdAt": "2024-08-02T15:38:15",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "sanitizing",
+      "mopping",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 132.33,
+    "serviceArea": "Joeltown",
+    "serviceAvailableFrom": "2025-05-10",
+    "serviceAvailableTo": "2025-06-08",
+    "serviceName": "Compatible logistical knowledgebase",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 19,
+    "view_history": 19
+  },
+  {
+    "cleanerId": "joy.washington@example.com",
+    "createdAt": "2024-08-30T07:14:57",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "mopping",
+      "vacuuming",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 83.23,
+    "serviceArea": "South Joyceshire",
+    "serviceAvailableFrom": "2025-04-19",
+    "serviceAvailableTo": "2025-05-02",
+    "serviceName": "Ameliorated disintermediate moderator",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "steam mop"
+    ],
+    "view_count": 19,
+    "view_history": 19
+  },
+  {
+    "cleanerId": "benjamin.summers@example.com",
+    "createdAt": "2025-01-20T21:54:19",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "dusting",
+      "sweeping",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 72.15,
+    "serviceArea": "Port Christina",
+    "serviceAvailableFrom": "2025-04-13",
+    "serviceAvailableTo": "2025-04-16",
+    "serviceName": "Right-sized 3rdgeneration database",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 10,
+    "view_history": 10
+  },
+  {
+    "cleanerId": "nicole.burton@example.com",
+    "createdAt": "2025-05-04T13:53:00",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "sanitizing",
+      "sweeping",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 146.3,
+    "serviceArea": "Lake Brittneyton",
+    "serviceAvailableFrom": "2025-05-10",
+    "serviceAvailableTo": "2025-05-17",
+    "serviceName": "Re-engineered dedicated Graphic Interface",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "vacuum"
+    ],
+    "view_count": 24,
+    "view_history": 24
+  },
+  {
+    "cleanerId": "taylor.martinez@example.com",
+    "createdAt": "2024-07-30T05:42:01",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "mopping",
+      "dusting",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 89.77,
+    "serviceArea": "Jonathanmouth",
+    "serviceAvailableFrom": "2025-05-03",
+    "serviceAvailableTo": "2025-05-29",
+    "serviceName": "Customizable 6thgeneration extranet",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "industrial duster"
+    ],
+    "view_count": 15,
+    "view_history": 15
+  },
+  {
+    "cleanerId": "stacie.boyer@example.com",
+    "createdAt": "2025-01-09T10:43:15",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "mopping",
+      "sanitizing",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 40.89,
+    "serviceArea": "Rayland",
+    "serviceAvailableFrom": "2025-04-27",
+    "serviceAvailableTo": "2025-05-18",
+    "serviceName": "Robust asynchronous installation",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "vacuum"
+    ],
+    "view_count": 15,
+    "view_history": 15
+  },
+  {
+    "cleanerId": "scott.noble@example.com",
+    "createdAt": "2024-07-04T23:48:42",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "vacuuming",
+      "sweeping",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 50.49,
+    "serviceArea": "Lake Shane",
+    "serviceAvailableFrom": "2025-04-26",
+    "serviceAvailableTo": "2025-05-05",
+    "serviceName": "Balanced heuristic customer loyalty",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 5,
+    "view_history": 5
+  },
+  {
+    "cleanerId": "joseph.copeland@example.com",
+    "createdAt": "2024-07-18T11:09:38",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "vacuuming",
+      "dusting",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 105.88,
+    "serviceArea": "Hayesstad",
+    "serviceAvailableFrom": "2025-04-16",
+    "serviceAvailableTo": "2025-04-24",
+    "serviceName": "Reactive incremental definition",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "industrial duster"
+    ],
+    "view_count": 25,
+    "view_history": 25
+  },
+  {
+    "cleanerId": "heather.butler@example.com",
+    "createdAt": "2025-05-01T10:05:58",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "mopping",
+      "sanitizing",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 58.85,
+    "serviceArea": "Brianfort",
+    "serviceAvailableFrom": "2025-05-05",
+    "serviceAvailableTo": "2025-05-10",
+    "serviceName": "Reactive actuating moderator",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 6,
+    "view_history": 6
+  },
+  {
+    "cleanerId": "william.hughes@example.com",
+    "createdAt": "2024-12-23T05:05:08",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "mopping",
+      "vacuuming",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 132.62,
+    "serviceArea": "Robinsonfort",
+    "serviceAvailableFrom": "2025-05-08",
+    "serviceAvailableTo": "2025-05-09",
+    "serviceName": "Distributed solution-oriented artificial intelligence",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "industrial duster"
+    ],
+    "view_count": 31,
+    "view_history": 31
+  },
+  {
+    "cleanerId": "samuel.clay@example.com",
+    "createdAt": "2025-03-18T23:30:26",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "dusting",
+      "sweeping",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 56.87,
+    "serviceArea": "Foxville",
+    "serviceAvailableFrom": "2025-04-28",
+    "serviceAvailableTo": "2025-05-24",
+    "serviceName": "Synchronized 3rdgeneration matrix",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "vacuum"
+    ],
+    "view_count": 23,
+    "view_history": 23
+  },
+  {
+    "cleanerId": "joseph.scott@example.com",
+    "createdAt": "2025-04-02T05:55:28",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "vacuuming",
+      "mopping",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 42.92,
+    "serviceArea": "Port Jonathan",
+    "serviceAvailableFrom": "2025-04-27",
+    "serviceAvailableTo": "2025-05-02",
+    "serviceName": "Synergistic context-sensitive interface",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 16,
+    "view_history": 16
+  },
+  {
+    "cleanerId": "victoria.meyer@example.com",
+    "createdAt": "2024-06-14T22:21:43",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "mopping",
+      "sanitizing",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 139.43,
+    "serviceArea": "Lake Aprilshire",
+    "serviceAvailableFrom": "2025-05-03",
+    "serviceAvailableTo": "2025-05-16",
+    "serviceName": "Virtual fault-tolerant paradigm",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 38,
+    "view_history": 38
+  },
+  {
+    "cleanerId": "sean.wilkerson@example.com",
+    "createdAt": "2024-11-01T06:32:57",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "vacuuming",
+      "dusting",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 127.75,
+    "serviceArea": "Lake Ryan",
+    "serviceAvailableFrom": "2025-05-01",
+    "serviceAvailableTo": "2025-05-16",
+    "serviceName": "Universal system-worthy approach",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 5,
+    "view_history": 5
+  },
+  {
+    "cleanerId": "cole.murray@example.com",
+    "createdAt": "2025-03-26T14:17:08",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "sweeping",
+      "vacuuming",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 135.05,
+    "serviceArea": "South Angelatown",
+    "serviceAvailableFrom": "2025-05-08",
+    "serviceAvailableTo": "2025-05-16",
+    "serviceName": "Grass-roots transitional Graphical User Interface",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "vacuum",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 14,
+    "view_history": 14
+  },
+  {
+    "cleanerId": "jacob.rodriguez@example.com",
+    "createdAt": "2024-10-15T10:21:40",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "sweeping",
+      "mopping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 129.41,
+    "serviceArea": "Port Benjaminshire",
+    "serviceAvailableFrom": "2025-04-18",
+    "serviceAvailableTo": "2025-05-15",
+    "serviceName": "Focused system-worthy artificial intelligence",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 25,
+    "view_history": 25
+  },
+  {
+    "cleanerId": "nathaniel.turner@example.com",
+    "createdAt": "2024-08-25T12:57:24",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "mopping",
+      "sanitizing",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 93.96,
+    "serviceArea": "Reginaview",
+    "serviceAvailableFrom": "2025-04-20",
+    "serviceAvailableTo": "2025-04-24",
+    "serviceName": "Reverse-engineered executive archive",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "vacuum"
+    ],
+    "view_count": 23,
+    "view_history": 23
+  },
+  {
+    "cleanerId": "eric.smith@example.com",
+    "createdAt": "2024-06-10T17:35:47",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "vacuuming",
+      "dusting",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 123.47,
+    "serviceArea": "South Kimberly",
+    "serviceAvailableFrom": "2025-05-12",
+    "serviceAvailableTo": "2025-06-01",
+    "serviceName": "Reverse-engineered composite budgetary management",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "steam mop"
+    ],
+    "view_count": 29,
+    "view_history": 29
+  },
+  {
+    "cleanerId": "timothy.kelly@example.com",
+    "createdAt": "2024-07-19T02:59:04",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "mopping",
+      "sanitizing",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 103.31,
+    "serviceArea": "Lake Kristin",
+    "serviceAvailableFrom": "2025-05-06",
+    "serviceAvailableTo": "2025-05-07",
+    "serviceName": "Progressive dedicated benchmark",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "industrial duster",
+      "steam mop"
+    ],
+    "view_count": 27,
+    "view_history": 27
+  },
+  {
+    "cleanerId": "pamela.bright@example.com",
+    "createdAt": "2025-02-24T17:59:28",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "dusting",
+      "sweeping",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 98.62,
+    "serviceArea": "West Dustinchester",
+    "serviceAvailableFrom": "2025-04-18",
+    "serviceAvailableTo": "2025-05-18",
+    "serviceName": "Polarized actuating orchestration",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 37,
+    "view_history": 37
+  },
+  {
+    "cleanerId": "mark.davis@example.com",
+    "createdAt": "2024-06-23T10:21:15",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "sanitizing",
+      "mopping",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 33.15,
+    "serviceArea": "Larrytown",
+    "serviceAvailableFrom": "2025-04-13",
+    "serviceAvailableTo": "2025-05-04",
+    "serviceName": "Total directional groupware",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "vacuum"
+    ],
+    "view_count": 16,
+    "view_history": 16
+  },
+  {
+    "cleanerId": "sandra.cox@example.com",
+    "createdAt": "2024-12-27T08:02:29",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "mopping",
+      "dusting",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 147.89,
+    "serviceArea": "South Teresaside",
+    "serviceAvailableFrom": "2025-04-23",
+    "serviceAvailableTo": "2025-05-21",
+    "serviceName": "Versatile neutral functionalities",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "steam mop"
+    ],
+    "view_count": 20,
+    "view_history": 20
+  },
+  {
+    "cleanerId": "laura.coleman@example.com",
+    "createdAt": "2025-01-06T16:43:03",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "vacuuming",
+      "dusting",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 111.25,
+    "serviceArea": "Port Timothyland",
+    "serviceAvailableFrom": "2025-05-12",
+    "serviceAvailableTo": "2025-05-20",
+    "serviceName": "Ergonomic static neural-net",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 6,
+    "view_history": 6
+  },
+  {
+    "cleanerId": "joseph.beck@example.com",
+    "createdAt": "2024-08-02T19:47:13",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "sanitizing",
+      "dusting",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 30.47,
+    "serviceArea": "West Matthewhaven",
+    "serviceAvailableFrom": "2025-05-08",
+    "serviceAvailableTo": "2025-05-24",
+    "serviceName": "Synchronized full-range support",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "vacuum"
+    ],
+    "view_count": 17,
+    "view_history": 17
+  },
+  {
+    "cleanerId": "kaitlin.anderson@example.com",
+    "createdAt": "2025-04-12T07:17:30",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "sweeping",
+      "dusting",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 133.61,
+    "serviceArea": "Codyview",
+    "serviceAvailableFrom": "2025-05-03",
+    "serviceAvailableTo": "2025-06-02",
+    "serviceName": "Customer-focused foreground support",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "vacuum"
+    ],
+    "view_count": 31,
+    "view_history": 31
+  },
+  {
+    "cleanerId": "tracey.williams@example.com",
+    "createdAt": "2025-03-10T14:13:15",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "sanitizing",
+      "dusting",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 103.79,
+    "serviceArea": "West Dylan",
+    "serviceAvailableFrom": "2025-05-09",
+    "serviceAvailableTo": "2025-06-05",
+    "serviceName": "Reduced leadingedge info-mediaries",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 15,
+    "view_history": 15
+  },
+  {
+    "cleanerId": "jaime.howard@example.com",
+    "createdAt": "2025-02-01T15:39:07",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "sweeping",
+      "dusting",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 136.14,
+    "serviceArea": "Lake William",
+    "serviceAvailableFrom": "2025-05-09",
+    "serviceAvailableTo": "2025-05-22",
+    "serviceName": "Extended user-facing policy",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "vacuum"
+    ],
+    "view_count": 16,
+    "view_history": 16
+  },
+  {
+    "cleanerId": "david.franco@example.com",
+    "createdAt": "2024-11-14T03:00:51",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "mopping",
+      "vacuuming",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 87.53,
+    "serviceArea": "Brownhaven",
+    "serviceAvailableFrom": "2025-04-19",
+    "serviceAvailableTo": "2025-05-10",
+    "serviceName": "Visionary optimizing success",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "vacuum"
+    ],
+    "view_count": 22,
+    "view_history": 22
+  },
+  {
+    "cleanerId": "clarence.lee@example.com",
+    "createdAt": "2024-11-22T14:28:20",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "sweeping",
+      "dusting",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 145.62,
+    "serviceArea": "East Jerry",
+    "serviceAvailableFrom": "2025-05-11",
+    "serviceAvailableTo": "2025-05-21",
+    "serviceName": "Phased fault-tolerant hardware",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 28,
+    "view_history": 28
+  },
+  {
+    "cleanerId": "cindy.phillips@example.com",
+    "createdAt": "2025-04-10T22:53:24",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "dusting",
+      "vacuuming",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 88.72,
+    "serviceArea": "Lake Samuelborough",
+    "serviceAvailableFrom": "2025-05-11",
+    "serviceAvailableTo": "2025-05-25",
+    "serviceName": "Stand-alone actuating strategy",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "industrial duster",
+      "vacuum"
+    ],
+    "view_count": 32,
+    "view_history": 32
+  },
+  {
+    "cleanerId": "lance.nguyen@example.com",
+    "createdAt": "2024-07-20T11:15:04",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "sanitizing",
+      "mopping",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 99.05,
+    "serviceArea": "Bryanborough",
+    "serviceAvailableFrom": "2025-05-11",
+    "serviceAvailableTo": "2025-05-20",
+    "serviceName": "Object-based dynamic monitoring",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "vacuum"
+    ],
+    "view_count": 25,
+    "view_history": 25
+  },
+  {
+    "cleanerId": "james.russell@example.com",
+    "createdAt": "2025-04-19T10:56:01",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "sanitizing",
+      "vacuuming",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 136.95,
+    "serviceArea": "West Benjamin",
+    "serviceAvailableFrom": "2025-05-04",
+    "serviceAvailableTo": "2025-05-27",
+    "serviceName": "Horizontal value-added synergy",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 9,
+    "view_history": 9
+  },
+  {
+    "cleanerId": "dawn.lewis@example.com",
+    "createdAt": "2024-11-27T06:41:31",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "sanitizing",
+      "vacuuming",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 149.98,
+    "serviceArea": "Davidfort",
+    "serviceAvailableFrom": "2025-04-23",
+    "serviceAvailableTo": "2025-05-07",
+    "serviceName": "Re-engineered didactic matrix",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "industrial duster",
+      "steam mop"
+    ],
+    "view_count": 19,
+    "view_history": 19
+  },
+  {
+    "cleanerId": "david.alvarez@example.com",
+    "createdAt": "2025-02-04T23:54:40",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "sanitizing",
+      "sweeping",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 116.35,
+    "serviceArea": "New Nathan",
+    "serviceAvailableFrom": "2025-05-03",
+    "serviceAvailableTo": "2025-05-20",
+    "serviceName": "Team-oriented real-time methodology",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "vacuum"
+    ],
+    "view_count": 5,
+    "view_history": 5
+  },
+  {
+    "cleanerId": "marie.rogers@example.com",
+    "createdAt": "2025-04-29T03:47:50",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "sanitizing",
+      "sweeping",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 139.3,
+    "serviceArea": "Lake Raymondmouth",
+    "serviceAvailableFrom": "2025-04-24",
+    "serviceAvailableTo": "2025-05-11",
+    "serviceName": "Centralized intangible implementation",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "vacuum",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 29,
+    "view_history": 29
+  },
+  {
+    "cleanerId": "scott.miller@example.com",
+    "createdAt": "2024-12-15T18:54:53",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "vacuuming",
+      "sanitizing",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 44.07,
+    "serviceArea": "East Eddieton",
+    "serviceAvailableFrom": "2025-04-13",
+    "serviceAvailableTo": "2025-04-19",
+    "serviceName": "Diverse full-range matrices",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 25,
+    "view_history": 25
+  },
+  {
+    "cleanerId": "daniel.freeman@example.com",
+    "createdAt": "2025-02-08T20:04:28",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "sanitizing",
+      "mopping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 133.8,
+    "serviceArea": "Robertside",
+    "serviceAvailableFrom": "2025-05-04",
+    "serviceAvailableTo": "2025-06-01",
+    "serviceName": "Team-oriented bottom-line array",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "industrial duster"
+    ],
+    "view_count": 24,
+    "view_history": 24
+  },
+  {
+    "cleanerId": "ivan.garcia@example.com",
+    "createdAt": "2025-02-24T23:45:35",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "mopping",
+      "dusting",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 98.36,
+    "serviceArea": "Fergusonside",
+    "serviceAvailableFrom": "2025-05-02",
+    "serviceAvailableTo": "2025-06-01",
+    "serviceName": "Enterprise-wide user-facing encryption",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "vacuum",
+      "industrial duster"
+    ],
+    "view_count": 28,
+    "view_history": 28
+  },
+  {
+    "cleanerId": "paul.smith@example.com",
+    "createdAt": "2024-11-03T10:56:58",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "vacuuming",
+      "dusting",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 132.24,
+    "serviceArea": "Mooreland",
+    "serviceAvailableFrom": "2025-04-16",
+    "serviceAvailableTo": "2025-05-01",
+    "serviceName": "Managed zero administration methodology",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "industrial duster"
+    ],
+    "view_count": 34,
+    "view_history": 34
+  },
+  {
+    "cleanerId": "steven.morales@example.com",
+    "createdAt": "2024-09-17T07:03:49",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "dusting",
+      "sanitizing",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 138.14,
+    "serviceArea": "Lake Richard",
+    "serviceAvailableFrom": "2025-04-23",
+    "serviceAvailableTo": "2025-05-19",
+    "serviceName": "User-friendly dynamic budgetary management",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 21,
+    "view_history": 21
+  },
+  {
+    "cleanerId": "joseph.thomas@example.com",
+    "createdAt": "2024-12-27T19:41:29",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "mopping",
+      "sanitizing",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 61.48,
+    "serviceArea": "Noblehaven",
+    "serviceAvailableFrom": "2025-04-13",
+    "serviceAvailableTo": "2025-04-14",
+    "serviceName": "Re-contextualized coherent array",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "industrial duster"
+    ],
+    "view_count": 21,
+    "view_history": 21
+  },
+  {
+    "cleanerId": "yolanda.haney@example.com",
+    "createdAt": "2024-11-27T05:58:10",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "sanitizing",
+      "mopping",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 44.13,
+    "serviceArea": "Katherinechester",
+    "serviceAvailableFrom": "2025-04-21",
+    "serviceAvailableTo": "2025-04-29",
+    "serviceName": "Enhanced neutral methodology",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 2,
+    "view_history": 2
+  },
+  {
+    "cleanerId": "mark.nichols@example.com",
+    "createdAt": "2025-05-04T11:39:36",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "vacuuming",
+      "dusting",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 91.94,
+    "serviceArea": "East Danielhaven",
+    "serviceAvailableFrom": "2025-04-13",
+    "serviceAvailableTo": "2025-04-15",
+    "serviceName": "Triple-buffered fault-tolerant function",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 32,
+    "view_history": 32
+  },
+  {
+    "cleanerId": "crystal.guzman@example.com",
+    "createdAt": "2024-09-08T12:33:42",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "sweeping",
+      "sanitizing",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 65.34,
+    "serviceArea": "Port Elizabethburgh",
+    "serviceAvailableFrom": "2025-05-02",
+    "serviceAvailableTo": "2025-05-12",
+    "serviceName": "Grass-roots human-resource matrix",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "industrial duster",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 22,
+    "view_history": 22
+  },
+  {
+    "cleanerId": "melinda.morrison@example.com",
+    "createdAt": "2024-12-14T02:47:55",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "mopping",
+      "sweeping",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 87.52,
+    "serviceArea": "Wellsberg",
+    "serviceAvailableFrom": "2025-04-14",
+    "serviceAvailableTo": "2025-05-13",
+    "serviceName": "Diverse impactful emulation",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "vacuum"
+    ],
+    "view_count": 12,
+    "view_history": 12
+  },
+  {
+    "cleanerId": "daniel.long@example.com",
+    "createdAt": "2024-09-02T12:55:50",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "sweeping",
+      "sanitizing",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 139.1,
+    "serviceArea": "New Jenniferport",
+    "serviceAvailableFrom": "2025-04-27",
+    "serviceAvailableTo": "2025-05-07",
+    "serviceName": "Team-oriented even-keeled methodology",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "industrial duster"
+    ],
+    "view_count": 19,
+    "view_history": 19
+  },
+  {
+    "cleanerId": "daniel.herrera@example.com",
+    "createdAt": "2024-11-09T05:06:04",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "dusting",
+      "sanitizing",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 72.15,
+    "serviceArea": "Port Joel",
+    "serviceAvailableFrom": "2025-04-25",
+    "serviceAvailableTo": "2025-05-25",
+    "serviceName": "Intuitive zero-defect matrix",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "vacuum",
+      "industrial duster"
+    ],
+    "view_count": 30,
+    "view_history": 30
+  },
+  {
+    "cleanerId": "madison.stewart@example.com",
+    "createdAt": "2024-07-06T07:30:50",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "sanitizing",
+      "dusting",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 41.42,
+    "serviceArea": "North Matthew",
+    "serviceAvailableFrom": "2025-04-25",
+    "serviceAvailableTo": "2025-05-23",
+    "serviceName": "Programmable scalable hub",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 11,
+    "view_history": 11
+  },
+  {
+    "cleanerId": "james.flores@example.com",
+    "createdAt": "2025-01-20T20:42:03",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "vacuuming",
+      "sanitizing",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 103.42,
+    "serviceArea": "Port Michael",
+    "serviceAvailableFrom": "2025-05-08",
+    "serviceAvailableTo": "2025-05-27",
+    "serviceName": "Extended human-resource paradigm",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "steam mop"
+    ],
+    "view_count": 29,
+    "view_history": 29
+  },
+  {
+    "cleanerId": "kara.mcdaniel@example.com",
+    "createdAt": "2024-05-25T16:51:29",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "mopping",
+      "dusting",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 48.17,
+    "serviceArea": "South Carriehaven",
+    "serviceAvailableFrom": "2025-05-06",
+    "serviceAvailableTo": "2025-06-05",
+    "serviceName": "Persistent non-volatile frame",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "steam mop"
+    ],
+    "view_count": 30,
+    "view_history": 30
+  },
+  {
+    "cleanerId": "william.robinson@example.com",
+    "createdAt": "2025-01-16T04:32:17",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "sweeping",
+      "vacuuming",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 93.35,
+    "serviceArea": "Ryanchester",
+    "serviceAvailableFrom": "2025-05-07",
+    "serviceAvailableTo": "2025-05-28",
+    "serviceName": "Enhanced non-volatile synergy",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "steam mop"
+    ],
+    "view_count": 13,
+    "view_history": 13
+  },
+  {
+    "cleanerId": "kirsten.torres@example.com",
+    "createdAt": "2025-04-26T18:08:38",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "vacuuming",
+      "dusting",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 32.63,
+    "serviceArea": "New Johnberg",
+    "serviceAvailableFrom": "2025-04-14",
+    "serviceAvailableTo": "2025-05-07",
+    "serviceName": "Fully-configurable context-sensitive matrix",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "vacuum"
+    ],
+    "view_count": 22,
+    "view_history": 22
+  },
+  {
+    "cleanerId": "mary.taylor@example.com",
+    "createdAt": "2025-04-28T09:42:26",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "dusting",
+      "sanitizing",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 133.93,
+    "serviceArea": "East David",
+    "serviceAvailableFrom": "2025-05-02",
+    "serviceAvailableTo": "2025-05-30",
+    "serviceName": "Visionary directional approach",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 20,
+    "view_history": 20
+  },
+  {
+    "cleanerId": "john.cooper@example.com",
+    "createdAt": "2025-02-11T13:36:20",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "sweeping",
+      "sanitizing",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 55.76,
+    "serviceArea": "Meganburgh",
+    "serviceAvailableFrom": "2025-04-21",
+    "serviceAvailableTo": "2025-05-14",
+    "serviceName": "Innovative human-resource adapter",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 5,
+    "view_history": 5
+  },
+  {
+    "cleanerId": "james.wright@example.com",
+    "createdAt": "2024-09-18T01:30:18",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "sanitizing",
+      "sweeping",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 94.98,
+    "serviceArea": "Ryanborough",
+    "serviceAvailableFrom": "2025-04-26",
+    "serviceAvailableTo": "2025-05-23",
+    "serviceName": "Centralized holistic focus group",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 6,
+    "view_history": 6
+  },
+  {
+    "cleanerId": "marvin.rice@example.com",
+    "createdAt": "2025-02-05T05:21:20",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "vacuuming",
+      "mopping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 90.37,
+    "serviceArea": "Brownhaven",
+    "serviceAvailableFrom": "2025-05-05",
+    "serviceAvailableTo": "2025-06-01",
+    "serviceName": "Optional transitional strategy",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 22,
+    "view_history": 22
+  },
+  {
+    "cleanerId": "shane.gilmore@example.com",
+    "createdAt": "2024-06-08T10:45:09",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "sanitizing",
+      "mopping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 55.7,
+    "serviceArea": "South Robert",
+    "serviceAvailableFrom": "2025-04-25",
+    "serviceAvailableTo": "2025-04-26",
+    "serviceName": "Extended regional benchmark",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "vacuum"
+    ],
+    "view_count": 23,
+    "view_history": 23
+  },
+  {
+    "cleanerId": "katherine.golden@example.com",
+    "createdAt": "2024-07-26T08:18:28",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "vacuuming",
+      "sanitizing",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 87.3,
+    "serviceArea": "Austinmouth",
+    "serviceAvailableFrom": "2025-04-25",
+    "serviceAvailableTo": "2025-05-13",
+    "serviceName": "Ergonomic incremental encoding",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 32,
+    "view_history": 32
+  },
+  {
+    "cleanerId": "elizabeth.banks@example.com",
+    "createdAt": "2024-06-14T09:43:34",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "dusting",
+      "sanitizing",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 70.14,
+    "serviceArea": "Port Joshuafurt",
+    "serviceAvailableFrom": "2025-04-24",
+    "serviceAvailableTo": "2025-05-19",
+    "serviceName": "Horizontal zero-defect data-warehouse",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "industrial duster",
+      "steam mop"
+    ],
+    "view_count": 20,
+    "view_history": 20
+  },
+  {
+    "cleanerId": "james.golden@example.com",
+    "createdAt": "2024-09-14T09:55:25",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "dusting",
+      "vacuuming",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 79.36,
+    "serviceArea": "Stacieland",
+    "serviceAvailableFrom": "2025-05-02",
+    "serviceAvailableTo": "2025-05-18",
+    "serviceName": "Upgradable asynchronous Local Area Network",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "industrial duster",
+      "vacuum"
+    ],
+    "view_count": 10,
+    "view_history": 10
+  },
+  {
+    "cleanerId": "maria.martin@example.com",
+    "createdAt": "2024-07-19T05:21:38",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "dusting",
+      "sweeping",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 131.56,
+    "serviceArea": "North Curtis",
+    "serviceAvailableFrom": "2025-05-08",
+    "serviceAvailableTo": "2025-05-17",
+    "serviceName": "Synchronized full-range model",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 13,
+    "view_history": 13
+  },
+  {
+    "cleanerId": "laura.wells@example.com",
+    "createdAt": "2024-07-30T16:38:06",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "sanitizing",
+      "sweeping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 34.61,
+    "serviceArea": "Cowanchester",
+    "serviceAvailableFrom": "2025-04-19",
+    "serviceAvailableTo": "2025-05-02",
+    "serviceName": "Self-enabling value-added focus group",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "industrial duster"
+    ],
+    "view_count": 28,
+    "view_history": 28
+  },
+  {
+    "cleanerId": "william.davis@example.com",
+    "createdAt": "2024-08-30T03:57:57",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "dusting",
+      "sweeping",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 50.44,
+    "serviceArea": "North Xavierbury",
+    "serviceAvailableFrom": "2025-04-16",
+    "serviceAvailableTo": "2025-05-14",
+    "serviceName": "Object-based cohesive approach",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "steam mop",
+      "industrial duster"
+    ],
+    "view_count": 18,
+    "view_history": 18
+  },
+  {
+    "cleanerId": "anna.johnson@example.com",
+    "createdAt": "2025-05-03T07:55:10",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "mopping",
+      "sweeping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 62.26,
+    "serviceArea": "Munozville",
+    "serviceAvailableFrom": "2025-04-13",
+    "serviceAvailableTo": "2025-05-10",
+    "serviceName": "Secured next generation knowledgebase",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "industrial duster"
+    ],
+    "view_count": 35,
+    "view_history": 35
+  },
+  {
+    "cleanerId": "ricky.grant@example.com",
+    "createdAt": "2025-01-06T14:22:36",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "vacuuming",
+      "mopping",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 71.51,
+    "serviceArea": "Cookport",
+    "serviceAvailableFrom": "2025-04-25",
+    "serviceAvailableTo": "2025-05-03",
+    "serviceName": "Enhanced context-sensitive concept",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 31,
+    "view_history": 31
+  },
+  {
+    "cleanerId": "amy.scott@example.com",
+    "createdAt": "2025-05-07T06:03:45",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "vacuuming",
+      "sweeping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 117.31,
+    "serviceArea": "Dustinland",
+    "serviceAvailableFrom": "2025-04-24",
+    "serviceAvailableTo": "2025-04-26",
+    "serviceName": "Realigned 5thgeneration utilization",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 22,
+    "view_history": 22
+  },
+  {
+    "cleanerId": "glen.duncan@example.com",
+    "createdAt": "2024-12-11T18:56:12",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "vacuuming",
+      "sanitizing",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 143.45,
+    "serviceArea": "West Marcmouth",
+    "serviceAvailableFrom": "2025-05-02",
+    "serviceAvailableTo": "2025-05-26",
+    "serviceName": "Seamless tangible circuit",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "industrial duster",
+      "steam mop"
+    ],
+    "view_count": 14,
+    "view_history": 14
+  },
+  {
+    "cleanerId": "elizabeth.bennett@example.com",
+    "createdAt": "2024-05-23T15:09:06",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "dusting",
+      "vacuuming",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 66.12,
+    "serviceArea": "Christopherport",
+    "serviceAvailableFrom": "2025-05-06",
+    "serviceAvailableTo": "2025-05-25",
+    "serviceName": "Operative dynamic contingency",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 19,
+    "view_history": 19
+  },
+  {
+    "cleanerId": "david.castillo@example.com",
+    "createdAt": "2024-09-19T23:10:22",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "dusting",
+      "sanitizing",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 117.74,
+    "serviceArea": "Kingland",
+    "serviceAvailableFrom": "2025-05-03",
+    "serviceAvailableTo": "2025-05-26",
+    "serviceName": "Robust user-facing application",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "industrial duster"
+    ],
+    "view_count": 18,
+    "view_history": 18
+  },
+  {
+    "cleanerId": "roy.smith@example.com",
+    "createdAt": "2025-02-07T08:06:38",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "mopping",
+      "sanitizing",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 74.59,
+    "serviceArea": "Tonychester",
+    "serviceAvailableFrom": "2025-05-08",
+    "serviceAvailableTo": "2025-05-29",
+    "serviceName": "Inverse high-level strategy",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 10,
+    "view_history": 10
+  },
+  {
+    "cleanerId": "jennifer.castillo@example.com",
+    "createdAt": "2024-08-16T16:03:53",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "sweeping",
+      "dusting",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 135.41,
+    "serviceArea": "Christophershire",
+    "serviceAvailableFrom": "2025-05-02",
+    "serviceAvailableTo": "2025-05-15",
+    "serviceName": "Business-focused coherent Graphic Interface",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "vacuum"
+    ],
+    "view_count": 13,
+    "view_history": 13
+  },
+  {
+    "cleanerId": "justin.ryan@example.com",
+    "createdAt": "2024-06-28T13:00:18",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "sanitizing",
+      "sweeping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 85.88,
+    "serviceArea": "New Carol",
+    "serviceAvailableFrom": "2025-05-09",
+    "serviceAvailableTo": "2025-06-05",
+    "serviceName": "Persistent object-oriented circuit",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "industrial duster"
+    ],
+    "view_count": 1,
+    "view_history": 1
+  },
+  {
+    "cleanerId": "betty.romero@example.com",
+    "createdAt": "2024-05-19T21:28:46",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "dusting",
+      "sanitizing",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 5,
+    "price": 89.76,
+    "serviceArea": "South Patrick",
+    "serviceAvailableFrom": "2025-05-11",
+    "serviceAvailableTo": "2025-05-18",
+    "serviceName": "Synchronized client-server success",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "vacuum"
+    ],
+    "view_count": 13,
+    "view_history": 13
+  },
+  {
+    "cleanerId": "evan.harris@example.com",
+    "createdAt": "2024-12-22T06:24:34",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "dusting",
+      "vacuuming",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 47.63,
+    "serviceArea": "Melaniefurt",
+    "serviceAvailableFrom": "2025-04-21",
+    "serviceAvailableTo": "2025-05-03",
+    "serviceName": "Managed multi-state leverage",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 24,
+    "view_history": 24
+  },
+  {
+    "cleanerId": "ariel.russell@example.com",
+    "createdAt": "2025-03-04T03:47:45",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "sweeping",
+      "sanitizing",
+      "vacuuming"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 111.41,
+    "serviceArea": "Port Aaronside",
+    "serviceAvailableFrom": "2025-04-20",
+    "serviceAvailableTo": "2025-04-22",
+    "serviceName": "De-engineered background Graphic Interface",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "industrial duster",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 21,
+    "view_history": 21
+  },
+  {
+    "cleanerId": "jacqueline.rodgers@example.com",
+    "createdAt": "2024-09-27T20:06:38",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "vacuuming",
+      "sweeping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 4,
+    "price": 94.45,
+    "serviceArea": "Sheaville",
+    "serviceAvailableFrom": "2025-04-18",
+    "serviceAvailableTo": "2025-04-22",
+    "serviceName": "Integrated 24/7 superstructure",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "eco-friendly cleaners",
+      "steam mop"
+    ],
+    "view_count": 14,
+    "view_history": 14
+  },
+  {
+    "cleanerId": "connor.sexton@example.com",
+    "createdAt": "2024-05-28T03:29:25",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "dusting",
+      "vacuuming",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 72.25,
+    "serviceArea": "New Judymouth",
+    "serviceAvailableFrom": "2025-04-29",
+    "serviceAvailableTo": "2025-05-21",
+    "serviceName": "Vision-oriented global pricing structure",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "vacuum",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 36,
+    "view_history": 36
+  },
+  {
+    "cleanerId": "ashley.navarro@example.com",
+    "createdAt": "2024-10-02T20:56:21",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "mopping",
+      "sweeping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 72.26,
+    "serviceArea": "Smithfurt",
+    "serviceAvailableFrom": "2025-05-05",
+    "serviceAvailableTo": "2025-05-26",
+    "serviceName": "Pre-emptive maximized knowledge user",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "steam mop"
+    ],
+    "view_count": 22,
+    "view_history": 22
+  },
+  {
+    "cleanerId": "justin.forbes@example.com",
+    "createdAt": "2024-10-11T02:16:57",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "dusting",
+      "sanitizing",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 86.39,
+    "serviceArea": "Williamtown",
+    "serviceAvailableFrom": "2025-04-15",
+    "serviceAvailableTo": "2025-05-05",
+    "serviceName": "Expanded scalable knowledgebase",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 31,
+    "view_history": 31
+  },
+  {
+    "cleanerId": "dana.castaneda@example.com",
+    "createdAt": "2025-01-08T02:59:13",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 2,
+    "includedTasks": [
+      "mopping",
+      "dusting",
+      "sweeping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 92.75,
+    "serviceArea": "Dalemouth",
+    "serviceAvailableFrom": "2025-04-29",
+    "serviceAvailableTo": "2025-05-14",
+    "serviceName": "Cross-platform multi-state challenge",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "vacuum",
+      "industrial duster"
+    ],
+    "view_count": 7,
+    "view_history": 7
+  },
+  {
+    "cleanerId": "alexandra.santos@example.com",
+    "createdAt": "2025-04-18T01:00:56",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 3,
+    "includedTasks": [
+      "vacuuming",
+      "sweeping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 3,
+    "price": 107.05,
+    "serviceArea": "Ryanland",
+    "serviceAvailableFrom": "2025-04-24",
+    "serviceAvailableTo": "2025-04-29",
+    "serviceName": "Business-focused interactive installation",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 20,
+    "view_history": 20
+  },
+  {
+    "cleanerId": "david.gibson@example.com",
+    "createdAt": "2024-07-07T21:27:26",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 1,
+    "includedTasks": [
+      "mopping",
+      "sweeping",
+      "dusting"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 88.07,
+    "serviceArea": "North Timothy",
+    "serviceAvailableFrom": "2025-04-14",
+    "serviceAvailableTo": "2025-04-26",
+    "serviceName": "Synchronized intangible installation",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "steam mop",
+      "industrial duster"
+    ],
+    "view_count": 8,
+    "view_history": 8
+  },
+  {
+    "cleanerId": "patrick.braun@example.com",
+    "createdAt": "2024-08-28T12:22:37",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "sanitizing",
+      "sweeping",
+      "mopping"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 1,
+    "price": 121.76,
+    "serviceArea": "Richardberg",
+    "serviceAvailableFrom": "2025-04-26",
+    "serviceAvailableTo": "2025-05-08",
+    "serviceName": "Synergized asymmetric framework",
+    "serviceType": "Residential",
+    "specialEquipment": [
+      "industrial duster",
+      "eco-friendly cleaners"
+    ],
+    "view_count": 25,
+    "view_history": 25
+  },
+  {
+    "cleanerId": "amanda.robinson@example.com",
+    "createdAt": "2024-11-12T03:46:42",
+    "description": "Professional cleaning service for homes and offices.",
+    "duration": 4,
+    "includedTasks": [
+      "mopping",
+      "sweeping",
+      "sanitizing"
+    ],
+    "isAvailable": true,
+    "isOffering": true,
+    "numWorkers": 2,
+    "price": 77.01,
+    "serviceArea": "Nicholashaven",
+    "serviceAvailableFrom": "2025-05-08",
+    "serviceAvailableTo": "2025-06-04",
+    "serviceName": "Distributed background superstructure",
+    "serviceType": "Commercial",
+    "specialEquipment": [
+      "vacuum",
+      "industrial duster"
+    ],
+    "view_count": 30,
+    "view_history": 30
+  }
+]

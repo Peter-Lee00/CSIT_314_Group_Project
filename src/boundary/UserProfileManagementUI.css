@@ -83,7 +83,7 @@
 
 .upm-list-header {
     display: grid;
-    grid-template-columns: 1.5fr 2fr 1fr 1fr;
+    grid-template-columns: 1.5fr 2fr 1fr 100px;
     gap: 15px;
     padding: 12px 20px;
     background-color: #2c3338;
@@ -93,7 +93,7 @@
 
 .upm-list-row {
     display: grid;
-    grid-template-columns: 1.5fr 2fr 1fr 1fr;
+    grid-template-columns: 1.5fr 2fr 1fr 50px;
     gap: 15px;
     padding: 12px 20px;
     border-bottom: 1px solid #3a4149;
