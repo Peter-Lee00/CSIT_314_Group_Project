@@ -1,8 +1,8 @@
 import UserAccount from '../entity/UserAccount';
 
 // Handles new user registration
-export class CreateUserAccountController {
-  async createUserAccount(firstName, lastName, password, phoneNumber, email, userProfile, address = null) {
+class CreateUserAccountController {
+  async createUserAccount(firstName, lastName, password, phoneNumber, email, userProfile) {
     try {
       const newUser = new UserAccount(
         firstName,
@@ -11,20 +11,18 @@ export class CreateUserAccountController {
         phoneNumber,
         email,
         userProfile,
-        userProfile === 'HomeOwner' ? address : null // Only HomeOwner needs address
       );
-
       const created = await newUser.createUserAccount(); // save to DB
-      return created; // could be true, 'DUPLICATE_EMAIL', 'DUPLICATE_PHONE', or false
+      return created; // success return true, fail return false
     } catch (err) {
       console.error('Error while creating user account:', err);
-      return false; // fail-safe
+      return false;
     }
   }
 }
 
 // Reads user data
-export class ViewUserAccountController {
+class ViewUserAccountController {
   async getAllUsers() {
     try {
       const users = await UserAccount.loadAllUsers(); // returns array of user docs
@@ -46,8 +44,8 @@ export class ViewUserAccountController {
 }
 
 // Updates existing user
-export class AdminAccountController {
-  async updateUserAccount(firstName, lastName, password, phoneNumber, email, userProfile, address = null) {
+class UpdateUserAccountController {
+  async updateUserAccount(firstName, lastName, password, phoneNumber, email, userProfile) {
     try {
       const result = await new UserAccount(
         firstName,
@@ -55,25 +53,25 @@ export class AdminAccountController {
         password,
         phoneNumber,
         email,
-        userProfile,
-        userProfile === 'HomeOwner' ? address : null
+        userProfile
       ).updateUserAccount(
         firstName,
         lastName,
         password,
         phoneNumber,
         email,
-        userProfile,
-        userProfile === 'HomeOwner' ? address : null
+        userProfile
       );
       return result;
     } catch (err) {
       console.error("Update failed for user:", err);
       return false;
+    }
   }
 }
 
-// Looks up a user
+// Search for a user
+class SearchUserAccountController {
   async searchUserAccount(email) {
     try {
       return await UserAccount.searchUserAccount(email);
@@ -82,7 +80,10 @@ export class AdminAccountController {
       return null;
     }
   }
+}
 
+// Suspend a user account
+class SuspendUserAccountController {
   async suspendUserAccount(email) {
     try {
       // First get the user data
@@ -91,7 +92,6 @@ export class AdminAccountController {
         console.warn("User not found:", email);
         return false;
       }
-
       // Create a UserAccount instance with the user data
       const user = new UserAccount(
         userData.firstName,
@@ -102,7 +102,6 @@ export class AdminAccountController {
         userData.userProfile,
         userData.address
       );
-
       // Call the suspendUserAccount method
       const result = await user.suspendUserAccount();
       return result;
@@ -112,4 +111,12 @@ export class AdminAccountController {
     }
   }
 }
+
+export {
+  CreateUserAccountController,
+  ViewUserAccountController,
+  UpdateUserAccountController,
+  SearchUserAccountController,
+  SuspendUserAccountController
+};
 

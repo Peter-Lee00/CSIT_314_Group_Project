@@ -4,9 +4,9 @@ import "./UserProfileManagementUI.css";
 import { Util } from "../Util";
 import { UserLogoutController } from "../controller/UserAuthController";
 import {
-  UAViewUserProfileController,
-  UACreateUserProfileController,
-  UAUpdateUserProfileController,
+  ViewProfileController,
+  CreateProfileController,
+  UpdateProfileController,
   UASearchUserProfileController,
   UASuspendUserProfileController,
   UADeleteUserProfileController
@@ -66,7 +66,7 @@ function UserProfileManagementUI() {
       }
     }).then(async (res) => {
       if (res.isConfirmed) {
-        const controller = new UACreateUserProfileController();
+        const controller = new CreateProfileController();
         const success = await controller.createUserProfile(
           res.value.profileName,
           res.value.description
@@ -100,7 +100,7 @@ function UserProfileManagementUI() {
   };
 
   const handleView = async (profileName) => {
-    const controller = new UAViewUserProfileController();
+    const controller = new ViewProfileController();
     const profile = await controller.viewUserProfile(profileName);
 
     if (profile) {
@@ -159,7 +159,7 @@ function UserProfileManagementUI() {
       }
     }).then(async (res) => {
       if (res.isConfirmed) {
-        const controller = new UAUpdateUserProfileController();
+        const controller = new UpdateProfileController();
         const updated = await controller.updateUserProfile(
           res.value.profileName,
           res.value.description

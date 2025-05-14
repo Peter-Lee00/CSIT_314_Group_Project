@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Swal from 'sweetalert2';
+import './CleanerConfirmedMatchesUI.css';
 import ServiceCategory from '../entity/ServiceCategory';
 
-const CleanerRequestUI = ({ requests, requestServiceDetails, onAccept, onDecline, onClose }) => {
+const CleanerConfirmedMatchesUI = ({ confirmedRequests, onClose }) => {
   const [search, setSearch] = useState('');
   const [serviceType, setServiceType] = useState('');
   const [priceRange, setPriceRange] = useState('');
@@ -20,8 +20,8 @@ const CleanerRequestUI = ({ requests, requestServiceDetails, onAccept, onDecline
     setDate('');
   };
 
-  const filtered = requests.filter(request => {
-    const service = requestServiceDetails[request.serviceId] || {};
+  const filtered = confirmedRequests.filter(request => {
+    const service = request.serviceDetails || {};
     const matchesSearch = !search ||
       (service.serviceName && service.serviceName.toLowerCase().includes(search.toLowerCase())) ||
       (service.serviceType && service.serviceType.toLowerCase().includes(search.toLowerCase())) ||
@@ -41,7 +41,7 @@ const CleanerRequestUI = ({ requests, requestServiceDetails, onAccept, onDecline
     <div className="cs-modal">
       <div className="cs-modal-content">
         <div className="cs-modal-header">
-          <h2>Service Requests</h2>
+          <h2>Confirmed Matches</h2>
           <button className="cs-modal-close" onClick={onClose}>×</button>
         </div>
         <div className="cs-search-section" style={{flexDirection: 'column', gap: '8px'}}>
@@ -90,41 +90,24 @@ const CleanerRequestUI = ({ requests, requestServiceDetails, onAccept, onDecline
         </div>
         <div className="cs-requests-list">
           {filtered.length === 0 ? (
-            <p>No requests found.</p>
+            <p>No confirmed matches found.</p>
           ) : (
             filtered.map(request => {
-              const service = requestServiceDetails[request.serviceId] || {};
+              const service = request.serviceDetails || {};
               return (
                 <div key={request.id} className="cs-request-card">
                   <div className="cs-request-header">
-                    <h3>Request from {request.homeownerId}</h3>
-                    <span className={`cs-request-status ${request.status.toLowerCase()}`}>{request.status}</span>
+                    <h3>Confirmed with {request.homeownerId}</h3>
+                    <span className="cs-request-status accepted">ACCEPTED</span>
                   </div>
                   <div className="cs-request-details">
                     <p><strong>Service Name:</strong> {service.serviceName || 'N/A'}</p>
                     <p><strong>Service Type:</strong> {service.serviceType || 'N/A'}</p>
                     <p><strong>Price:</strong> {service.price ? `$${service.price}` : 'N/A'}</p>
                     <p><strong>Location:</strong> {service.serviceArea || 'N/A'}</p>
-                    <p><strong>Requested Date:</strong> {request.requestedDate || 'N/A'}</p>
-                    <p><strong>Requested On:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
-                    {request.message && <p><strong>Message:</strong> {request.message}</p>}
+                    <p><strong>Confirmed Date:</strong> {request.requestedDate || 'N/A'}</p>
+                    <p><strong>Confirmed On:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
                   </div>
-                  {request.status === 'PENDING' && (
-                    <div className="cs-request-actions">
-                      <button 
-                        className="cs-accept-button"
-                        onClick={() => onAccept(request.id, 'ACCEPTED')}
-                      >
-                        Accept
-                      </button>
-                      <button 
-                        className="cs-decline-button"
-                        onClick={() => onDecline(request.id, 'DECLINED')}
-                      >
-                        Decline
-                      </button>
-                    </div>
-                  )}
                 </div>
               );
             })
@@ -135,4 +118,4 @@ const CleanerRequestUI = ({ requests, requestServiceDetails, onAccept, onDecline
   );
 };
 
-export default CleanerRequestUI; 
+export default CleanerConfirmedMatchesUI; 

@@ -1,5 +1,6 @@
 import { db } from './firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import Cookies from 'js-cookie';
 
 export class Util {
     // Get list of all user accounts
@@ -78,4 +79,20 @@ export class Util {
         
         return errorMessage;
     }
+
+    static getCurrentUser() {
+        return {
+            username: Cookies.get('username'),
+            email: Cookies.get('email'),
+            userProfile: Cookies.get('userProfile')
+        };
+    }
+}
+
+export function getCurrentUser() {
+    return {
+        username: Cookies.get('username'),
+        email: Cookies.get('email'),
+        userProfile: Cookies.get('userProfile')
+    };
 }

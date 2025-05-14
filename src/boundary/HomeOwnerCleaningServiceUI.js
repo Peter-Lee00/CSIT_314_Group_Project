@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from "react";
-import OwnerCleaningServiceController from "../controller/OwnerCleaningServiceController";
-import "./HomeOwnerCleaningServiceUI.css"; // Create this CSS file for styling
+import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import CleaningService from '../entity/CleaningService';
 import CleaningServiceRequest from '../entity/CleaningServiceRequest';
 import { UserLogoutController } from '../controller/UserAuthController';
 import ServiceCategory from '../entity/ServiceCategory';
-import OwnerServiceHistoryController from '../controller/OwnerServiceHistoryController';
+import {
+  OwnerSearchCleaningServiceController,
+  OwnerSaveShortlistController,
+  OwnerGetShortlistedServicesController,
+  OwnerRemoveFromShortlistController,
+  OwnerCreateServiceRequestController,
+  OwnerGetServiceHistoryController,
+  OwnerUpdateRequestStatusController,
+  OwnerGetConfirmedMatchesController,
+  OwnerSearchShortlistedServicesController,
+  OwnerGetRequestsByHomeownerController
+} from '../controller/OwnerCleaningServiceController';
+import { CreateServiceRequestController } from '../controller/CleanerRequestController';
 
 function HomeOwnerCleaningServiceUI() {
     const [services, setServices] = useState([]);
@@ -40,6 +51,17 @@ function HomeOwnerCleaningServiceUI() {
         duration: ''
     });
     const [shortlistSearchPerformed, setShortlistSearchPerformed] = useState(false);
+
+    const searchController = new OwnerSearchCleaningServiceController();
+    const saveShortlistController = new OwnerSaveShortlistController();
+    const getShortlistedServicesController = new OwnerGetShortlistedServicesController();
+    const removeFromShortlistController = new OwnerRemoveFromShortlistController();
+    const createServiceRequestController = new CreateServiceRequestController();
+    const getServiceHistoryController = new OwnerGetServiceHistoryController();
+    const updateRequestStatusController = new OwnerUpdateRequestStatusController();
+    const getConfirmedMatchesController = new OwnerGetConfirmedMatchesController();
+    const searchShortlistedServicesController = new OwnerSearchShortlistedServicesController();
+    const getRequestsByHomeownerController = new OwnerGetRequestsByHomeownerController();
 
     // Add isShortlisted function
     const isShortlisted = (serviceId) => {
@@ -80,16 +102,10 @@ function HomeOwnerCleaningServiceUI() {
     }, []);
 
     const fetchServices = async (filters = {}) => {
-        const controller = new OwnerCleaningServiceController();
-        // Parse price range
-        let priceRange = [undefined, undefined];
-        if (filters.priceRange) {
-            priceRange = filters.priceRange.split("-").map(x => x.trim());
-        }
-        const result = await controller.searchCleaningService(
+        const result = await searchController.searchCleaningService(
             filters.serviceName || undefined,
             filters.serviceType || undefined,
-            priceRange[0] ? priceRange : undefined,
+            filters.priceRange ? filters.priceRange.split("-").map(x => x.trim()) : undefined,
             filters.duration || undefined,
             undefined // cleanerId
         );
@@ -144,7 +160,6 @@ function HomeOwnerCleaningServiceUI() {
 
     const handleShortlist = async (service) => {
         const username = localStorage.getItem('username') || 'testuser';
-        const controller = new OwnerCleaningServiceController();
         
         // Check if service is already in shortlist
         if (isShortlisted(service.id)) {
@@ -161,7 +176,7 @@ function HomeOwnerCleaningServiceUI() {
         // Increment shortlist count when service is added to shortlist
         await CleaningService.increaseShortlistCount(service.id);
         
-        const result = await controller.saveToShortlist(username, service);
+        const result = await saveShortlistController.saveToShortlist(username, service);
         if (result) {
             Swal.fire({
                 title: 'Added!',
@@ -182,8 +197,7 @@ function HomeOwnerCleaningServiceUI() {
 
     const handleViewShortlist = async () => {
         const username = localStorage.getItem('username') || 'testuser';
-        const controller = new OwnerCleaningServiceController();
-        const result = await controller.getShortlistedServices(username);
+        const result = await getShortlistedServicesController.getShortlistedServices(username);
         setShortlistedServices((result || []).map(doc => ({
             id: doc.id,
             serviceName: doc.serviceName,
@@ -249,7 +263,6 @@ function HomeOwnerCleaningServiceUI() {
 
     const handleRemoveFromShortlist = async (serviceId) => {
         const username = localStorage.getItem('username') || 'testuser';
-        const controller = new OwnerCleaningServiceController();
         const result = await Swal.fire({
             title: 'Remove from Shortlist?',
             text: 'Are you sure you want to remove this service from your shortlist?',
@@ -259,7 +272,7 @@ function HomeOwnerCleaningServiceUI() {
             cancelButtonText: 'Cancel',
         });
         if (result.isConfirmed) {
-            await controller.removeFromShortlist(username, serviceId);
+            await removeFromShortlistController.removeFromShortlist(username, serviceId);
             handleViewShortlist();
             Swal.fire('Removed!', 'Service has been removed from your shortlist.', 'success');
         }
@@ -268,7 +281,7 @@ function HomeOwnerCleaningServiceUI() {
     const handleSendRequest = async (service) => {
         try {
             // Check if request already exists
-            const existingRequests = await CleaningServiceRequest.getRequestsByHomeowner(username);
+            const existingRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(username);
             const hasExistingRequest = existingRequests.some(req => 
                 req.serviceId === service.id && 
                 (req.status === 'PENDING' || req.status === 'ACCEPTED')
@@ -308,7 +321,7 @@ function HomeOwnerCleaningServiceUI() {
             });
 
             if (formValues) {  // User clicked Send Request
-                const result = await CleaningServiceRequest.createRequest(
+                const result = await createServiceRequestController.createRequest(
                     service.id,
                     username,
                     service.cleanerId,
@@ -343,10 +356,9 @@ function HomeOwnerCleaningServiceUI() {
         }
     };
 
-    const historyController = new OwnerServiceHistoryController();
     const loadConfirmedServices = async () => {
         try {
-            const allRequests = await historyController.getRequestsByHomeowner(username);
+            const allRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(username);
             const accepted = allRequests.filter(r => r.status === 'ACCEPTED');
             setConfirmedServices(accepted);
             // Fetch service details for each confirmed service
@@ -392,7 +404,6 @@ function HomeOwnerCleaningServiceUI() {
     };
 
     const searchShortlist = async () => {
-        const controller = new OwnerCleaningServiceController();
         let priceRange = shortlistSearch.priceRange ? shortlistSearch.priceRange.split('-') : [];
         const filterCriteria = {
             serviceName: shortlistSearch.serviceName,
@@ -400,7 +411,7 @@ function HomeOwnerCleaningServiceUI() {
             priceRange: priceRange,
             duration: shortlistSearch.duration
         };
-        const result = await controller.searchShortlistedServices(username, filterCriteria);
+        const result = await searchShortlistedServicesController.searchShortlistedServices(username, filterCriteria);
         setShortlistedServices(result.map(doc => ({
             id: doc.id,
             serviceName: doc.serviceName,
@@ -500,43 +511,44 @@ function HomeOwnerCleaningServiceUI() {
                     <button className="hocSearch-button" onClick={handleClear}>Clear</button>
                 </div>
             </div>
-            <div className="hocService-table">
-                <div className="hocTable-header">
-                    <span>Service Name</span>
-                    <span>Description</span>
-                    <span>Type</span>
-                    <span>Price</span>
-                    <span>Duration</span>
-                    <span></span>
-                </div>
-            {services.length === 0 ? (
-                    <div className="hocNoResults" style={{ gridColumn: "1 / -1" }}>No cleaning services found.</div>
-                ) : (
-                    services.map(service => (
-                        <React.Fragment key={service.id}>
-                            <span>{service.serviceName}</span>
-                            <span>{service.description}</span>
-                            <span>{service.serviceType}</span>
-                            <span>${service.price}</span>
-                            <span>{service.duration} hrs</span>
-                            <div className="hocAction-buttons">
-                                <button className="cs-edit-button" onClick={() => handleViewService(service)}>
-                                    View
-                                </button>
-                                <button className="cs-delete-button" onClick={() => handleShortlist(service)}>
-                                    Shortlist
-                                </button>
-                            </div>
-                        </React.Fragment>
-                    ))
-                )}
+            <div className="hcsUser-table">
+                <table className="hcsTable">
+                    <thead>
+                        <tr>
+                            <th>Service Name</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                            <th>Duration</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {services.map((service) => (
+                            <tr key={service.id}>
+                                <td>{service.serviceName}</td>
+                                <td>{service.description}</td>
+                                <td>{service.serviceType}</td>
+                                <td>${service.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                <td>{service.duration} hrs</td>
+                                <td style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                    <button className="serviceViewButton" onClick={() => handleViewService(service)}>
+                                        View
+                                    </button>
+                                    <button className="serviceShortlistButton" onClick={() => handleShortlist(service)}>
+                                        Shortlist
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
-            {showShortlist && (
-                <div className="hocShortlist-modal">
-                    <div className="hocShortlist-modal-content">
-                        <button className="hocShortlist-close" onClick={handleCloseShortlist}>Close</button>
+            {showShortlist ? (
+                <div className="modal-overlay">
+                    <div className="modal-container">
+                        <button className="modal-close" onClick={handleCloseShortlist}>×</button>
                         <h3>My Shortlisted Cleaning Services</h3>
-                        {/* --- Shortlist Search Bar --- */}
                         <div className="hscSearch-bar" style={{marginBottom: '16px'}}>
                             <input
                                 name="serviceName"
@@ -580,7 +592,6 @@ function HomeOwnerCleaningServiceUI() {
                             <button onClick={searchShortlist} className="hscSearch-button">Search</button>
                             <button onClick={clearShortlistSearch} className="hscSearch-button">Clear</button>
                         </div>
-                        {/* --- End Shortlist Search Bar --- */}
                         {shortlistedServices.length === 0 ? (
                             <p>No shortlisted services.</p>
                         ) : (
@@ -610,15 +621,13 @@ function HomeOwnerCleaningServiceUI() {
                         )}
                     </div>
                 </div>
-            )}
-            {showHistoryModal && (
-                <div className="hocShortlist-modal">
-                    <div className="hocShortlist-modal-content">
+            ) : showHistoryModal ? (
+                <div className="modal-overlay">
+                    <div className="modal-container">
                         <div className="hocModal-header-bar">
-                            <button className="hocShortlist-close" onClick={() => setShowHistoryModal(false)}>Close</button>
+                            <button className="modal-close" onClick={() => setShowHistoryModal(false)}>×</button>
                         </div>
                         <h3>Service History</h3>
-                        {/* Filter controls */}
                         <div className="hocSearch-bar" style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' }}>
                             <input
                                 type="text"
@@ -689,31 +698,34 @@ function HomeOwnerCleaningServiceUI() {
                         </div>
                     </div>
                 </div>
-            )}
-            {selectedService && (
-                <div className="hocModal">
-                    <div className="hocModal-content">
-                        <h2>{selectedService.serviceName}</h2>
-                        <p><strong>Type:</strong> {selectedService.serviceType}</p>
-                        <p><strong>Price:</strong> ${selectedService.price}</p>
-                        <p><strong>Description:</strong> {selectedService.description}</p>
-                        <p><strong>Available From:</strong> {selectedService.serviceAvailableFrom || 'N/A'}</p>
-                        <p><strong>Available To:</strong> {selectedService.serviceAvailableTo || 'N/A'}</p>
-                        <div style={{display:'flex',gap:'12px',justifyContent:'flex-end',marginTop:'20px'}}>
-                            <button className="hocShortlist-button" onClick={() => handleShortlist(selectedService)}>
-                                {isShortlisted(selectedService.id) ? 'Remove from Shortlist' : 'Add to Shortlist'}
-                            </button>
-                            <button 
-                                className="hocShortlist-button" 
-                                onClick={() => handleSendRequest(selectedService)}
-                                style={{backgroundColor: '#4CAF50'}}
-                            >
-                                Send Request
-                            </button>
-                            <button className="hocSearch-button" onClick={() => setSelectedService(null)}>Close</button>
+            ) : (
+                <>
+                    {selectedService && (
+                        <div className="hocModal">
+                            <div className="hocModal-content">
+                                <h2>{selectedService.serviceName}</h2>
+                                <p><strong>Type:</strong> {selectedService.serviceType}</p>
+                                <p><strong>Price:</strong> ${selectedService.price}</p>
+                                <p><strong>Description:</strong> {selectedService.description}</p>
+                                <p><strong>Available From:</strong> {selectedService.serviceAvailableFrom || 'N/A'}</p>
+                                <p><strong>Available To:</strong> {selectedService.serviceAvailableTo || 'N/A'}</p>
+                                <div style={{display:'flex',gap:'12px',justifyContent:'flex-end',marginTop:'20px'}}>
+                                    <button className="hocShortlist-button" onClick={() => handleShortlist(selectedService)}>
+                                        {isShortlisted(selectedService.id) ? 'Remove from Shortlist' : 'Add to Shortlist'}
+                                    </button>
+                                    <button 
+                                        className="hocShortlist-button" 
+                                        onClick={() => handleSendRequest(selectedService)}
+                                        style={{backgroundColor: '#4CAF50'}}
+                                    >
+                                        Send Request
+                                    </button>
+                                    <button className="hocSearch-button" onClick={() => setSelectedService(null)}>Close</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    )}
+                </>
             )}
         </div>
     );

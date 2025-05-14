@@ -267,23 +267,9 @@ class CleaningService {
     }
 
     static async getConfirmedMatches(cleanerId, serviceType, priceRange, startDate, endDate) {
-        try {
-            const matchesColl = collection(db, 'ConfirmedMatches');
-            const conditions = [where('cleanerId', '==', cleanerId)];
-            if (serviceType) conditions.push(where('serviceType', '==', serviceType));
-            if (priceRange && priceRange.length === 2) {
-                conditions.push(where('price', '>=', Number(priceRange[0])));
-                conditions.push(where('price', '<=', Number(priceRange[1])));
-            }
-            if (startDate) conditions.push(where('confirmedAt', '>=', startDate));
-            if (endDate) conditions.push(where('confirmedAt', '<=', endDate));
-            const q = query(matchesColl, ...conditions);
-            const results = await getDocs(q);
-            return results.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        } catch (err) {
-            console.error('Error fetching confirmed matches:', err);
-            return [];
-        }
+        // This method is deprecated - use CleanerConfirmedMatchController instead
+        console.warn('getConfirmedMatches is deprecated - use CleanerConfirmedMatchController instead');
+        return [];
     }
 
     static async getAllServices() {
@@ -319,6 +305,43 @@ class CleaningService {
             console.error('Error reading cleaning services:', error);
             return [];
         }
+    }
+
+    static async trackViewCount(serviceId) {
+        try {
+            const serviceRef = doc(db, 'CleaningServices', serviceId);
+            const serviceSnap = await getDocs(query(collection(db, 'CleaningServices'), where('__name__', '==', serviceId)));
+            if (!serviceSnap.empty) {
+                const docData = serviceSnap.docs[0].data();
+                return docData.view_history || null;
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('Error tracking view count:', error);
+            return null;
+        }
+    }
+
+    static async trackShortlistCount(serviceId) {
+        try {
+            const serviceSnap = await getDocs(query(collection(db, 'CleaningServices'), where('__name__', '==', serviceId)));
+            if (!serviceSnap.empty) {
+                const docData = serviceSnap.docs[0].data();
+                return docData.shortlist_history || null;
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('Error tracking shortlist count:', error);
+            return null;
+        }
+    }
+
+    static async searchConfirmedMatches(cleanerId, filters = {}) {
+        // This method is deprecated - use CleanerConfirmedMatchController instead
+        console.warn('searchConfirmedMatches is deprecated - use CleanerConfirmedMatchController instead');
+        return [];
     }
 }
 

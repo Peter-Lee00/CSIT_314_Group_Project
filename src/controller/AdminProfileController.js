@@ -1,6 +1,6 @@
 import UserProfile from '../entity/UserProfile';
 
-class UACreateUserProfileController {
+class CreateProfileController {
     async createUserProfile(profileName, description) {
         try {
             const profile = new UserProfile();
@@ -13,7 +13,7 @@ class UACreateUserProfileController {
     }
 }
 
-class UAViewUserProfileController {
+class ViewProfileController {
     async viewUserProfile(profileName) {
         try {
             const userProfile = new UserProfile();
@@ -26,7 +26,7 @@ class UAViewUserProfileController {
     }
 }
 
-class UAUpdateUserProfileController {
+class UpdateProfileController {
     async updateUserProfile(profileName, description) {
         try {
             const userProfile = new UserProfile();
@@ -80,10 +80,10 @@ class UADeleteUserProfileController {
 }
 
 export { 
-    UACreateUserProfileController, 
-    UAViewUserProfileController, 
-    UAUpdateUserProfileController, 
-    UASuspendUserProfileController, 
+    CreateProfileController,
+    ViewProfileController,
+    UpdateProfileController,
+    UASuspendUserProfileController,
     UASearchUserProfileController,
     UADeleteUserProfileController
 };

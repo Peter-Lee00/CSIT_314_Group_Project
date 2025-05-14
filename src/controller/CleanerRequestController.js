@@ -1,35 +1,59 @@
 import CleaningServiceRequest from '../entity/CleaningServiceRequest';
 
-class CleanerRequestController {
-    /**
-     * Get all requests for a given cleaner
-     * @param {string} cleanerId
-     * @returns {Promise<Array>} Array of request objects
-     */
+class GetRequestsByCleanerController {
     async getRequestsByCleaner(cleanerId) {
-        // Add validation or transformation here if needed
-        return await CleaningServiceRequest.getRequestsByCleaner(cleanerId);
-    }
-
-    /**
-     * Update the status of a request (e.g., ACCEPTED, DECLINED)
-     * @param {string} requestId
-     * @param {string} newStatus
-     * @returns {Promise<boolean>} True if update successful
-     */
-    async updateRequestStatus(requestId, newStatus) {
-        // Add business rules here if needed
-        return await CleaningServiceRequest.updateRequestStatus(requestId, newStatus);
-    }
-
-    /**
-     * (Optional) Get all requests for a given homeowner
-     * @param {string} homeownerId
-     * @returns {Promise<Array>} Array of request objects
-     */
-    async getRequestsByHomeowner(homeownerId) {
-        return await CleaningServiceRequest.getRequestsByHomeowner(homeownerId);
+        if (!cleanerId) {
+            throw new Error("Cleaner ID is required.");
+        }
+        try {
+            const requests = await CleaningServiceRequest.getRequestsByCleaner(cleanerId);
+            return requests || [];
+        } catch (error) {
+            console.error("Error fetching requests for cleaner:", error);
+            return [];
+        }
     }
 }
 
-export default CleanerRequestController; 
+class UpdateRequestStatusController {
+    async updateRequestStatus(requestId, newStatus) {
+        if (!requestId || !newStatus) {
+            throw new Error("Request ID and new status are required.");
+        }
+        try {
+            const result = await CleaningServiceRequest.updateRequestStatus(requestId, newStatus);
+            return !!result;
+        } catch (error) {
+            console.error("Error updating request status:", error);
+            return false;
+        }
+    }
+}
+
+class GetRequestsByHomeownerController {
+    async getRequestsByHomeowner(homeownerId) {
+        if (!homeownerId) {
+            throw new Error("Homeowner ID is required.");
+        }
+        try {
+            const requests = await CleaningServiceRequest.getRequestsByHomeowner(homeownerId);
+            return requests || [];
+        } catch (error) {
+            console.error("Error fetching requests for homeowner:", error);
+            return [];
+        }
+    }
+}
+
+class CreateServiceRequestController {
+    async createRequest(serviceId, homeownerId, cleanerId, message = '', requestedDate = '') {
+        return await CleaningServiceRequest.createRequest(serviceId, homeownerId, cleanerId, message, requestedDate);
+    }
+}
+
+export {
+    GetRequestsByCleanerController,
+    UpdateRequestStatusController,
+    GetRequestsByHomeownerController,
+    CreateServiceRequestController
+};

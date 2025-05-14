@@ -75,6 +75,19 @@ class ServiceCategory {
             return null;
         }
     }
+
+    static async searchCategories(searchTerm) {
+        try {
+            const categoryColl = collection(db, 'ServiceCategories');
+            const results = await getDocs(categoryColl);
+            return results.docs
+                .map(doc => ({ id: doc.id, ...doc.data() }))
+                .filter(cat => cat.name.toLowerCase().includes(searchTerm.toLowerCase()));
+        } catch (err) {
+            console.error("Problem searching categories:", err);
+            return [];
+        }
+    }
 }
 
 export default ServiceCategory; 

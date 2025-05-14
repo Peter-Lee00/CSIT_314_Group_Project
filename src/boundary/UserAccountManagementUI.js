@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 // import all the controllers for User Account Management
 import {
-  AdminAccountController,
   CreateUserAccountController,
-  ViewUserAccountController
-} from "../controller/AdminAccountController";
+  ViewUserAccountController,
+  UpdateUserAccountController,
+  SearchUserAccountController,
+  SuspendUserAccountController
+} from '../controller/AdminAccountController';
 import { UserLogoutController } from "../controller/UserAuthController";
 import { Util } from "../Util";
 import Cookies from "js-cookie";
@@ -48,7 +50,7 @@ function UserAccountManagementUI() {
       return;
     }
 
-    const controller = new AdminAccountController();
+    const controller = new SearchUserAccountController();
     const found = await controller.searchUserAccount(emailFilter);
 
     if (!found) {
@@ -220,7 +222,7 @@ function UserAccountManagementUI() {
     if (!result.isConfirmed) return;
 
     const update = result.value;
-    const ctrl = new AdminAccountController();
+    const ctrl = new UpdateUserAccountController();
     const ok = await ctrl.updateUserAccount(
       update.firstName,
       update.lastName,
@@ -243,7 +245,7 @@ function UserAccountManagementUI() {
   };
 
   const handleSuspend = async (email) => {
-    const ctrl = new AdminAccountController();
+    const ctrl = new SuspendUserAccountController();
     const didSuspend = await ctrl.suspendUserAccount(email);
     if (didSuspend) {
       Swal.fire('Success!', 'User suspended Successfully.', 'success');

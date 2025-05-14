@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { PlatformManagerServiceCategoryController } from '../controller/PlatformManagerServiceCategoryController';
-import { PlatformManagerReportController } from '../controller/PlatformManagerReportController';
+import {
+    AddCategoryController,
+    EditCategoryController,
+    DeleteCategoryController,
+    ListCategoriesController,
+    SearchCategoriesController,
+    GetCategoryByIdController
+} from '../controller/PMserviceCategoryController';
+import {
+    GenerateDailyReportController,
+    GenerateWeeklyReportController,
+    GenerateMonthlyReportController
+} from '../controller/PMreportController';
 import Swal from 'sweetalert2';
 import { UserLogoutController } from '../controller/UserAuthController';
 import { useNavigate } from 'react-router-dom';
@@ -9,19 +20,26 @@ import './PlatformManagerServiceCategoryUI.css';
 const PlatformManagerServiceCategoryUI = () => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
-    const controller = new PlatformManagerServiceCategoryController();
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredCategories, setFilteredCategories] = useState([]);
     const navigate = useNavigate();
 
     const loadCategories = async () => {
         setLoading(true);
-        const data = await controller.listCategories();
+        const listController = new ListCategoriesController();
+        const data = await listController.listCategories();
         setCategories(data);
+        setFilteredCategories(data);
         setLoading(false);
     };
 
     useEffect(() => {
         loadCategories();
     }, []);
+
+    useEffect(() => {
+        setFilteredCategories(categories);
+    }, [categories]);
 
     const handleLogout = async () => {
         const userAuthController = new UserLogoutController();
@@ -65,9 +83,14 @@ const PlatformManagerServiceCategoryUI = () => {
             }
         });
         if (formValues) {
-            await controller.addCategory(formValues.name, formValues.desc);
-            loadCategories();
-            Swal.fire('Added!', 'Category added successfully.', 'success');
+            try {
+                const addController = new AddCategoryController();
+                await addController.addCategory(formValues.name, formValues.desc);
+                await loadCategories();
+                Swal.fire('Added!', 'Category added successfully.', 'success');
+            } catch (err) {
+                Swal.fire('Error', err.message || 'Failed to add category', 'error');
+            }
         }
     };
 
@@ -89,9 +112,14 @@ const PlatformManagerServiceCategoryUI = () => {
             }
         });
         if (formValues) {
-            await controller.editCategory(cat.id, { name: formValues.name, description: formValues.desc });
-            loadCategories();
-            Swal.fire('Updated!', 'Category updated successfully.', 'success');
+            try {
+                const editController = new EditCategoryController();
+                await editController.editCategory(cat.id, { name: formValues.name, description: formValues.desc });
+                await loadCategories();
+                Swal.fire('Updated!', 'Category updated successfully.', 'success');
+            } catch (err) {
+                Swal.fire('Error', err.message || 'Failed to update category', 'error');
+            }
         }
     };
 
@@ -105,17 +133,42 @@ const PlatformManagerServiceCategoryUI = () => {
             cancelButtonText: 'Cancel',
         });
         if (result.isConfirmed) {
-            await controller.deleteCategory(cat.id);
-            loadCategories();
-            Swal.fire('Deleted!', 'Category deleted.', 'success');
+            try {
+                const deleteController = new DeleteCategoryController();
+                await deleteController.deleteCategory(cat);
+                await loadCategories();
+                Swal.fire('Deleted!', 'Category deleted.', 'success');
+            } catch (err) {
+                Swal.fire('Error', err.message || 'Failed to delete category', 'error');
+            }
         }
+    };
+
+    const handleSearch = async () => {
+        const searchController = new SearchCategoriesController();
+        const filtered = await searchController.searchCategories(searchTerm);
+        setFilteredCategories(filtered);
+    };
+
+    const handleClear = () => {
+        setSearchTerm('');
+        setFilteredCategories(categories);
     };
 
     // REPORT HANDLER
     const handleGenerateReport = async (period) => {
         try {
-            const reportController = new PlatformManagerReportController();
-            const report = await reportController.generateReport(period);
+            let reportController;
+            if (period === 'daily') {
+                reportController = new GenerateDailyReportController();
+            } else if (period === 'weekly') {
+                reportController = new GenerateWeeklyReportController();
+            } else if (period === 'monthly') {
+                reportController = new GenerateMonthlyReportController();
+            } else {
+                throw new Error('Invalid report period');
+            }
+            const report = await reportController.generateReport();
             // Find the most viewed, most requested, and most shortlisted service categories
             let mostViewedService = null;
             let mostViewedCount = -1;
@@ -144,6 +197,20 @@ const PlatformManagerServiceCategoryUI = () => {
                 The most shortlisted service is "${mostShortlistedService && mostShortlistedCount > 0 ? mostShortlistedService + ' (' + mostShortlistedCount + ' shortlists)' : 'No data'}"
               </div>
             `;
+            // Add period info
+            let periodInfo = '';
+            const today = new Date();
+            const pad = n => n < 10 ? '0' + n : n;
+            if (period === 'daily') {
+                periodInfo = `<div style='margin-top:10px;font-style:italic;'>Date: ${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}</div>`;
+            } else if (period === 'weekly') {
+                const end = new Date(today);
+                const start = new Date(today);
+                start.setDate(end.getDate() - 6);
+                periodInfo = `<div style='margin-top:10px;font-style:italic;'>Week: ${start.getFullYear()}-${pad(start.getMonth() + 1)}-${pad(start.getDate())} to ${end.getFullYear()}-${pad(end.getMonth() + 1)}-${pad(end.getDate())}</div>`;
+            } else if (period === 'monthly') {
+                periodInfo = `<div style='margin-top:10px;font-style:italic;'>Month: ${today.getFullYear()}-${pad(today.getMonth() + 1)}</div>`;
+            }
             Swal.fire({
                 title: `${period.charAt(0).toUpperCase() + period.slice(1)} Report`,
                 html: `
@@ -168,6 +235,7 @@ const PlatformManagerServiceCategoryUI = () => {
                     </tbody>
                   </table>
                   ${summaryHtml}
+                  ${periodInfo}
                 `,
                 width: 700
             });
@@ -178,17 +246,28 @@ const PlatformManagerServiceCategoryUI = () => {
 
     return (
         <div className="pmsc-container">
-            <div className="pmsc-header">
+            <div className="pmsc-header-row">
                 <h2 className="pmsc-title">Service Category Management</h2>
                 <button className="pmsc-logout-button" onClick={handleLogout}>Logout</button>
             </div>
-            {/* REPORT BUTTONS */}
-            <div className="pmsc-report-buttons">
+            <div className="pmsc-action-row">
                 <button className="pmsc-report-button" onClick={() => handleGenerateReport('daily')}>Generate Daily Report</button>
                 <button className="pmsc-report-button" onClick={() => handleGenerateReport('weekly')}>Generate Weekly Report</button>
                 <button className="pmsc-report-button" onClick={() => handleGenerateReport('monthly')}>Generate Monthly Report</button>
             </div>
-            <button className="pmsc-add-button" onClick={handleAdd}>Add New Category</button>
+            <div className="pmsc-search-row">
+                <input
+                    type="text"
+                    placeholder="Search categories..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button onClick={handleSearch}>Search</button>
+                <button onClick={handleClear}>Clear</button>
+            </div>
+            <div className="pmsc-add-row">
+                <button className="pmsc-add-button" onClick={handleAdd}>Add New Category</button>
+            </div>
             {loading ? (
                 <div className="pmsc-loading">Loading...</div>
             ) : (
@@ -201,13 +280,13 @@ const PlatformManagerServiceCategoryUI = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {categories.map((category) => (
+                        {filteredCategories.map((category) => (
                             <tr key={category.id}>
                                 <td>{category.name}</td>
                                 <td>{category.description}</td>
                                 <td>
                                     <button className="pmsc-edit-button" onClick={() => handleEdit(category)}>Edit</button>
-                                    <button className="pmsc-delete-button" onClick={() => handleDelete(category.id)}>Delete</button>
+                                    <button className="pmsc-delete-button" onClick={() => handleDelete(category)}>Delete</button>
                                 </td>
                             </tr>
                         ))}

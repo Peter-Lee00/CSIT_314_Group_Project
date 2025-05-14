@@ -3,6 +3,9 @@ import UserProfile from '../entity/UserProfile';
 import Cookies from 'js-cookie';
 
 export class UserLoginController {
+    constructor() {
+        this.lastError = null;
+    }
     async authenticateLogin(email, password, profileType, profileDocId) {
         try {
             // First verify the user account
@@ -10,27 +13,27 @@ export class UserLoginController {
 
             // If the user account has been suspended
             if (userProfile === "SUSPENDED") {
-                console.log("User account has been suspended");
-                return 'SUSPENDED_ACCOUNT';
+                this.lastError = 'SUSPENDED_ACCOUNT';
+                return false;
             }
             
             // If email/password not match with DB
             if (!userProfile) {
-                console.log("Invalid email/password");
-                return 'INVALID_CREDENTIALS';
+                this.lastError = 'INVALID_CREDENTIALS';
+                return false;
             }
 
             // Strictly check that the user's actual role matches the selected role
             if (userProfile !== profileType) {
-                console.log("Role mismatch: user role is", userProfile, "but selected", profileType);
-                return 'INVALID_PROFILE';
+                this.lastError = 'INVALID_PROFILE';
+                return false;
             }
 
             // Use UserProfile entity to verify profile type and suspension
             const profileVerified = await UserProfile.verifyUserProfile(profileDocId, profileType);
             if (!profileVerified) {
-                console.log("Profile verification failed");
-                return 'INVALID_PROFILE';
+                this.lastError = 'INVALID_PROFILE';
+                return false;
             }
 
             // If we get here, both credentials and profile type are correct
@@ -41,12 +44,13 @@ export class UserLoginController {
             if (userData) {
                 Cookies.set('username', userData.firstName || email);
             }
-            console.log("Login successfully");
-            return 'SUCCESS';
+            this.lastError = null;
+            return true;
 
         } catch (error) {
             console.error("Authentication error:", error);
-            return 'ERROR';
+            this.lastError = 'ERROR';
+            return false;
         }
     }
 }

@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // So we can redirect if the user isn't a cleaner
 import Cookies from 'js-cookie';
-import { CleanerServiceController } from '../controller/CleanerServiceController';
-import CleanerTrackViewCountController from '../controller/CleanerTrackViewCountController';
-import CleanerTrackShortlistCountController from '../controller/CleanerTrackShortlistCountController';
+import {
+  CleanerGetServicesController,
+  CleanerCreateServiceController,
+  CleanerUpdateServiceController,
+  CleanerDeleteServiceController,
+  CleanerUpdateServiceOfferingController,
+  CleanerTrackViewCountController,
+  CleanerTrackShortlistCountController,
+  CleanerReadCleaningServicesController
+} from '../controller/CleanerServiceController';
 import { ServiceOffering } from '../entity/CleaningService';
 import Swal from 'sweetalert2';
 import Chart from 'chart.js/auto';
@@ -16,6 +23,8 @@ import CleanerConfirmedMatchController from '../controller/CleanerConfirmedMatch
 import { FaEdit, FaTrash, FaEye, FaStar, FaHistory } from 'react-icons/fa';
 import { db } from '../firebase';
 import { collection, query, where, getDocs, doc, updateDoc, deleteDoc, addDoc, serverTimestamp } from 'firebase/firestore';
+import CleanerRequestUI from './CleanerRequestUI';
+import CleanerConfirmedMatchesUI from './CleanerConfirmedMatchesUI';
 
 const CleanerServiceUI = () => {
   const navigate = useNavigate();
@@ -38,18 +47,18 @@ const CleanerServiceUI = () => {
   const [searchPriceRange, setSearchPriceRange] = useState('');
   const [showRequests, setShowRequests] = useState(false);
   const [requests, setRequests] = useState([]);
-  const [requestServiceDetails, setRequestServiceDetails] = useState({});
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [confirmedRequests, setConfirmedRequests] = useState([]);
-  const [historyFilters, setHistoryFilters] = useState({
-    serviceName: '',
-    serviceType: '',
-    priceRange: '',
-    date: '',
-    search: ''
-  });
+  const [requestServiceDetails, setRequestServiceDetails] = useState({});
 
-  const controller = new CleanerServiceController();
+  const getServicesController = new CleanerGetServicesController();
+  const createServiceController = new CleanerCreateServiceController();
+  const updateServiceController = new CleanerUpdateServiceController();
+  const deleteServiceController = new CleanerDeleteServiceController();
+  const updateServiceOfferingController = new CleanerUpdateServiceOfferingController();
+  const trackViewCountController = new CleanerTrackViewCountController();
+  const trackShortlistCountController = new CleanerTrackShortlistCountController();
+  const readCleaningServicesController = new CleanerReadCleaningServicesController();
   const confirmedMatchController = new CleanerConfirmedMatchController();
 
   useEffect(() => {
@@ -132,7 +141,7 @@ const CleanerServiceUI = () => {
   const fetchServicesForCleaner = async (id) => {
     try {
       setLoading(true);
-      const serviceList = await controller.readCleaningServices(id);
+      const serviceList = await readCleaningServicesController.readCleaningServices(id);
       setMyServices(serviceList || []);
       setFilteredServices((serviceList || []).filter(service => service.isOffering));
     } catch (e) {
@@ -208,13 +217,13 @@ const CleanerServiceUI = () => {
           includedTasks: includedTasks.split(',').map(s => s.trim()),
           serviceAvailableFrom,
           serviceAvailableTo,
-          isOffering: true
+        isOffering: true
         };
       }
     });
 
     if (newService) {
-      const isAdded = await controller.createService(
+      const isAdded = await createServiceController.createService(
         newService.serviceName,
         newService.description,
         newService.price,
@@ -241,7 +250,7 @@ const CleanerServiceUI = () => {
 
   const handleServiceOfferingChange = async (serviceId, newOfferingStatus) => {
     try {
-      const result = await controller.updateServiceOffering(serviceId, newOfferingStatus);
+      const result = await updateServiceOfferingController.updateServiceOffering(serviceId, newOfferingStatus);
       
       if (result === null) {
         // Failed to update
@@ -328,7 +337,7 @@ const CleanerServiceUI = () => {
     });
 
     if (updatedInfo) {
-      const wasUpdated = await controller.updateService(existingService.id, updatedInfo);
+      const wasUpdated = await updateServiceController.updateService(existingService.id, updatedInfo);
       if (wasUpdated) {
         Swal.fire('Updated', 'Your service has been modified', 'success');
         fetchServicesForCleaner(currentCleanerId);
@@ -351,7 +360,7 @@ const CleanerServiceUI = () => {
 
     if (result.isConfirmed) {
       try {
-        const deleted = await controller.deleteService(serviceId);
+        const deleted = await deleteServiceController.deleteService(serviceId);
         if (deleted) {
           Swal.fire('Deleted!', 'Service has been removed.', 'success');
           fetchServicesForCleaner(currentCleanerId);
@@ -365,8 +374,7 @@ const CleanerServiceUI = () => {
 
   const handleViewCount = async (serviceId) => {
     try {
-      const viewCountController = new CleanerTrackViewCountController();
-      const viewCountHistory = await viewCountController.viewServiceViewCount(serviceId);
+      const viewCountHistory = await trackViewCountController.trackViewCount(serviceId);
       Swal.fire({
         title: 'View Count History',
         width: 800,
@@ -428,8 +436,7 @@ const CleanerServiceUI = () => {
 
   const handleShortlistCount = async (serviceId) => {
     try {
-      const shortlistCountController = new CleanerTrackShortlistCountController();
-      const shortlistCountHistory = await shortlistCountController.viewServiceShortlistCount(serviceId);
+      const shortlistCountHistory = await trackShortlistCountController.trackShortlistCount(serviceId);
       Swal.fire({
         title: 'Shortlist Count History',
         width: 800,
@@ -534,7 +541,7 @@ const CleanerServiceUI = () => {
       if (success) {
         Swal.fire('Success', `Request ${newStatus.toLowerCase()} successfully`, 'success');
         loadRequests(); // Refresh the requests list
-      } else {
+    } else {
         Swal.fire('Error', 'Failed to update request status', 'error');
       }
     } catch (error) {
@@ -543,51 +550,14 @@ const CleanerServiceUI = () => {
     }
   };
 
-  const loadConfirmedRequests = async (filters = {}) => {
+  const loadConfirmedRequests = async () => {
     try {
-      const accepted = await confirmedMatchController.getConfirmedMatches(currentCleanerId, filters);
+      const accepted = await confirmedMatchController.getConfirmedMatches(currentCleanerId);
       setConfirmedRequests(accepted);
-      // Fetch service details for each confirmed request
-      const serviceIds = [...new Set(accepted.map(req => req.serviceId))];
-      const details = {};
-      for (const id of serviceIds) {
-        const service = await CleaningService.getServiceById(id);
-        if (service) details[id] = service;
-      }
-      setRequestServiceDetails(details);
     } catch (error) {
       console.error('Error loading confirmed requests:', error);
       Swal.fire('Error', 'Failed to load confirmed requests', 'error');
     }
-  };
-
-  const getUnique = (arr, key) => [...new Set(arr.map(item => item[key]).filter(Boolean))];
-
-  const filterConfirmedRequests = () => {
-    // Use the controller for filtering if filters are set, otherwise return all
-    if (Object.values(historyFilters).some(v => v)) {
-      // If any filter is set, reload with filters
-      loadConfirmedRequests(historyFilters);
-    }
-    return confirmedRequests.filter(request => {
-      const service = requestServiceDetails[request.serviceId] || {};
-      const matchesServiceName = !historyFilters.serviceName || service.serviceName === historyFilters.serviceName;
-      const matchesServiceType = !historyFilters.serviceType || service.serviceType === historyFilters.serviceType;
-      const matchesPrice = !historyFilters.priceRange || (() => {
-        if (!service.price) return false;
-        const [min, max] = historyFilters.priceRange.split('-').map(Number);
-        return service.price >= min && service.price <= max;
-      })();
-      const matchesDate = !historyFilters.date || request.requestedDate === historyFilters.date;
-      const matchesSearch = !historyFilters.search || (
-        (service.serviceName && service.serviceName.toLowerCase().includes(historyFilters.search.toLowerCase())) ||
-        (service.serviceType && service.serviceType.toLowerCase().includes(historyFilters.search.toLowerCase())) ||
-        (service.price && String(service.price).includes(historyFilters.search)) ||
-        (service.serviceArea && service.serviceArea.toLowerCase().includes(historyFilters.search.toLowerCase())) ||
-        (request.homeownerId && request.homeownerId.toLowerCase().includes(historyFilters.search.toLowerCase()))
-      );
-      return matchesServiceName && matchesServiceType && matchesPrice && matchesDate && matchesSearch;
-    });
   };
 
   const handleLogout = async () => {
@@ -634,11 +604,11 @@ const CleanerServiceUI = () => {
             loadConfirmedRequests();
           }}>Confirmed Matches</button>
           <button className="cs-history-button" onClick={handleLogout}>Logout</button>
-          {!showHistory && (
-            <button className="cs-back-button" onClick={() => navigate(-1)}>
-              Home
-            </button>
-          )}
+        {!showHistory && (
+          <button className="cs-back-button" onClick={() => navigate(-1)}>
+            Home
+          </button>
+        )}
         </div>
       </div>
 
@@ -756,149 +726,20 @@ const CleanerServiceUI = () => {
 
       {/* Add Requests Modal */}
       {showRequests && (
-        <div className="cs-modal">
-          <div className="cs-modal-content">
-            <div className="cs-modal-header">
-              <h2>Service Requests</h2>
-              <button className="cs-modal-close" onClick={() => setShowRequests(false)}>×</button>
-            </div>
-            <div className="cs-requests-list">
-              {requests.length === 0 ? (
-                <p>No requests found.</p>
-              ) : (
-                requests.map(request => {
-                  const service = requestServiceDetails[request.serviceId] || {};
-                  return (
-                    <div key={request.id} className="cs-request-card">
-                      <div className="cs-request-header">
-                        <h3>Request from {request.homeownerId}</h3>
-                        <span className={`cs-request-status ${request.status.toLowerCase()}`}>{request.status}</span>
-                      </div>
-                      <div className="cs-request-details">
-                        <p><strong>Service Name:</strong> {service.serviceName || 'N/A'}</p>
-                        <p><strong>Service Type:</strong> {service.serviceType || 'N/A'}</p>
-                        <p><strong>Price:</strong> {service.price ? `$${service.price}` : 'N/A'}</p>
-                        <p><strong>Location:</strong> {service.serviceArea || 'N/A'}</p>
-                        <p><strong>Requested Date:</strong> {request.requestedDate || 'N/A'}</p>
-                        <p><strong>Requested On:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
-                        {request.message && <p><strong>Message:</strong> {request.message}</p>}
-                      </div>
-                      {request.status === 'PENDING' && (
-                        <div className="cs-request-actions">
-                          <button 
-                            className="cs-accept-button"
-                            onClick={() => handleRequestStatus(request.id, 'ACCEPTED')}
-                          >
-                            Accept
-                          </button>
-                          <button 
-                            className="cs-decline-button"
-                            onClick={() => handleRequestStatus(request.id, 'DECLINED')}
-                          >
-                            Decline
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </div>
-        </div>
+        <CleanerRequestUI
+          requests={requests}
+          requestServiceDetails={requestServiceDetails}
+          onAccept={handleRequestStatus}
+          onDecline={handleRequestStatus}
+          onClose={() => setShowRequests(false)}
+        />
       )}
 
       {showHistoryModal && (
-        <div className="cs-modal">
-          <div className="cs-modal-content">
-            <div className="cs-modal-header">
-              <h2>Confirmed Matches</h2>
-              <button className="cs-modal-close" onClick={() => setShowHistoryModal(false)}>×</button>
-            </div>
-            {/* Filter controls - Updated to match main service list style */}
-            <div className="cs-search-section" style={{flexDirection: 'column', gap: '8px'}}>
-              <div className="cs-search-main" style={{gap: '8px', alignItems: 'center'}}>
-                <input
-                  type="text"
-                  placeholder="Search by service name"
-                  value={historyFilters.search}
-                  onChange={e => setHistoryFilters(f => ({ ...f, search: e.target.value }))}
-                  className="cs-search-input"
-                />
-                <button onClick={() => filterConfirmedRequests()} className="cs-search-button">Search</button>
-                <button onClick={() => setHistoryFilters({
-                  serviceName: '',
-                  serviceType: '',
-                  priceRange: '',
-                  date: '',
-                  search: ''
-                })} className="cs-reset-button">Clear</button>
-              </div>
-              <div className="cs-search-filters" style={{gap: '8px', alignItems: 'center'}}>
-                <select
-                  value={historyFilters.serviceType}
-                  onChange={e => setHistoryFilters(f => ({ ...f, serviceType: e.target.value }))}
-                  className="cs-search-input"
-                  style={{ minWidth: '140px' }}
-                >
-                  <option value="">All Types</option>
-                  <option value="Basic Cleaning">Basic Cleaning</option>
-                  <option value="Deep Cleaning">Deep Cleaning</option>
-                  <option value="Move In/Out Cleaning">Move In/Out Cleaning</option>
-                  <option value="Office Cleaning">Office Cleaning</option>
-                  <option value="Window Cleaning">Window Cleaning</option>
-                  <option value="Carpet Cleaning">Carpet Cleaning</option>
-                  <option value="Post Renovation Cleaning">Post Renovation Cleaning</option>
-                  <option value="Disinfection Service">Disinfection Service</option>
-                </select>
-                <select
-                  value={historyFilters.priceRange}
-                  onChange={e => setHistoryFilters(f => ({ ...f, priceRange: e.target.value }))}
-                  className="cs-search-input"
-                  style={{ minWidth: '140px' }}
-                >
-                  <option value="">All Prices</option>
-                  <option value="0-50">$0 - $50</option>
-                  <option value="51-100">$51 - $100</option>
-                  <option value="101-200">$101 - $200</option>
-                  <option value="201-500">$201 - $500</option>
-                </select>
-                <input
-                  type="date"
-                  value={historyFilters.date}
-                  onChange={e => setHistoryFilters(f => ({ ...f, date: e.target.value }))}
-                  className="cs-search-input"
-                  style={{ minWidth: '140px' }}
-                />
-              </div>
-            </div>
-            <div className="cs-requests-list">
-              {filterConfirmedRequests().length === 0 ? (
-                <p>No confirmed matches found.</p>
-              ) : (
-                filterConfirmedRequests().map(request => {
-                  const service = requestServiceDetails[request.serviceId] || {};
-                  return (
-                    <div key={request.id} className="cs-request-card">
-                      <div className="cs-request-header">
-                        <h3>Confirmed with {request.homeownerId}</h3>
-                        <span className="cs-request-status accepted">ACCEPTED</span>
-                      </div>
-                      <div className="cs-request-details">
-                        <p><strong>Service Name:</strong> {service.serviceName || 'N/A'}</p>
-                        <p><strong>Service Type:</strong> {service.serviceType || 'N/A'}</p>
-                        <p><strong>Price:</strong> {service.price ? `$${service.price}` : 'N/A'}</p>
-                        <p><strong>Location:</strong> {service.serviceArea || 'N/A'}</p>
-                        <p><strong>Confirmed Date:</strong> {request.requestedDate || 'N/A'}</p>
-                        <p><strong>Confirmed On:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
-                      </div>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </div>
-        </div>
+        <CleanerConfirmedMatchesUI
+          confirmedRequests={confirmedRequests}
+          onClose={() => setShowHistoryModal(false)}
+        />
       )}
     </div>
   );

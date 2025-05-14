@@ -664,3 +664,26 @@ tr:hover {
         width: 100%;
     }
 }
+
+.pmsc-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.pmsc-action-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pmsc-search-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pmsc-add-row {
+  margin-bottom: 16px;
+}
