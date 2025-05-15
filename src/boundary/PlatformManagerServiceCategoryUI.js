@@ -261,7 +261,6 @@ const PlatformManagerServiceCategoryUI = () => {
                         <th>Total Views</th>
                         <th>Total Requests</th>
                         <th>Total Shortlists</th>
-                          <th>Service Count</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -271,7 +270,6 @@ const PlatformManagerServiceCategoryUI = () => {
                           <td>${row.totalViews}</td>
                           <td>${row.totalRequests}</td>
                           <td>${row.totalShortlists}</td>
-                            <td>${row.serviceCount}</td>
                         </tr>
                       `).join('')}
                     </tbody>
@@ -298,23 +296,25 @@ const PlatformManagerServiceCategoryUI = () => {
 
             <div className="pmsc-controls">
                 <div className="pmsc-search-section">
-                <input
-                    type="text"
-                    placeholder="Search categories..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    <input
+                        type="text"
+                        placeholder="Search categories..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                         className="pmsc-search-input"
-                />
-                    <button onClick={handleSearch} className="pmsc-search-button">Search</button>
-                    <button onClick={handleClear} className="pmsc-clear-button">Clear</button>
+                    />
+                    <div className="pmsc-button-group">
+                        <button onClick={handleSearch} className="pmsc-primary-button">Search</button>
+                        <button onClick={handleClear} className="pmsc-secondary-button">Clear</button>
+                    </div>
                 </div>
-                <button onClick={handleAdd} className="pmsc-add-button">Add Category</button>
+                <button onClick={handleAdd} className="pmsc-primary-button">Add Category</button>
             </div>
 
             <div className="pmsc-report-controls">
-                <button onClick={() => handleGenerateReport('daily')} className="pmsc-report-button">Daily Report</button>
-                <button onClick={() => handleGenerateReport('weekly')} className="pmsc-report-button">Weekly Report</button>
-                <button onClick={() => handleGenerateReport('monthly')} className="pmsc-report-button">Monthly Report</button>
+                <button onClick={() => handleGenerateReport('daily')} className="pmsc-primary-button">Daily Report</button>
+                <button onClick={() => handleGenerateReport('weekly')} className="pmsc-primary-button">Weekly Report</button>
+                <button onClick={() => handleGenerateReport('monthly')} className="pmsc-primary-button">Monthly Report</button>
             </div>
 
             {loading ? (
@@ -323,9 +323,8 @@ const PlatformManagerServiceCategoryUI = () => {
                 <table className="pmsc-table">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Category Name</th>
                             <th>Description</th>
-                            <th>Service Count</th>
                             <th>Last Updated</th>
                             <th>Actions</th>
                         </tr>
@@ -335,17 +334,18 @@ const PlatformManagerServiceCategoryUI = () => {
                             <tr key={cat.id}>
                                 <td>{cat.name}</td>
                                 <td>{cat.description || 'No description'}</td>
-                                <td>{cat.serviceCount || 0}</td>
                                 <td>{cat.lastUpdated ? new Date(cat.lastUpdated).toLocaleDateString() : ''}</td>
                                 <td>
-                                    <button onClick={() => handleEdit(cat)} className="pmsc-edit-button">Edit</button>
-                                    <button onClick={() => handleDelete(cat)} className="pmsc-delete-button">Delete</button>
+                                    <div className="pmsc-action-buttons">
+                                        <button onClick={() => handleEdit(cat)} className="pmsc-primary-button">Edit</button>
+                                        <button onClick={() => handleDelete(cat)} className="pmsc-danger-button">Delete</button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
                         {filteredCategories.length === 0 && (
                             <tr>
-                                <td colSpan="5" className="pmsc-no-results">No categories found</td>
+                                <td colSpan="4" className="pmsc-no-results">No categories found</td>
                             </tr>
                         )}
                     </tbody>

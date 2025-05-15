@@ -3,43 +3,63 @@ import ServiceCategory from '../entity/ServiceCategory';
 // Add Category
 class AddCategoryController {
     async addCategory(name, description) {
-        if (!name || typeof name !== 'string' || name.trim().length === 0) {
-            throw new Error("Category name is required.");
+        try {
+            if (!name || typeof name !== 'string' || name.trim().length === 0) {
+                return { success: false, data: null, message: "Category name is required." };
+            }
+            if (name.length > 50) {
+                return { success: false, data: null, message: "Category name must be 50 characters or less." };
+            }
+            if (description && description.length > 200) {
+                return { success: false, data: null, message: "Description must be 200 characters or less." };
+            }
+            const existingCategories = await ServiceCategory.listCategories();
+            if (existingCategories.some(cat => cat.name.toLowerCase() === name.toLowerCase())) {
+                return { success: false, data: null, message: "A category with this name already exists." };
+            }
+            const category = new ServiceCategory(name, description);
+            const result = await category.addCategory();
+            if (result) {
+                return { success: true, data: { id: result, name, description }, message: "Category added successfully." };
+            } else {
+                return { success: false, data: null, message: "Failed to add category." };
+            }
+        } catch (error) {
+            console.error('Error in AddCategoryController:', error);
+            return { success: false, data: null, message: error.message || "Failed to add category." };
         }
-        if (name.length > 50) {
-            throw new Error("Category name must be 50 characters or less.");
-        }
-        if (description && description.length > 200) {
-            throw new Error("Description must be 200 characters or less.");
-        }
-        const existingCategories = await ServiceCategory.listCategories();
-        if (existingCategories.some(cat => cat.name.toLowerCase() === name.toLowerCase())) {
-            throw new Error("A category with this name already exists.");
-        }
-        const category = new ServiceCategory(name, description);
-        return await category.addCategory();
     }
 }
 
 // Edit Category
 class EditCategoryController {
     async editCategory(categoryId, updateFields) {
-        if (!categoryId) {
-            throw new Error("Category ID is required.");
-        }
-        if (updateFields.name && updateFields.name.length > 50) {
-            throw new Error("Category name must be 50 characters or less.");
-        }
-        if (updateFields.description && updateFields.description.length > 200) {
-            throw new Error("Description must be 200 characters or less.");
-        }
-        if (updateFields.name) {
-            const existingCategories = await ServiceCategory.listCategories();
-            if (existingCategories.some(cat => cat.name.toLowerCase() === updateFields.name.toLowerCase() && cat.id !== categoryId)) {
-                throw new Error("A category with this name already exists.");
+        try {
+            if (!categoryId) {
+                return { success: false, data: null, message: "Category ID is required." };
             }
+            if (updateFields.name && updateFields.name.length > 50) {
+                return { success: false, data: null, message: "Category name must be 50 characters or less." };
+            }
+            if (updateFields.description && updateFields.description.length > 200) {
+                return { success: false, data: null, message: "Description must be 200 characters or less." };
+            }
+            if (updateFields.name) {
+                const existingCategories = await ServiceCategory.listCategories();
+                if (existingCategories.some(cat => cat.name.toLowerCase() === updateFields.name.toLowerCase() && cat.id !== categoryId)) {
+                    return { success: false, data: null, message: "A category with this name already exists." };
+                }
+            }
+            const result = await ServiceCategory.editCategory(categoryId, updateFields);
+            if (result) {
+                return { success: true, data: { id: categoryId, ...updateFields }, message: "Category updated successfully." };
+            } else {
+                return { success: false, data: null, message: "Failed to update category." };
+            }
+        } catch (error) {
+            console.error('Error in EditCategoryController:', error);
+            return { success: false, data: null, message: error.message || "Failed to update category." };
         }
-        return await ServiceCategory.editCategory(categoryId, updateFields);
     }
 }
 
@@ -101,14 +121,10 @@ class ListCategoriesController {
         try {
             const categories = await ServiceCategory.listCategories();
             
-            // Enrich categories with additional data
-            const enrichedCategories = await Promise.all(categories.map(async (category) => {
-                const services = await ServiceCategory.getServicesByCategory(category.id);
-                return {
-                    ...category,
-                    serviceCount: services ? services.length : 0,
-                    lastUpdated: category.updatedAt || category.createdAt || new Date().toISOString()
-                };
+            // Enrich categories with lastUpdated
+            const enrichedCategories = categories.map(category => ({
+                ...category,
+                lastUpdated: category.updatedAt || category.createdAt || new Date().toISOString()
             }));
 
             return {
@@ -147,27 +163,14 @@ class SearchCategoriesController {
             
             // Apply additional filters
             let filteredCategories = categories;
-            if (filters.minServices) {
-                filteredCategories = await Promise.all(
-                    filteredCategories.filter(async (category) => {
-                        const services = await ServiceCategory.getServicesByCategory(category.id);
-                        return services && services.length >= filters.minServices;
-                    })
-                );
-            }
-
             if (filters.activeOnly) {
                 filteredCategories = filteredCategories.filter(category => category.isActive !== false);
             }
 
-            // Enrich categories with service counts and lastUpdated
-            const enrichedCategories = await Promise.all(filteredCategories.map(async (category) => {
-                const services = await ServiceCategory.getServicesByCategory(category.id);
-                return {
-                    ...category,
-                    serviceCount: services ? services.length : 0,
-                    lastUpdated: category.updatedAt || category.createdAt || new Date().toISOString()
-                };
+            // Enrich categories with lastUpdated
+            const enrichedCategories = filteredCategories.map(category => ({
+                ...category,
+                lastUpdated: category.updatedAt || category.createdAt || new Date().toISOString()
             }));
 
             return {

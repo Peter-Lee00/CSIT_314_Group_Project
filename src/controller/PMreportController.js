@@ -99,9 +99,6 @@ async function aggregateReport(period) {
       totalViews,
       totalRequests,
         totalShortlists,
-        serviceCount: servicesInCategory.length,
-        averageViewsPerService: servicesInCategory.length > 0 ? totalViews / servicesInCategory.length : 0,
-        averageRequestsPerService: servicesInCategory.length > 0 ? totalRequests / servicesInCategory.length : 0,
         conversionRate: totalViews > 0 ? (totalRequests / totalViews) * 100 : 0
     };
   });

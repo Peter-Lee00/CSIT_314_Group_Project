@@ -1,15 +1,11 @@
 .pmsc-container {
-    max-width: 1400px;
-    margin: 40px auto;
-    background: #2d2d2d;
-    border-radius: 8px;
-    padding: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    position: relative;
-    color: #e0e0e0;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: #222;
 }
 
-.pmsc-header {
+.pmsc-header-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -17,107 +13,172 @@
 }
 
 .pmsc-title {
-    margin: 0;
-    color: #ffffff;
     font-size: 24px;
-    font-weight: normal;
+    color: #fff;
+    margin: 0;
+}
+
+.pmsc-controls {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.pmsc-search-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.pmsc-search-input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    flex: 1;
+}
+
+.pmsc-button-group {
+    display: flex;
     gap: 10px;
 }
 
-.pmsc-logout-button {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    padding: 8px 16px;
-    background: #444;
-    color: #fff;
+.pmsc-primary-button {
+    background-color: #4CAF50;
+    color: white;
     border: none;
+    padding: 8px 16px;
     border-radius: 4px;
-    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.pmsc-primary-button:hover {
+    background-color: #45a049;
+}
+
+.pmsc-secondary-button {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.pmsc-secondary-button:hover {
+    background-color: #e0e0e0;
+}
+
+.pmsc-danger-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.pmsc-danger-button:hover {
+    background-color: #da190b;
+}
+
+.pmsc-logout-button {
+    background-color: #666;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
 }
 
 .pmsc-logout-button:hover {
-    background: #cc1c1c;
+    background-color: #555;
 }
 
-.pmsc-add-button {
-    margin-left: auto;
+.pmsc-report-controls {
     display: flex;
-    padding: 8px 16px;
-    background: #1976d2;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.pmsc-add-button:hover {
-    background: #0077ff;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .pmsc-table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pmsc-table th,
+.pmsc-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #222;
 }
 
 .pmsc-table th {
-    text-align: left;
-    padding: 8px;
-    background: #1a1a1a;
-    color: #fff;
+    background-color: #f5f5f5;
     font-weight: 600;
+    color: #222;
 }
 
-.pmsc-table td {
-    padding: 8px;
-    border-bottom: 1px solid #444;
-}
-
-.pmsc-edit-button {
-    margin-right: 8px;
-    padding: 4px 12px;
-    background: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.pmsc-edit-button:hover {
-    background: #43a047;
-}
-
-.pmsc-delete-button {
-    padding: 4px 12px;
-    background: #e53935;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.pmsc-delete-button:hover {
-    background: #d32f2f;
+.pmsc-action-buttons {
+    display: flex;
+    gap: 8px;
 }
 
 .pmsc-loading {
     text-align: center;
     padding: 20px;
-    color: #aaa;
+    color: #666;
 }
-.pmsc-report-button {
-    padding: 8px 16px ; 
-    background: #0077ff;
-    color: #fff;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.2s;
-    margin: 0  55px ;
+
+.pmsc-no-results {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-style: italic;
+}
+
+/* Report Modal Styles */
+.pmsc-report-modal-table-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.pmsc-report-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pmsc-report-table th,
+.pmsc-report-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.pmsc-report-summary-section {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    color: #222;
+}
+
+.pmsc-table tr:hover {
+    background: none;
 }
