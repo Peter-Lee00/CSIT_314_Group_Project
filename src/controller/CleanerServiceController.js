@@ -125,7 +125,7 @@ class CleanerTrackViewCountController {
     async getServiceViewCount(serviceId, viewType = 'monthly') {
         if (!serviceId) {
             return { success: false, data: null, message: "Service ID is required." };
-            }
+        }
         try {
             const data = await CleaningService.viewServiceViewCount(serviceId, viewType);
             return { success: true, data, message: "View count fetched successfully." };
@@ -133,16 +133,16 @@ class CleanerTrackViewCountController {
             return { success: false, data: null, message: err.message || "Unknown error." };
         }
     }
-    async trackViewCount(serviceId) {
+    async trackViewCount(serviceId, viewType = 'monthly') {
         if (!serviceId) {
             return { success: false, data: null, message: "Service ID is required." };
         }
         try {
-            const data = await CleaningService.trackViewCount(serviceId);
+            const data = await CleaningService.viewServiceViewCount(serviceId, viewType);
             return { success: true, data, message: "View count tracked successfully." };
         } catch (err) {
             return { success: false, data: null, message: err.message || "Unknown error." };
-                }
+        }
     }
 }
 
@@ -156,18 +156,18 @@ class CleanerTrackShortlistCountController {
             return { success: true, data, message: "Shortlist count fetched successfully." };
         } catch (err) {
             return { success: false, data: null, message: err.message || "Unknown error." };
-            }
+        }
     }
-    async trackShortlistCount(serviceId) {
+    async trackShortlistCount(serviceId, viewType = 'monthly') {
         if (!serviceId) {
             return { success: false, data: null, message: "Service ID is required." };
         }
         try {
-            const data = await CleaningService.trackShortlistCount(serviceId);
+            const data = await CleaningService.viewServiceShortlistCount(serviceId, viewType);
             return { success: true, data, message: "Shortlist count tracked successfully." };
         } catch (err) {
             return { success: false, data: null, message: err.message || "Unknown error." };
-            }
+        }
     }
 }
 
