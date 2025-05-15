@@ -12,7 +12,8 @@ import {
   OwnerUpdateRequestStatusController,
   OwnerGetConfirmedMatchesController,
   OwnerSearchShortlistedServicesController,
-  OwnerGetRequestsByHomeownerController
+  OwnerGetRequestsByHomeownerController,
+  OwnerSearchServiceHistoryController
 } from '../controller/OwnerCleaningServiceController';
 import { CreateServiceRequestController } from '../controller/CleanerRequestController';
 
@@ -57,6 +58,8 @@ function HomeOwnerCleaningServiceUI() {
     });
     const [historySearchPerformed, setHistorySearchPerformed] = useState(false);
     const [filteredConfirmedServices, setFilteredConfirmedServices] = useState([]);
+    const [serviceHistory, setServiceHistory] = useState([]);
+    const [historyMessage, setHistoryMessage] = useState('');
 
     const searchController = new OwnerSearchCleaningServiceController();
     const saveShortlistController = new OwnerSaveShortlistController();
@@ -68,6 +71,7 @@ function HomeOwnerCleaningServiceUI() {
     const getConfirmedMatchesController = new OwnerGetConfirmedMatchesController();
     const searchShortlistedServicesController = new OwnerSearchShortlistedServicesController();
     const getRequestsByHomeownerController = new OwnerGetRequestsByHomeownerController();
+    const searchServiceHistoryController = new OwnerSearchServiceHistoryController();
 
     // Add isShortlisted function
     const isShortlisted = (serviceId) => {
@@ -480,6 +484,32 @@ function HomeOwnerCleaningServiceUI() {
         });
         setFilteredConfirmedServices(confirmedServices);
         setHistorySearchPerformed(false);
+    };
+
+    const searchServiceHistory = async () => {
+        try {
+            const username = localStorage.getItem('username') || 'testuser';
+            const filters = {
+                status: document.getElementById('statusFilter').value,
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                serviceType: document.getElementById('serviceTypeFilter').value
+            };
+
+            const result = await new OwnerSearchServiceHistoryController().searchServiceHistory(username, filters);
+            
+            if (result.success) {
+                setServiceHistory(result.data);
+                setHistoryMessage(result.message);
+            } else {
+                setHistoryMessage(result.message);
+                setServiceHistory([]);
+            }
+        } catch (error) {
+            console.error('Error searching service history:', error);
+            setHistoryMessage('Failed to search service history');
+            setServiceHistory([]);
+        }
     };
 
     return (

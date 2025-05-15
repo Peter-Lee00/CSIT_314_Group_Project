@@ -1,5 +1,5 @@
 import { db } from '../firebase';
-import { collection, addDoc, getDocs, doc, updateDoc, query, where } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, updateDoc, query, where, orderBy } from 'firebase/firestore';
 
 class CleaningServiceRequest {
     constructor(serviceId, homeownerId, cleanerId, status = 'PENDING', message = '', requestedDate = '') {
@@ -46,13 +46,32 @@ class CleaningServiceRequest {
 
     static async getRequestsByHomeowner(homeownerId) {
         try {
-            const requestColl = collection(db, 'CleaningServiceRequests');
-            const q = query(requestColl, where('homeownerId', '==', homeownerId));
-            const results = await getDocs(q);
-            return results.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            if (!homeownerId) {
+                throw new Error('Homeowner ID is required');
+            }
+
+            const requestsRef = collection(db, 'CleaningServiceRequests');
+            const q = query(
+                requestsRef,
+                where('homeownerId', '==', homeownerId),
+                orderBy('requestedDate', 'desc')
+            );
+
+            const querySnapshot = await getDocs(q);
+            const requests = [];
+            
+            querySnapshot.forEach((doc) => {
+                requests.push({
+                    id: doc.id,
+                    ...doc.data(),
+                    requestedDate: doc.data().requestedDate?.toDate?.() || doc.data().requestedDate
+                });
+            });
+
+            return requests;
         } catch (error) {
-            console.error('Error getting requests for homeowner:', error);
-            return [];
+            console.error('Error in getRequestsByHomeowner:', error);
+            throw error;
         }
     }
 
@@ -67,6 +86,52 @@ class CleaningServiceRequest {
         } catch (error) {
             console.error('Error updating request status:', error);
             return false;
+        }
+    }
+
+    static async searchServiceHistory(homeownerId, filters = {}) {
+        try {
+            if (!homeownerId) {
+                throw new Error('Homeowner ID is required');
+            }
+
+            const requestsRef = collection(db, 'CleaningServiceRequests');
+            let q = query(
+                requestsRef,
+                where('homeownerId', '==', homeownerId)
+            );
+
+            // Apply status filter if provided
+            if (filters.status) {
+                q = query(q, where('status', '==', filters.status));
+            }
+
+            // Apply date range filters
+            if (filters.startDate) {
+                q = query(q, where('requestedDate', '>=', filters.startDate));
+            }
+            if (filters.endDate) {
+                q = query(q, where('requestedDate', '<=', filters.endDate));
+            }
+
+            // Add ordering
+            q = query(q, orderBy('requestedDate', 'desc'));
+
+            const querySnapshot = await getDocs(q);
+            const requests = [];
+            
+            querySnapshot.forEach((doc) => {
+                requests.push({
+                    id: doc.id,
+                    ...doc.data(),
+                    requestedDate: doc.data().requestedDate?.toDate?.() || doc.data().requestedDate
+                });
+            });
+
+            return requests;
+        } catch (error) {
+            console.error('Error in searchServiceHistory:', error);
+            throw error;
         }
     }
 }

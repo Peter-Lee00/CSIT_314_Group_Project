@@ -273,6 +273,59 @@ class OwnerGetRequestsByHomeownerController {
     }
 }
 
+class OwnerSearchServiceHistoryController {
+    async searchServiceHistory(username, filters = {}) {
+        try {
+            if (!username) {
+                return { 
+                    success: false, 
+                    data: null, 
+                    message: "Username is required" 
+                };
+            }
+
+            // Get filtered requests using the entity method
+            const requests = await CleaningServiceRequest.searchServiceHistory(username, filters);
+            
+            // Fetch service details for each request
+            const serviceIds = [...new Set(requests.map(req => req.serviceId))];
+            const serviceDetails = {};
+            for (const id of serviceIds) {
+                const service = await CleaningService.getServiceById(id);
+                if (service) serviceDetails[id] = service;
+            }
+
+            // Apply service type filter if provided
+            let filteredRequests = requests;
+            if (filters.serviceType) {
+                filteredRequests = filteredRequests.filter(r => {
+                    const service = serviceDetails[r.serviceId];
+                    return service && service.serviceType === filters.serviceType;
+                });
+            }
+
+            // Enrich requests with service details
+            const enrichedRequests = filteredRequests.map(request => ({
+                ...request,
+                serviceDetails: serviceDetails[request.serviceId] || {}
+            }));
+
+            return { 
+                success: true, 
+                data: enrichedRequests, 
+                message: "Service history searched successfully" 
+            };
+        } catch (error) {
+            console.error('Error in searchServiceHistory:', error);
+            return { 
+                success: false, 
+                data: null, 
+                message: error.message || "Failed to search service history" 
+            };
+        }
+    }
+}
+
 export {
     OwnerSearchCleaningServiceController,
     OwnerSaveShortlistController,
@@ -283,5 +336,6 @@ export {
     OwnerUpdateRequestStatusController,
     OwnerGetConfirmedMatchesController,
     OwnerSearchShortlistedServicesController,
-    OwnerGetRequestsByHomeownerController
+    OwnerGetRequestsByHomeownerController,
+    OwnerSearchServiceHistoryController
 };
