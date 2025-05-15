@@ -1,9 +1,44 @@
 import CleaningServiceRequest from '../entity/CleaningServiceRequest';
 import CleaningService from '../entity/CleaningService';
 
-class CleanerConfirmedMatchController {
-    // Get confirmed matches (accepted requests) for a cleaner, with all filtering (including service details)
-    async getConfirmedMatches(cleanerId, filters = {}) {
+class CleanerGetConfirmedMatchesController {
+    async getConfirmedMatches(cleanerId) {
+        if (!cleanerId) {
+            return { success: false, data: null, message: "Cleaner ID is required." };
+        }
+        try {
+            // Get all requests for this cleaner
+            const allRequests = await CleaningServiceRequest.getRequestsByCleaner(cleanerId);
+            // Only accepted/confirmed
+            let confirmed = allRequests.filter(r => r.status === 'ACCEPTED');
+
+            // Fetch all unique service details in one go
+            const serviceIds = [...new Set(confirmed.map(req => req.serviceId))];
+            const serviceDetails = {};
+            for (const id of serviceIds) {
+                const service = await CleaningService.getServiceById(id);
+                if (service) serviceDetails[id] = service;
+            }
+
+            // Return enriched objects with both request and service details
+            const result = confirmed.map(request => ({
+                ...request,
+                serviceDetails: serviceDetails[request.serviceId] || {}
+            }));
+
+            return { success: true, data: result, message: "Confirmed matches fetched successfully." };
+        } catch (error) {
+            console.error('Error in getConfirmedMatches:', error);
+            return { success: false, data: null, message: error.message || "Unknown error." };
+        }
+    }
+}
+
+class CleanerSearchConfirmedMatchesController {
+    async searchConfirmedMatches(cleanerId, filters = {}) {
+        if (!cleanerId) {
+            return { success: false, data: null, message: "Cleaner ID is required." };
+        }
         try {
             // Get all requests for this cleaner
             const allRequests = await CleaningServiceRequest.getRequestsByCleaner(cleanerId);
@@ -21,19 +56,14 @@ class CleanerConfirmedMatchController {
             // Apply filters (including those based on service details)
             confirmed = confirmed.filter(request => {
                 const service = serviceDetails[request.serviceId] || {};
-                // Service Name filter
                 if (filters.serviceName && service.serviceName !== filters.serviceName) return false;
-                // Service Type filter
                 if (filters.serviceType && service.serviceType !== filters.serviceType) return false;
-                // Price Range filter
                 if (filters.priceRange && filters.priceRange.length === 2) {
                     if (!service.price) return false;
                     const [min, max] = filters.priceRange;
                     if (service.price < Number(min) || service.price > Number(max)) return false;
                 }
-                // Date filter
                 if (filters.date && request.requestedDate !== filters.date) return false;
-                // Search filter (searches multiple fields)
                 if (filters.search) {
                     const searchTerm = filters.search.toLowerCase();
                     const matches =
@@ -48,20 +78,20 @@ class CleanerConfirmedMatchController {
             });
 
             // Return enriched objects with both request and service details
-            return confirmed.map(request => ({
+            const result = confirmed.map(request => ({
                 ...request,
                 serviceDetails: serviceDetails[request.serviceId] || {}
             }));
-        } catch (error) {
-            console.error('Error in getConfirmedMatches:', error);
-            throw error;
-        }
-    }
 
-    // Search confirmed matches with additional filters
-    async searchConfirmedMatches(cleanerId, filters = {}) {
-        return this.getConfirmedMatches(cleanerId, filters);
+            return { success: true, data: result, message: "Confirmed matches searched successfully." };
+        } catch (error) {
+            console.error('Error in searchConfirmedMatches:', error);
+            return { success: false, data: null, message: error.message || "Unknown error." };
+        }
     }
 }
 
-export default CleanerConfirmedMatchController;
+export {
+    CleanerGetConfirmedMatchesController,
+    CleanerSearchConfirmedMatchesController
+};

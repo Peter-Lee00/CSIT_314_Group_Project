@@ -193,24 +193,24 @@ function HomeOwnerCleaningServiceUI() {
             return;
         }
         try {
-            // Increment shortlist count when service is added to shortlist
-            await CleaningService.increaseShortlistCount(service.id);
+        // Increment shortlist count when service is added to shortlist
+        await CleaningService.increaseShortlistCount(service.id);
             const result = await saveShortlistController.saveToShortlist(username, service);
-            if (result) {
-                Swal.fire({
-                    title: 'Added!',
-                    text: 'Service added to shortlist!',
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                    timer: 1500
-                });
-            } else {
-                Swal.fire({
-                    title: 'Failed!',
-                    text: 'Service failed to add to shortlist.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+        if (result) {
+            Swal.fire({
+                title: 'Added!',
+                text: 'Service added to shortlist!',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                timer: 1500
+            });
+        } else {
+            Swal.fire({
+                title: 'Failed!',
+                text: 'Service failed to add to shortlist.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
             }
         } catch (error) {
             if (error.message && error.message.includes('already in your shortlist')) {
@@ -315,7 +315,11 @@ function HomeOwnerCleaningServiceUI() {
     const handleSendRequest = async (service) => {
         try {
             // Check if request already exists
-            const existingRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(username);
+            let existingRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(username);
+            if (existingRequests && existingRequests.success && Array.isArray(existingRequests.data)) {
+                existingRequests = existingRequests.data;
+            }
+            existingRequests = Array.isArray(existingRequests) ? existingRequests : [];
             const hasExistingRequest = existingRequests.some(req => 
                 req.serviceId === service.id && 
                 (req.status === 'PENDING' || req.status === 'ACCEPTED')
@@ -392,7 +396,12 @@ function HomeOwnerCleaningServiceUI() {
 
     const loadConfirmedServices = async () => {
         try {
-            const allRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(username);
+            let allRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(username);
+            // Handle both controller response object and direct array
+            if (allRequests && allRequests.success && Array.isArray(allRequests.data)) {
+                allRequests = allRequests.data;
+            }
+            allRequests = Array.isArray(allRequests) ? allRequests : [];
             const accepted = allRequests.filter(r => r.status === 'ACCEPTED');
             setConfirmedServices(accepted);
             // Fetch service details for each confirmed service
@@ -568,11 +577,11 @@ function HomeOwnerCleaningServiceUI() {
                                 <td>{service.duration} hrs</td>
                                 <td style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                                     <button className="serviceViewButton" onClick={() => handleViewService(service)}>
-                                        View
-                                    </button>
+                                    View
+                                </button>
                                     <button className="serviceShortlistButton" onClick={() => handleShortlist(service)}>
-                                        Shortlist
-                                    </button>
+                                    Shortlist
+                                </button>
                                 </td>
                             </tr>
                         ))}
@@ -588,58 +597,58 @@ function HomeOwnerCleaningServiceUI() {
                         </div>
                         <div className="cs-search-section" style={{flexDirection: 'column', gap: '8px'}}>
                             <div className="cs-search-main" style={{gap: '8px', alignItems: 'center'}}>
-                                <input
+                            <input
                                     type="text"
-                                    name="serviceName"
+                                name="serviceName"
                                     placeholder="Search by service name"
-                                    value={shortlistSearch.serviceName}
-                                    onChange={handleShortlistSearchInput}
+                                value={shortlistSearch.serviceName}
+                                onChange={handleShortlistSearchInput}
                                     className="cs-search-input"
-                                />
+                            />
                                 <button onClick={handleShortlistSearch} className="cs-search-button">Search</button>
                                 <button onClick={clearShortlistSearch} className="cs-reset-button">Clear</button>
                             </div>
                             <div className="cs-search-filters" style={{gap: '8px', alignItems: 'center'}}>
-                                <select
-                                    name="serviceType"
-                                    value={shortlistSearch.serviceType}
-                                    onChange={handleShortlistSearchInput}
+                            <select
+                                name="serviceType"
+                                value={shortlistSearch.serviceType}
+                                onChange={handleShortlistSearchInput}
                                     className="cs-search-input"
                                     style={{ minWidth: '140px' }}
-                                >
-                                    <option value="">All Types</option>
-                                    {serviceTypes.map(type => (
-                                        <option key={type} value={type}>{type}</option>
-                                    ))}
-                                </select>
-                                <select
-                                    name="priceRange"
-                                    value={shortlistSearch.priceRange}
-                                    onChange={handleShortlistSearchInput}
+                            >
+                                <option value="">All Types</option>
+                                {serviceTypes.map(type => (
+                                    <option key={type} value={type}>{type}</option>
+                                ))}
+                            </select>
+                            <select
+                                name="priceRange"
+                                value={shortlistSearch.priceRange}
+                                onChange={handleShortlistSearchInput}
                                     className="cs-search-input"
                                     style={{ minWidth: '140px' }}
-                                >
-                                    <option value="">All Prices</option>
-                                    <option value="0-50">$0 - $50</option>
-                                    <option value="51-100">$51 - $100</option>
-                                    <option value="101-200">$101 - $200</option>
-                                    <option value="201-500">$201 - $500</option>
-                                </select>
-                                <input
+                            >
+                                <option value="">All Prices</option>
+                                <option value="0-50">$0 - $50</option>
+                                <option value="51-100">$51 - $100</option>
+                                <option value="101-200">$101 - $200</option>
+                                <option value="201-500">$201 - $500</option>
+                            </select>
+                            <input
                                     type="number"
-                                    name="duration"
-                                    placeholder="Duration (hours)"
-                                    value={shortlistSearch.duration}
-                                    onChange={handleShortlistSearchInput}
+                                name="duration"
+                                placeholder="Duration (hours)"
+                                value={shortlistSearch.duration}
+                                onChange={handleShortlistSearchInput}
                                     className="cs-search-input"
                                     style={{ minWidth: '120px' }}
-                                />
+                            />
                             </div>
                         </div>
                         <div className="cs-requests-list">
                             {(shortlistSearchPerformed ? filteredShortlistedServices : shortlistedServices).length === 0 ? (
-                                <p>No shortlisted services.</p>
-                            ) : (
+                            <p>No shortlisted services.</p>
+                        ) : (
                                 (shortlistSearchPerformed ? filteredShortlistedServices : shortlistedServices).map(service => (
                                     <div key={service.id} className="cs-request-card">
                                         <div className="cs-request-header">
@@ -663,7 +672,7 @@ function HomeOwnerCleaningServiceUI() {
                                     </div>
                                 ))
                             )}
-                        </div>
+                            </div>
                     </div>
                 </div>
             ) : showHistoryModal ? (
@@ -675,45 +684,45 @@ function HomeOwnerCleaningServiceUI() {
                         </div>
                         <div className="cs-search-section" style={{flexDirection: 'column', gap: '8px'}}>
                             <div className="cs-search-main" style={{gap: '8px', alignItems: 'center'}}>
-                                <input
-                                    type="text"
+                            <input
+                                type="text"
                                     name="serviceName"
-                                    placeholder="Search by service name"
+                                placeholder="Search by service name"
                                     value={historySearch.serviceName}
                                     onChange={handleHistorySearchInput}
                                     className="cs-search-input"
-                                />
+                            />
                                 <button onClick={handleHistorySearch} className="cs-search-button">Search</button>
                                 <button onClick={clearHistorySearch} className="cs-reset-button">Clear</button>
                             </div>
                             <div className="cs-search-filters" style={{gap: '8px', alignItems: 'center'}}>
-                                <select
+                            <select
                                     name="serviceType"
                                     value={historySearch.serviceType}
                                     onChange={handleHistorySearchInput}
                                     className="cs-search-input"
                                     style={{ minWidth: '140px' }}
-                                >
-                                    <option value="">All Types</option>
-                                    {serviceTypes.map(type => (
-                                        <option key={type} value={type}>{type}</option>
-                                    ))}
-                                </select>
-                                <select
+                            >
+                                <option value="">All Types</option>
+                                {serviceTypes.map(type => (
+                                    <option key={type} value={type}>{type}</option>
+                                ))}
+                            </select>
+                            <select
                                     name="priceRange"
                                     value={historySearch.priceRange}
                                     onChange={handleHistorySearchInput}
                                     className="cs-search-input"
                                     style={{ minWidth: '140px' }}
-                                >
-                                    <option value="">All Prices</option>
-                                    <option value="0-50">$0 - $50</option>
-                                    <option value="51-100">$51 - $100</option>
-                                    <option value="101-200">$101 - $200</option>
-                                    <option value="201-500">$201 - $500</option>
-                                </select>
-                                <input
-                                    type="date"
+                            >
+                                <option value="">All Prices</option>
+                                <option value="0-50">$0 - $50</option>
+                                <option value="51-100">$51 - $100</option>
+                                <option value="101-200">$101 - $200</option>
+                                <option value="201-500">$201 - $500</option>
+                            </select>
+                            <input
+                                type="date"
                                     name="date"
                                     value={historySearch.date}
                                     onChange={handleHistorySearchInput}
@@ -751,30 +760,30 @@ function HomeOwnerCleaningServiceUI() {
                 </div>
             ) : (
                 <>
-                    {selectedService && (
-                        <div className="hocModal">
-                            <div className="hocModal-content">
-                                <h2>{selectedService.serviceName}</h2>
-                                <p><strong>Type:</strong> {selectedService.serviceType}</p>
-                                <p><strong>Price:</strong> ${selectedService.price}</p>
-                                <p><strong>Description:</strong> {selectedService.description}</p>
-                                <p><strong>Available From:</strong> {selectedService.serviceAvailableFrom || 'N/A'}</p>
-                                <p><strong>Available To:</strong> {selectedService.serviceAvailableTo || 'N/A'}</p>
-                                <div style={{display:'flex',gap:'12px',justifyContent:'flex-end',marginTop:'20px'}}>
-                                    <button className="hocShortlist-button" onClick={() => handleShortlist(selectedService)}>
-                                        {isShortlisted(selectedService.id) ? 'Remove from Shortlist' : 'Add to Shortlist'}
-                                    </button>
-                                    <button 
-                                        className="hocShortlist-button" 
-                                        onClick={() => handleSendRequest(selectedService)}
-                                        style={{backgroundColor: '#4CAF50'}}
-                                    >
-                                        Send Request
-                                    </button>
-                                    <button className="hocSearch-button" onClick={() => setSelectedService(null)}>Close</button>
-                                </div>
-                            </div>
+            {selectedService && (
+                <div className="hocModal">
+                    <div className="hocModal-content">
+                        <h2>{selectedService.serviceName}</h2>
+                        <p><strong>Type:</strong> {selectedService.serviceType}</p>
+                        <p><strong>Price:</strong> ${selectedService.price}</p>
+                        <p><strong>Description:</strong> {selectedService.description}</p>
+                        <p><strong>Available From:</strong> {selectedService.serviceAvailableFrom || 'N/A'}</p>
+                        <p><strong>Available To:</strong> {selectedService.serviceAvailableTo || 'N/A'}</p>
+                        <div style={{display:'flex',gap:'12px',justifyContent:'flex-end',marginTop:'20px'}}>
+                            <button className="hocShortlist-button" onClick={() => handleShortlist(selectedService)}>
+                                {isShortlisted(selectedService.id) ? 'Remove from Shortlist' : 'Add to Shortlist'}
+                            </button>
+                            <button 
+                                className="hocShortlist-button" 
+                                onClick={() => handleSendRequest(selectedService)}
+                                style={{backgroundColor: '#4CAF50'}}
+                            >
+                                Send Request
+                            </button>
+                            <button className="hocSearch-button" onClick={() => setSelectedService(null)}>Close</button>
                         </div>
+                    </div>
+                </div>
                     )}
                 </>
             )}

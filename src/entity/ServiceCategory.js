@@ -88,6 +88,25 @@ class ServiceCategory {
             return [];
         }
     }
+
+    static async getServicesByCategory(categoryId) {
+        try {
+            // First, get the category by ID to retrieve its name
+            const category = await ServiceCategory.getCategoryById(categoryId);
+            if (!category) return [];
+            const servicesColl = collection(db, 'CleaningServices');
+            // Now query by serviceType (category name)
+            const q = query(servicesColl, where('serviceType', '==', category.name));
+            const results = await getDocs(q);
+            return results.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        } catch (err) {
+            console.error("Problem getting services for category:", err);
+            return [];
+        }
+    }
 }
 
 export default ServiceCategory; 

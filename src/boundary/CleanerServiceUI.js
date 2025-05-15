@@ -18,7 +18,7 @@ import CleaningServiceRequest from '../entity/CleaningServiceRequest';
 import CleaningService from '../entity/CleaningService';
 import ServiceCategory from '../entity/ServiceCategory';
 import { UserLogoutController } from '../controller/UserAuthController';
-import CleanerConfirmedMatchController from '../controller/CleanerConfirmedMatchController';
+import { CleanerGetConfirmedMatchesController, CleanerSearchConfirmedMatchesController } from '../controller/CleanerConfirmedMatchController';
 import CleanerRequestUI from './CleanerRequestUI';
 import CleanerConfirmedMatchesUI from './CleanerConfirmedMatchesUI';
 
@@ -45,6 +45,8 @@ const CleanerServiceUI = () => {
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [confirmedRequests, setConfirmedRequests] = useState([]);
   const [requestServiceDetails, setRequestServiceDetails] = useState({});
+  const [confirmedMatchesLoading, setConfirmedMatchesLoading] = useState(false);
+  const [filteredConfirmedRequests, setFilteredConfirmedRequests] = useState([]);
 
   const getServicesController = new CleanerGetServicesController();
   const createServiceController = new CleanerCreateServiceController();
@@ -54,7 +56,8 @@ const CleanerServiceUI = () => {
   const trackViewCountController = new CleanerTrackViewCountController();
   const trackShortlistCountController = new CleanerTrackShortlistCountController();
   const readCleaningServicesController = new CleanerReadCleaningServicesController();
-  const confirmedMatchController = new CleanerConfirmedMatchController();
+  const getConfirmedMatchesController = new CleanerGetConfirmedMatchesController();
+  const searchConfirmedMatchesController = new CleanerSearchConfirmedMatchesController();
 
   useEffect(() => {
     const email = Cookies.get('email');
@@ -136,8 +139,9 @@ const CleanerServiceUI = () => {
   const fetchServicesForCleaner = async (id) => {
     try {
       setLoading(true);
-      const serviceList = await readCleaningServicesController.readCleaningServices(id);
-      setMyServices(serviceList || []);
+      const result = await readCleaningServicesController.readCleaningServices(id);
+      const serviceList = result && result.success ? result.data : [];
+      setMyServices(serviceList);
       setFilteredServices((serviceList || []).filter(service => service.isOffering));
     } catch (e) {
       console.error('Uh-oh, problem getting services:', e);
@@ -421,13 +425,28 @@ const CleanerServiceUI = () => {
     }
   };
 
-  const loadConfirmedRequests = async () => {
+  const handleConfirmedMatchesSearch = async (filters) => {
+    setConfirmedMatchesLoading(true);
     try {
-      const accepted = await confirmedMatchController.getConfirmedMatches(currentCleanerId);
-      setConfirmedRequests(accepted);
+      const response = await searchConfirmedMatchesController.searchConfirmedMatches(currentCleanerId, filters);
+      setFilteredConfirmedRequests(response.success ? response.data : []);
+    } catch (err) {
+      setFilteredConfirmedRequests([]);
+    } finally {
+      setConfirmedMatchesLoading(false);
+    }
+  };
+
+  const openConfirmedMatchesModal = async () => {
+    setShowHistoryModal(true);
+    setConfirmedMatchesLoading(true);
+    try {
+      const accepted = await getConfirmedMatchesController.getConfirmedMatches(currentCleanerId);
+      setFilteredConfirmedRequests(accepted && accepted.success ? accepted.data : []);
     } catch (error) {
-      console.error('Error loading confirmed requests:', error);
-      Swal.fire('Error', 'Failed to load confirmed requests', 'error');
+      setFilteredConfirmedRequests([]);
+    } finally {
+      setConfirmedMatchesLoading(false);
     }
   };
 
@@ -574,7 +593,7 @@ const CleanerServiceUI = () => {
           </button>
           <button className="cs-history-button" onClick={() => {
             setShowHistoryModal(true);
-            loadConfirmedRequests();
+            openConfirmedMatchesModal();
           }}>Confirmed Matches</button>
           <button className="cs-history-button" onClick={handleLogout}>Logout</button>
         </div>
@@ -705,7 +724,9 @@ const CleanerServiceUI = () => {
 
       {showHistoryModal && (
         <CleanerConfirmedMatchesUI
-          confirmedRequests={confirmedRequests}
+          confirmedRequests={filteredConfirmedRequests}
+          loading={confirmedMatchesLoading}
+          onSearch={handleConfirmedMatchesSearch}
           onClose={() => setShowHistoryModal(false)}
         />
       )}

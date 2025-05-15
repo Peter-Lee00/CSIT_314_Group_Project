@@ -79,10 +79,10 @@ class SearchUserAccountController {
       console.error("User search failed:", err);
       return null;
     }
+    }
   }
-}
 
-// Suspend a user account
+  // Suspend a user account
 class SuspendUserAccountController {
   async suspendUserAccount(email) {
     try {

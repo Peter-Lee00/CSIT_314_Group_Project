@@ -10,8 +10,8 @@ class OwnerSearchCleaningServiceController {
             console.error('Error searching for cleaning services:', error);
             return null;
         }
+        }
     }
-}
 
 class OwnerSaveShortlistController {
     static MAX_SHORTLIST_ITEMS = 10;
@@ -47,8 +47,8 @@ class OwnerSaveShortlistController {
             console.error('Error in saveToShortlist:', error);
             throw error;
         }
+        }
     }
-}
 
 class OwnerGetShortlistedServicesController {
     async getShortlistedServices(username) {
@@ -67,8 +67,8 @@ class OwnerGetShortlistedServicesController {
             console.error('Error in getShortlistedServices:', error);
             throw error;
         }
+        }
     }
-}
 
 class OwnerRemoveFromShortlistController {
     async removeFromShortlist(username, serviceId) {
@@ -90,8 +90,8 @@ class OwnerRemoveFromShortlistController {
             console.error('Error in removeFromShortlist:', error);
             throw error;
         }
+        }
     }
-}
 
 class OwnerCreateServiceRequestController {
     async createServiceRequest(serviceId, homeownerId, cleanerId, message = '', requestedDate = '') {
@@ -102,14 +102,14 @@ class OwnerCreateServiceRequestController {
             const result = await CleaningServiceRequest.createRequest(serviceId, homeownerId, cleanerId, message, requestedDate);
             if (!result) {
                 throw new Error('Failed to create service request');
-            }
+    }
             return result;
         } catch (error) {
             console.error('Error in createServiceRequest:', error);
             throw error;
         }
+        }
     }
-}
 
 class OwnerGetServiceHistoryController {
     async getServiceHistory(username, filters = {}) {
@@ -136,8 +136,8 @@ class OwnerGetServiceHistoryController {
             console.error('Error in getServiceHistory:', error);
             throw error;
         }
+        }
     }
-}
 
 class OwnerUpdateRequestStatusController {
     async updateRequestStatus(requestId, newStatus) {
@@ -154,8 +154,8 @@ class OwnerUpdateRequestStatusController {
             console.error('Error in updateRequestStatus:', error);
             throw error;
         }
+        }
     }
-}
 
 class OwnerGetConfirmedMatchesController {
     async getConfirmedMatches(username, filters = {}) {
@@ -184,14 +184,92 @@ class OwnerGetConfirmedMatchesController {
 }
 
 class OwnerSearchShortlistedServicesController {
-    async searchShortlistedServices(username, filters) {
-        return await Shortlist.searchShortlistedServices(username, filters);
+    async searchShortlistedServices(username, filters = {}) {
+        try {
+            if (!username) {
+                return { success: false, data: null, message: "Username is required" };
+            }
+
+            // Get all shortlisted services for the user
+            const allServices = await Shortlist.getShortlistedServices(username);
+            
+            // Apply filters if provided
+            let filteredServices = allServices;
+            if (filters.serviceName) {
+                filteredServices = filteredServices.filter(service => 
+                    service.serviceName.toLowerCase().includes(filters.serviceName.toLowerCase())
+                );
+            }
+            if (filters.serviceType) {
+                filteredServices = filteredServices.filter(service => 
+                    service.serviceType === filters.serviceType
+                );
+            }
+            if (filters.priceRange && filters.priceRange.length === 2) {
+                const [min, max] = filters.priceRange;
+                filteredServices = filteredServices.filter(service => 
+                    service.price >= min && service.price <= max
+                );
+            }
+            if (filters.date) {
+                filteredServices = filteredServices.filter(service => 
+                    service.shortlistedAt && service.shortlistedAt.includes(filters.date)
+                );
+            }
+
+            return { 
+                success: true, 
+                data: filteredServices, 
+                message: "Shortlisted services searched successfully" 
+            };
+        } catch (error) {
+            console.error('Error in searchShortlistedServices:', error);
+            return { 
+                success: false, 
+                data: null, 
+                message: error.message || "Failed to search shortlisted services" 
+            };
+        }
     }
 }
 
 class OwnerGetRequestsByHomeownerController {
     async getRequestsByHomeowner(homeownerId) {
-        return await CleaningServiceRequest.getRequestsByHomeowner(homeownerId);
+        try {
+            if (!homeownerId) {
+                return { success: false, data: null, message: "Homeowner ID is required" };
+            }
+
+            // Get all requests for this homeowner
+            const requests = await CleaningServiceRequest.getRequestsByHomeowner(homeownerId);
+            
+            // Fetch service details for each request
+            const serviceIds = [...new Set(requests.map(req => req.serviceId))];
+            const serviceDetails = {};
+            for (const id of serviceIds) {
+                const service = await CleaningService.getServiceById(id);
+                if (service) serviceDetails[id] = service;
+            }
+
+            // Enrich requests with service details
+            const enrichedRequests = requests.map(request => ({
+                ...request,
+                serviceDetails: serviceDetails[request.serviceId] || {}
+            }));
+
+            return { 
+                success: true, 
+                data: enrichedRequests, 
+                message: "Requests fetched successfully" 
+            };
+        } catch (error) {
+            console.error('Error in getRequestsByHomeowner:', error);
+            return { 
+                success: false, 
+                data: null, 
+                message: error.message || "Failed to fetch requests" 
+            };
+    }
     }
 }
 

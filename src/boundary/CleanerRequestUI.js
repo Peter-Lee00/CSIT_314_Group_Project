@@ -8,9 +8,9 @@ const CleanerRequestUI = ({ requests, requestServiceDetails, onAccept, onDecline
   const [date, setDate] = useState('');
   const [serviceTypes, setServiceTypes] = useState([]);
 
-  useEffect(() => {
+    useEffect(() => {
     ServiceCategory.listCategories().then(types => setServiceTypes(types));
-  }, []);
+    }, []);
 
   const handleClear = () => {
     setSearch('');
@@ -36,7 +36,7 @@ const CleanerRequestUI = ({ requests, requestServiceDetails, onAccept, onDecline
     return matchesSearch && matchesType && matchesPrice && matchesDate;
   });
 
-  return (
+    return (
     <div className="cs-modal">
       <div className="cs-modal-content">
         <div className="cs-modal-header">
@@ -89,8 +89,8 @@ const CleanerRequestUI = ({ requests, requestServiceDetails, onAccept, onDecline
         </div>
         <div className="cs-requests-list">
           {filtered.length === 0 ? (
-            <p>No requests found.</p>
-          ) : (
+                    <p>No requests found.</p>
+                ) : (
             filtered.map(request => {
               const service = requestServiceDetails[request.serviceId] || {};
               return (
@@ -98,40 +98,40 @@ const CleanerRequestUI = ({ requests, requestServiceDetails, onAccept, onDecline
                   <div className="cs-request-header">
                     <h3>Request from {request.homeownerId}</h3>
                     <span className={`cs-request-status ${request.status.toLowerCase()}`}>{request.status}</span>
-                  </div>
+                            </div>
                   <div className="cs-request-details">
                     <p><strong>Service Name:</strong> {service.serviceName || 'N/A'}</p>
                     <p><strong>Service Type:</strong> {service.serviceType || 'N/A'}</p>
                     <p><strong>Price:</strong> {service.price ? `$${service.price}` : 'N/A'}</p>
                     <p><strong>Location:</strong> {service.serviceArea || 'N/A'}</p>
                     <p><strong>Requested Date:</strong> {request.requestedDate || 'N/A'}</p>
-                    <p><strong>Requested On:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
-                    {request.message && <p><strong>Message:</strong> {request.message}</p>}
-                  </div>
-                  {request.status === 'PENDING' && (
+                                <p><strong>Requested On:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
+                                {request.message && <p><strong>Message:</strong> {request.message}</p>}
+                            </div>
+                            {request.status === 'PENDING' && (
                     <div className="cs-request-actions">
-                      <button 
+                                    <button 
                         className="cs-accept-button"
                         onClick={() => onAccept(request.id, 'ACCEPTED')}
-                      >
-                        Accept
-                      </button>
-                      <button 
+                                    >
+                                        Accept
+                                    </button>
+                                    <button 
                         className="cs-decline-button"
                         onClick={() => onDecline(request.id, 'DECLINED')}
-                      >
-                        Decline
-                      </button>
-                    </div>
-                  )}
-                </div>
+                                    >
+                                        Decline
+                                    </button>
+                                </div>
+                            )}
+                        </div>
               );
             })
-          )}
+                )}
         </div>
-      </div>
-    </div>
-  );
+            </div>
+        </div>
+    );
 };
 
 export default CleanerRequestUI; 

@@ -3,14 +3,14 @@ import CleaningServiceRequest from '../entity/CleaningServiceRequest';
 class GetRequestsByCleanerController {
     async getRequestsByCleaner(cleanerId) {
         if (!cleanerId) {
-            throw new Error("Cleaner ID is required.");
+            return { success: false, data: null, message: "Cleaner ID is required." };
         }
         try {
             const requests = await CleaningServiceRequest.getRequestsByCleaner(cleanerId);
-            return requests || [];
+            return { success: true, data: requests || [], message: "Requests fetched successfully." };
         } catch (error) {
             console.error("Error fetching requests for cleaner:", error);
-            return [];
+            return { success: false, data: null, message: error.message || "Unknown error." };
         }
     }
 }
@@ -18,14 +18,18 @@ class GetRequestsByCleanerController {
 class UpdateRequestStatusController {
     async updateRequestStatus(requestId, newStatus) {
         if (!requestId || !newStatus) {
-            throw new Error("Request ID and new status are required.");
+            return { success: false, data: null, message: "Request ID and new status are required." };
         }
         try {
             const result = await CleaningServiceRequest.updateRequestStatus(requestId, newStatus);
-            return !!result;
+            if (result) {
+                return { success: true, data: result, message: "Request status updated successfully." };
+            } else {
+                return { success: false, data: null, message: "Failed to update request status." };
+            }
         } catch (error) {
             console.error("Error updating request status:", error);
-            return false;
+            return { success: false, data: null, message: error.message || "Unknown error." };
         }
     }
 }
@@ -33,21 +37,34 @@ class UpdateRequestStatusController {
 class GetRequestsByHomeownerController {
     async getRequestsByHomeowner(homeownerId) {
         if (!homeownerId) {
-            throw new Error("Homeowner ID is required.");
+            return { success: false, data: null, message: "Homeowner ID is required." };
         }
         try {
             const requests = await CleaningServiceRequest.getRequestsByHomeowner(homeownerId);
-            return requests || [];
+            return { success: true, data: requests || [], message: "Requests fetched successfully." };
         } catch (error) {
             console.error("Error fetching requests for homeowner:", error);
-            return [];
+            return { success: false, data: null, message: error.message || "Unknown error." };
         }
     }
 }
 
 class CreateServiceRequestController {
     async createRequest(serviceId, homeownerId, cleanerId, message = '', requestedDate = '') {
-        return await CleaningServiceRequest.createRequest(serviceId, homeownerId, cleanerId, message, requestedDate);
+        if (!serviceId || !homeownerId || !cleanerId) {
+            return { success: false, data: null, message: "Service ID, Homeowner ID, and Cleaner ID are required." };
+        }
+        try {
+            const result = await CleaningServiceRequest.createRequest(serviceId, homeownerId, cleanerId, message, requestedDate);
+            if (result) {
+                return { success: true, data: result, message: "Service request created successfully." };
+            } else {
+                return { success: false, data: null, message: "Failed to create service request." };
+            }
+        } catch (error) {
+            console.error("Error creating service request:", error);
+            return { success: false, data: null, message: error.message || "Unknown error." };
+        }
     }
 }
 

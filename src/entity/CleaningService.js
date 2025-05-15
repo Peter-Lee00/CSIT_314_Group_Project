@@ -266,10 +266,44 @@ class CleaningService {
         }
     }
 
-    static async getConfirmedMatches(cleanerId, serviceType, priceRange, startDate, endDate) {
-        // This method is deprecated - use CleanerConfirmedMatchController instead
-        console.warn('getConfirmedMatches is deprecated - use CleanerConfirmedMatchController instead');
-        return [];
+
+    static async getConfirmedMatches(cleanerId) {
+        try {
+            const reqCol = collection(db, 'CleaningServiceRequests');
+            const q = query(reqCol,
+                where('cleanerId', '==', cleanerId),
+                where('status', '==', 'confirmed')
+            );
+            const snapshot = await getDocs(q);
+            return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        } catch (err) {
+            console.error('Error fetching confirmed matches:', err);
+            return [];
+        }
+    }
+
+    static async searchConfirmedMatches(cleanerId, filters = {}) {
+        try {
+            const reqCol = collection(db, 'CleaningServiceRequests');
+            let conditions = [
+                where('cleanerId', '==', cleanerId),
+                where('status', '==', 'confirmed')
+            ];
+            if (filters.serviceType) conditions.push(where('serviceType', '==', filters.serviceType));
+            if (filters.priceRange && filters.priceRange.length === 2) {
+                conditions.push(where('price', '>=', Number(filters.priceRange[0])));
+                conditions.push(where('price', '<=', Number(filters.priceRange[1])));
+            }
+            if (filters.startDate) conditions.push(where('requestedDate', '>=', filters.startDate));
+            if (filters.endDate) conditions.push(where('requestedDate', '<=', filters.endDate));
+
+            const q = query(reqCol, ...conditions);
+            const snapshot = await getDocs(q);
+            return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        } catch (err) {
+            console.error('Error searching confirmed matches:', err);
+            return [];
+        }
     }
 
     static async getAllServices() {
@@ -286,11 +320,7 @@ class CleaningService {
         }
     }
 
-    /**
-     * Read all cleaning services for a specific cleaner
-     * @param {string} cleanerId - The ID of the cleaner
-     * @returns {Promise<Array>} Array of cleaning services
-     */
+   
     static async readCleaningServices(cleanerId) {
         try {
             const servicesCol = collection(db, 'CleaningServices');
@@ -336,12 +366,6 @@ class CleaningService {
             console.error('Error tracking shortlist count:', error);
             return null;
         }
-    }
-
-    static async searchConfirmedMatches(cleanerId, filters = {}) {
-        // This method is deprecated - use CleanerConfirmedMatchController instead
-        console.warn('searchConfirmedMatches is deprecated - use CleanerConfirmedMatchController instead');
-        return [];
     }
 }
 

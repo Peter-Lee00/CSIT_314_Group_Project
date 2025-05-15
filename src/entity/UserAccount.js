@@ -208,6 +208,38 @@ class UserAccount {
         return false;
     }
   }
+
+  static async viewUserAccount(email) {
+    // Fetch user data from Firestore using email
+    try {
+      const usersCol = collection(db, 'Users');
+      const q = query(usersCol, where('email', '==', email.trim()));
+      const snapshot = await getDocs(q);
+
+      if (snapshot.empty) {
+        console.log("User not found for email:", email);
+        return null;
+      }
+
+      const docSnap = snapshot.docs[0];
+      const data = docSnap.data();
+
+      return {
+        id: docSnap.id,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        password: data.password,
+        phoneNumber: data.phoneNumber,
+        email: data.email,
+        userProfile: data.userProfile,
+        suspended: data.suspended || false,
+        address: data.address
+      };
+    } catch (err) {
+      console.error("Error looking up user:", err);
+      return null;
+    }
+  }
 }
 
 export default UserAccount;

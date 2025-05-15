@@ -20,8 +20,8 @@ class SaveToShortlistController {
       console.error("Failed to save cleaner to shortlist:", err);
       return false;
     }
+    }
   }
-}
 
 class GetHomeOwnerShortlistController {
   async getHomeOwnerShortlist(homeOwnerId) {
@@ -35,8 +35,8 @@ class GetHomeOwnerShortlistController {
       console.error("Error loading shortlist for homeowner:", e);
       return [];
     }
+    }
   }
-}
 
 class RemoveFromShortlistController {
   async removeFromShortlist(shortlistId) {
@@ -50,8 +50,8 @@ class RemoveFromShortlistController {
       console.warn("Could not remove from shortlist:", e);
       return false;
     }
+    }
   }
-}
 
 class SearchCleanersController {
   async searchCleaners(searchTerm) {

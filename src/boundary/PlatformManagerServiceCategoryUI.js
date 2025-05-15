@@ -25,11 +25,21 @@ const PlatformManagerServiceCategoryUI = () => {
 
     const loadCategories = async () => {
         setLoading(true);
+        try {
         const listController = new ListCategoriesController();
-        const data = await listController.listCategories();
-        setCategories(data);
-        setFilteredCategories(data);
+            const response = await listController.listCategories();
+            if (response.success) {
+                setCategories(response.data.categories);
+                setFilteredCategories(response.data.categories);
+            } else {
+                Swal.fire('Error', response.message || 'Failed to load categories', 'error');
+            }
+        } catch (error) {
+            console.error('Error loading categories:', error);
+            Swal.fire('Error', 'Failed to load categories', 'error');
+        } finally {
         setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -84,9 +94,13 @@ const PlatformManagerServiceCategoryUI = () => {
         if (formValues) {
             try {
                 const addController = new AddCategoryController();
-                await addController.addCategory(formValues.name, formValues.desc);
+                const response = await addController.addCategory(formValues.name, formValues.desc);
+                if (response.success) {
                 await loadCategories();
                 Swal.fire('Added!', 'Category added successfully.', 'success');
+                } else {
+                    Swal.fire('Error', response.message || 'Failed to add category', 'error');
+                }
             } catch (err) {
                 Swal.fire('Error', err.message || 'Failed to add category', 'error');
             }
@@ -113,9 +127,13 @@ const PlatformManagerServiceCategoryUI = () => {
         if (formValues) {
             try {
                 const editController = new EditCategoryController();
-                await editController.editCategory(cat.id, { name: formValues.name, description: formValues.desc });
+                const response = await editController.editCategory(cat.id, { name: formValues.name, description: formValues.desc });
+                if (response.success) {
                 await loadCategories();
                 Swal.fire('Updated!', 'Category updated successfully.', 'success');
+                } else {
+                    Swal.fire('Error', response.message || 'Failed to update category', 'error');
+                }
             } catch (err) {
                 Swal.fire('Error', err.message || 'Failed to update category', 'error');
             }
@@ -134,9 +152,13 @@ const PlatformManagerServiceCategoryUI = () => {
         if (result.isConfirmed) {
             try {
                 const deleteController = new DeleteCategoryController();
-                await deleteController.deleteCategory(cat);
+                const response = await deleteController.deleteCategory(cat.id);
+                if (response.success) {
                 await loadCategories();
-                Swal.fire('Deleted!', 'Category deleted.', 'success');
+                    Swal.fire('Deleted!', 'Category deleted successfully.', 'success');
+                } else {
+                    Swal.fire('Error', response.message || 'Failed to delete category', 'error');
+                }
             } catch (err) {
                 Swal.fire('Error', err.message || 'Failed to delete category', 'error');
             }
@@ -144,9 +166,18 @@ const PlatformManagerServiceCategoryUI = () => {
     };
 
     const handleSearch = async () => {
+        try {
         const searchController = new SearchCategoriesController();
-        const filtered = await searchController.searchCategories(searchTerm);
-        setFilteredCategories(filtered);
+            const response = await searchController.searchCategories(searchTerm);
+            if (response.success) {
+                setFilteredCategories(response.data.categories);
+            } else {
+                Swal.fire('Error', response.message || 'Failed to search categories', 'error');
+            }
+        } catch (error) {
+            console.error('Error searching categories:', error);
+            Swal.fire('Error', 'Failed to search categories', 'error');
+        }
     };
 
     const handleClear = () => {
@@ -167,7 +198,12 @@ const PlatformManagerServiceCategoryUI = () => {
             } else {
                 throw new Error('Invalid report period');
             }
-            const report = await reportController.generateReport();
+            const response = await reportController.generateReport();
+            if (!response.success) {
+                throw new Error(response.message);
+            }
+
+            const report = response.data;
             // Find the most viewed, most requested, and most shortlisted service categories
             let mostViewedService = null;
             let mostViewedCount = -1;
@@ -175,6 +211,7 @@ const PlatformManagerServiceCategoryUI = () => {
             let mostRequestedCount = -1;
             let mostShortlistedService = null;
             let mostShortlistedCount = -1;
+
             report.categories.forEach(row => {
                 if (row.totalViews > mostViewedCount) {
                     mostViewedCount = row.totalViews;
@@ -189,6 +226,7 @@ const PlatformManagerServiceCategoryUI = () => {
                     mostShortlistedService = row.categoryName;
                 }
             });
+
             const summaryHtml = `
               <div style='margin-top:16px;font-weight:bold;'>
                 The most viewed service is "${mostViewedService && mostViewedCount > 0 ? mostViewedService + ' (' + mostViewedCount + ' views)' : 'No data'}"<br/>
@@ -196,6 +234,7 @@ const PlatformManagerServiceCategoryUI = () => {
                 The most shortlisted service is "${mostShortlistedService && mostShortlistedCount > 0 ? mostShortlistedService + ' (' + mostShortlistedCount + ' shortlists)' : 'No data'}"
               </div>
             `;
+
             // Add period info
             let periodInfo = '';
             const today = new Date();
@@ -210,16 +249,19 @@ const PlatformManagerServiceCategoryUI = () => {
             } else if (period === 'monthly') {
                 periodInfo = `<div style='margin-top:10px;font-style:italic;'>Month: ${today.getFullYear()}-${pad(today.getMonth() + 1)}</div>`;
             }
+
             Swal.fire({
                 title: `${period.charAt(0).toUpperCase() + period.slice(1)} Report`,
                 html: `
-                  <table style="width:100%;text-align:left">
+                  <div class="pmsc-report-modal-table-wrapper">
+                    <table class="pmsc-table pmsc-report-table">
                     <thead>
                       <tr>
                         <th>Category Name</th>
                         <th>Total Views</th>
                         <th>Total Requests</th>
                         <th>Total Shortlists</th>
+                          <th>Service Count</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -229,14 +271,18 @@ const PlatformManagerServiceCategoryUI = () => {
                           <td>${row.totalViews}</td>
                           <td>${row.totalRequests}</td>
                           <td>${row.totalShortlists}</td>
+                            <td>${row.serviceCount}</td>
                         </tr>
                       `).join('')}
                     </tbody>
                   </table>
+                  </div>
+                  <div class="pmsc-report-summary-section">
                   ${summaryHtml}
                   ${periodInfo}
+                  </div>
                 `,
-                width: 700
+                width: 800
             });
         } catch (err) {
             Swal.fire('Error', err.message || 'Failed to generate report', 'error');
@@ -249,46 +295,59 @@ const PlatformManagerServiceCategoryUI = () => {
                 <h2 className="pmsc-title">Service Category Management</h2>
                 <button className="pmsc-logout-button" onClick={handleLogout}>Logout</button>
             </div>
-            <div className="pmsc-action-row">
-                <button className="pmsc-report-button" onClick={() => handleGenerateReport('daily')}>Generate Daily Report</button>
-                <button className="pmsc-report-button" onClick={() => handleGenerateReport('weekly')}>Generate Weekly Report</button>
-                <button className="pmsc-report-button" onClick={() => handleGenerateReport('monthly')}>Generate Monthly Report</button>
-            </div>
-            <div className="pmsc-search-row">
+
+            <div className="pmsc-controls">
+                <div className="pmsc-search-section">
                 <input
                     type="text"
                     placeholder="Search categories..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pmsc-search-input"
                 />
-                <button onClick={handleSearch}>Search</button>
-                <button onClick={handleClear}>Clear</button>
+                    <button onClick={handleSearch} className="pmsc-search-button">Search</button>
+                    <button onClick={handleClear} className="pmsc-clear-button">Clear</button>
+                </div>
+                <button onClick={handleAdd} className="pmsc-add-button">Add Category</button>
             </div>
-            <div className="pmsc-add-row">
-                <button className="pmsc-add-button" onClick={handleAdd}>Add New Category</button>
+
+            <div className="pmsc-report-controls">
+                <button onClick={() => handleGenerateReport('daily')} className="pmsc-report-button">Daily Report</button>
+                <button onClick={() => handleGenerateReport('weekly')} className="pmsc-report-button">Weekly Report</button>
+                <button onClick={() => handleGenerateReport('monthly')} className="pmsc-report-button">Monthly Report</button>
             </div>
+
             {loading ? (
-                <div className="pmsc-loading">Loading...</div>
+                <div className="pmsc-loading">Loading categories...</div>
             ) : (
                 <table className="pmsc-table">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Description</th>
+                            <th>Service Count</th>
+                            <th>Last Updated</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredCategories.map((category) => (
-                            <tr key={category.id}>
-                                <td>{category.name}</td>
-                                <td>{category.description}</td>
+                        {filteredCategories.map((cat) => (
+                            <tr key={cat.id}>
+                                <td>{cat.name}</td>
+                                <td>{cat.description || 'No description'}</td>
+                                <td>{cat.serviceCount || 0}</td>
+                                <td>{cat.lastUpdated ? new Date(cat.lastUpdated).toLocaleDateString() : ''}</td>
                                 <td>
-                                    <button className="pmsc-edit-button" onClick={() => handleEdit(category)}>Edit</button>
-                                    <button className="pmsc-delete-button" onClick={() => handleDelete(category)}>Delete</button>
+                                    <button onClick={() => handleEdit(cat)} className="pmsc-edit-button">Edit</button>
+                                    <button onClick={() => handleDelete(cat)} className="pmsc-delete-button">Delete</button>
                                 </td>
                             </tr>
                         ))}
+                        {filteredCategories.length === 0 && (
+                            <tr>
+                                <td colSpan="5" className="pmsc-no-results">No categories found</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             )}

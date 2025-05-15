@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './CleanerConfirmedMatchesUI.css';
 import ServiceCategory from '../entity/ServiceCategory';
+import { CleanerSearchConfirmedMatchesController } from '../controller/CleanerConfirmedMatchController';
+import Cookies from 'js-cookie';
 
 const CleanerConfirmedMatchesUI = ({ confirmedRequests, onClose }) => {
   const [search, setSearch] = useState('');
@@ -8,34 +10,47 @@ const CleanerConfirmedMatchesUI = ({ confirmedRequests, onClose }) => {
   const [priceRange, setPriceRange] = useState('');
   const [date, setDate] = useState('');
   const [serviceTypes, setServiceTypes] = useState([]);
+  const [filtered, setFiltered] = useState(confirmedRequests);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     ServiceCategory.listCategories().then(types => setServiceTypes(types));
-  }, []);
+    setFiltered(confirmedRequests);
+  }, [confirmedRequests]);
 
   const handleClear = () => {
     setSearch('');
     setServiceType('');
     setPriceRange('');
     setDate('');
+    setFiltered(confirmedRequests);
   };
 
-  const filtered = confirmedRequests.filter(request => {
-    const service = request.serviceDetails || {};
-    const matchesSearch = !search ||
-      (service.serviceName && service.serviceName.toLowerCase().includes(search.toLowerCase())) ||
-      (service.serviceType && service.serviceType.toLowerCase().includes(search.toLowerCase())) ||
-      (service.serviceArea && service.serviceArea.toLowerCase().includes(search.toLowerCase())) ||
-      (request.homeownerId && request.homeownerId.toLowerCase().includes(search.toLowerCase()));
-    const matchesType = !serviceType || service.serviceType === serviceType;
-    const matchesPrice = !priceRange || (() => {
-      if (!service.price) return false;
-      const [min, max] = priceRange.split('-').map(Number);
-      return service.price >= min && service.price <= max;
-    })();
-    const matchesDate = !date || request.requestedDate === date;
-    return matchesSearch && matchesType && matchesPrice && matchesDate;
-  });
+  const handleSearch = async () => {
+    setLoading(true);
+    try {
+      const cleanerId = Cookies.get('email');
+      const filters = {};
+      if (search) filters.search = search;
+      if (serviceType) filters.serviceType = serviceType;
+      if (priceRange) {
+        const [min, max] = priceRange.split('-').map(Number);
+        filters.priceRange = [min, max];
+      }
+      if (date) filters.date = date;
+      const controller = new CleanerSearchConfirmedMatchesController();
+      const response = await controller.searchConfirmedMatches(cleanerId, filters);
+      if (response.success) {
+        setFiltered(response.data);
+      } else {
+        setFiltered([]);
+      }
+    } catch (err) {
+      setFiltered([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="cs-modal">
@@ -53,6 +68,7 @@ const CleanerConfirmedMatchesUI = ({ confirmedRequests, onClose }) => {
               onChange={e => setSearch(e.target.value)}
               className="cs-search-input"
             />
+            <button onClick={handleSearch} className="cs-search-button">Search</button>
             <button onClick={handleClear} className="cs-reset-button">Clear</button>
           </div>
           <div className="cs-search-filters" style={{gap: '8px', alignItems: 'center'}}>
@@ -89,7 +105,9 @@ const CleanerConfirmedMatchesUI = ({ confirmedRequests, onClose }) => {
           </div>
         </div>
         <div className="cs-requests-list">
-          {filtered.length === 0 ? (
+          {loading ? (
+            <p>Loading...</p>
+          ) : filtered.length === 0 ? (
             <p>No confirmed matches found.</p>
           ) : (
             filtered.map(request => {

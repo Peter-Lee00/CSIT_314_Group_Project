@@ -116,7 +116,7 @@
 @media (max-width: 700px) {
     .hosContainer {
         padding: 12px 4px;
-    }
+}
     .hosTable-header, .hosTable-row {
         font-size: 0.95rem;
         gap: 4px;
@@ -195,20 +195,20 @@
 .hosBack-button, .hosLogout-button {
   background: #1976d2;
   color: #fff;
-  border: none;
+    border: none;
   border-radius: 6px;
   padding: 8px 18px;
   font-size: 1rem;
   cursor: pointer;
   margin: 0 6px;
-  transition: background 0.2s;
+    transition: background 0.2s;
 }
 .hosBack-button:hover, .hosLogout-button:hover {
   background: #1565c0;
 }
 
 .hosView-button {
-  background: #1976d2;
+    background: #1976d2;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -219,13 +219,13 @@
   transition: background 0.2s;
 }
 .hosView-button:hover {
-  background: #1565c0;
+    background: #1565c0;
 }
 
 @media (max-width: 900px) {
   .hos-shortlist-list {
     gap: 12px;
-  }
+}
   .hos-shortlist-card {
     min-width: 180px;
     max-width: 100%;
@@ -237,7 +237,7 @@
   .hos-shortlist-list {
     flex-direction: column;
     gap: 10px;
-  }
+}
   .hos-shortlist-card {
     min-width: 0;
     width: 100%;

@@ -1,4 +1,5 @@
 import Report from '../entity/Report';
+import ServiceCategory from '../entity/ServiceCategory';
 
 function getWeeklySum(historyMap) {
   if (!historyMap) return 0;
@@ -29,6 +30,7 @@ function getSumForPeriod(historyMap, period) {
 }
 
 async function aggregateReport(period) {
+  try {
   const categories = await Report.getAllCategories();
   const services = await Report.getAllServices();
   const requests = await Report.getAllRequests();
@@ -42,31 +44,38 @@ async function aggregateReport(period) {
   const categoryRows = categories.map(category => {
     const servicesInCategory = services.filter(s => s.serviceType === category.name);
     const serviceIds = servicesInCategory.map(s => s.id);
+      
+      // Calculate total views
     let totalViews = 0;
-    let totalShortlists = 0;
     if (period === 'weekly') {
       totalViews = servicesInCategory.reduce((sum, s) => sum + getWeeklySum(s.view_history_daily), 0);
-      totalShortlists = servicesInCategory.reduce((sum, s) => sum + getWeeklySum(s.shortlist_history_daily), 0);
     } else {
       totalViews = servicesInCategory.reduce((sum, s) => {
         if (period === 'daily') {
           return sum + getSumForPeriod(s.view_history_daily, period);
         } else if (period === 'monthly') {
           return sum + getSumForPeriod(s.view_history, period);
-        } else {
-          return sum + getSumForPeriod(s.view_history, period);
         }
+          return sum;
       }, 0);
+      }
+
+      // Calculate total shortlists
+      let totalShortlists = 0;
+      if (period === 'weekly') {
+        totalShortlists = servicesInCategory.reduce((sum, s) => sum + getWeeklySum(s.shortlist_history_daily), 0);
+      } else {
       totalShortlists = servicesInCategory.reduce((sum, s) => {
         if (period === 'daily') {
           return sum + getSumForPeriod(s.shortlist_history_daily, period);
         } else if (period === 'monthly') {
           return sum + getSumForPeriod(s.shortlist_history, period);
-        } else {
-          return sum + getSumForPeriod(s.shortlist_history, period);
         }
+          return sum;
       }, 0);
     }
+
+      // Calculate total requests
     let totalRequests = 0;
     if (requests.length > 0 && requests[0].createdAt) {
       totalRequests = requests.filter(r => {
@@ -84,40 +93,142 @@ async function aggregateReport(period) {
     } else {
       totalRequests = requests.filter(r => serviceIds.includes(r.serviceId)).length;
     }
+
     return {
       categoryName: category.name,
       totalViews,
       totalRequests,
-      totalShortlists
+        totalShortlists,
+        serviceCount: servicesInCategory.length,
+        averageViewsPerService: servicesInCategory.length > 0 ? totalViews / servicesInCategory.length : 0,
+        averageRequestsPerService: servicesInCategory.length > 0 ? totalRequests / servicesInCategory.length : 0,
+        conversionRate: totalViews > 0 ? (totalRequests / totalViews) * 100 : 0
     };
   });
 
   return {
+      success: true,
+      data: {
     period,
-    categories: categoryRows
-  };
+        generatedAt: new Date().toISOString(),
+        categories: categoryRows,
+        summary: {
+          totalCategories: categories.length,
+          totalServices: services.length,
+          totalRequests: requests.length,
+          totalViews: categoryRows.reduce((sum, row) => sum + row.totalViews, 0),
+          totalShortlists: categoryRows.reduce((sum, row) => sum + row.totalShortlists, 0)
+        }
+      },
+      message: `${period.charAt(0).toUpperCase() + period.slice(1)} report generated successfully`
+    };
+  } catch (error) {
+    console.error(`Error generating ${period} report:`, error);
+    return {
+      success: false,
+      data: null,
+      message: error.message || `Failed to generate ${period} report`
+    };
+  }
+}
+
+async function aggregateReportWithDetails() {
+  try {
+    // Fetch all categories
+    const categories = await ServiceCategory.listCategories();
+    // For each category, fetch all services in that category
+    const detailedCategories = await Promise.all(categories.map(async (category) => {
+      const services = await ServiceCategory.getServicesByCategory(category.id);
+      return {
+        ...category,
+        serviceCount: services.length,
+        services: services // include all service details
+      };
+    }));
+    return {
+      success: true,
+      data: {
+        categories: detailedCategories,
+        totalCategories: detailedCategories.length
+      },
+      message: 'Detailed report generated successfully.'
+    };
+  } catch (error) {
+    console.error('Error generating detailed report:', error);
+    return {
+      success: false,
+      data: null,
+      message: error.message || 'Failed to generate detailed report.'
+    };
+  }
 }
 
 class GenerateDailyReportController {
   async generateReport() {
-    return await aggregateReport('daily');
+    try {
+      const report = await aggregateReport('daily');
+      if (!report.success) {
+        throw new Error(report.message);
+      }
+      return report;
+    } catch (error) {
+      console.error('Error in GenerateDailyReportController:', error);
+      return {
+        success: false,
+        data: null,
+        message: error.message || 'Failed to generate daily report'
+      };
+    }
   }
 }
 
 class GenerateWeeklyReportController {
   async generateReport() {
-    return await aggregateReport('weekly');
+    try {
+      const report = await aggregateReport('weekly');
+      if (!report.success) {
+        throw new Error(report.message);
+      }
+      return report;
+    } catch (error) {
+      console.error('Error in GenerateWeeklyReportController:', error);
+      return {
+        success: false,
+        data: null,
+        message: error.message || 'Failed to generate weekly report'
+      };
+    }
   }
 }
 
 class GenerateMonthlyReportController {
   async generateReport() {
-    return await aggregateReport('monthly');
+    try {
+      const report = await aggregateReport('monthly');
+      if (!report.success) {
+        throw new Error(report.message);
+      }
+      return report;
+    } catch (error) {
+      console.error('Error in GenerateMonthlyReportController:', error);
+      return {
+        success: false,
+        data: null,
+        message: error.message || 'Failed to generate monthly report'
+      };
+    }
+  }
+}
+
+class GenerateDetailedReportController {
+  async generateReport() {
+    return await aggregateReportWithDetails();
   }
 }
 
 export {
   GenerateDailyReportController,
   GenerateWeeklyReportController,
-  GenerateMonthlyReportController
+  GenerateMonthlyReportController,
+  GenerateDetailedReportController
 }; 

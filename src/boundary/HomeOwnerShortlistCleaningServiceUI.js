@@ -17,14 +17,14 @@ function HomeOwnerShortlistCleaningServiceUI() {
         const result = await controller.getShortlistedServices(username);
         if (!result || result.length === 0) {
             setShortlist([]);
-        } else {
+            } else {
             setShortlist(result.map(doc => ({
                 id: doc.id,
-                serviceName: doc.serviceName,
+                    serviceName: doc.serviceName,
                 description: doc.description && doc.description.length > 150 ? doc.description.substring(0, 150) + "..." : doc.description,
                 fullDescription: doc.description,
-                serviceType: doc.serviceType,
-                price: doc.price,
+                    serviceType: doc.serviceType,
+                    price: doc.price,
                 duration: doc.duration,
                 serviceArea: doc.serviceArea,
                 cleanerId: doc.cleanerId,
@@ -93,7 +93,7 @@ function HomeOwnerShortlistCleaningServiceUI() {
             if (result.isConfirmed) {
                 const controller = new OwnerRemoveFromShortlistController();
                 await controller.removeFromShortlist(username, serviceId);
-                Swal.fire('Removed!', 'The service has been removed from your shortlist.', 'success');
+                    Swal.fire('Removed!', 'The service has been removed from your shortlist.', 'success');
                 fetchShortlist();
             }
         });

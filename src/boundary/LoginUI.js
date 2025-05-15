@@ -55,63 +55,63 @@ function LoginUI() {
     const success = await auth.authenticateLogin(email, password, role, profileDocId);
 
     if (success) {
-      Swal.fire({
-        title: 'Login Successfully !',
-        icon: 'success',
-        confirmButtonText: 'Okay',
-        timer: 1500
-      }).then(() => {
-        // Navigate user based on their role
-        switch (role) {
-          case 'Cleaner':
-            navigate('/cleaner/services');
-            break;
-          case 'UserAdmin':
-            navigate('/usermanagement');
-            break;
-          case 'PlatformManager':
-            navigate('/platformmanager/dashboard');
-            break;
-          case 'HomeOwner':
-            navigate('/homeowner/dashboard');
-            break;
-          default:
-            navigate('/');
-        }
-      });
+        Swal.fire({
+          title: 'Login Successfully !',
+          icon: 'success',
+          confirmButtonText: 'Okay',
+          timer: 1500
+        }).then(() => {
+          // Navigate user based on their role
+          switch (role) {
+            case 'Cleaner':
+              navigate('/cleaner/services');
+              break;
+            case 'UserAdmin':
+              navigate('/usermanagement');
+              break;
+            case 'PlatformManager':
+              navigate('/platformmanager/dashboard');
+              break;
+            case 'HomeOwner':
+              navigate('/homeowner/dashboard');
+              break;
+            default:
+              navigate('/');
+          }
+        });
     } else {
       switch (auth.lastError) {
-        case 'INVALID_CREDENTIALS':
-          Swal.fire({
-            title: 'Login failed',
-            text: 'Please check your email and password.',
-            icon: 'error',
-            confirmButtonText: 'Retry'
-          });
-          break;
-        case 'INVALID_PROFILE':
-          Swal.fire({
-            title: 'Role Mismatch',
-            text: "Access denied. Please check your role again.",
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-          break;
-        case 'SUSPENDED_ACCOUNT':
-          Swal.fire({
-            title: 'Account Suspended',
-            text: "Your account has been suspended. Please contact the administrator.",
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-          break;
-        default:
-          Swal.fire({
-            title: 'Unexpected Error',
-            text: 'Something went wrong. Please try again later.',
-            icon: 'error',
-            confirmButtonText: 'Alright'
-          });
+      case 'INVALID_CREDENTIALS':
+        Swal.fire({
+          title: 'Login failed',
+          text: 'Please check your email and password.',
+          icon: 'error',
+          confirmButtonText: 'Retry'
+        });
+        break;
+      case 'INVALID_PROFILE':
+        Swal.fire({
+          title: 'Role Mismatch',
+          text: "Access denied. Please check your role again.",
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        break;
+      case 'SUSPENDED_ACCOUNT':
+        Swal.fire({
+          title: 'Account Suspended',
+          text: "Your account has been suspended. Please contact the administrator.",
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        break;
+      default:
+        Swal.fire({
+          title: 'Unexpected Error',
+          text: 'Something went wrong. Please try again later.',
+          icon: 'error',
+          confirmButtonText: 'Alright'
+        });
       }
     }
   };
