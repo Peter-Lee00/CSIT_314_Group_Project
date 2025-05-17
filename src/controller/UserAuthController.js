@@ -6,31 +6,51 @@ export class UserLoginController {
     constructor() {
         this.lastError = null;
     }
+    // Helper to normalize strings (remove spaces, lowercase)
+    normalize(str) {
+        return (str || '').replace(/\s+/g, '').toLowerCase();
+    }
     async authenticateLogin(email, password, profileType, profileDocId) {
         try {
             // First verify the user account
-            const userProfile = await UserAccount.verifyUserAccount(email, password);
+            const userProfileName = await UserAccount.verifyUserAccount(email, password);
 
             // If the user account has been suspended
-            if (userProfile === "SUSPENDED") {
+            if (userProfileName === "SUSPENDED") {
                 this.lastError = 'SUSPENDED_ACCOUNT';
                 return false;
             }
             
             // If email/password not match with DB
-            if (!userProfile) {
+            if (!userProfileName) {
                 this.lastError = 'INVALID_CREDENTIALS';
                 return false;
             }
 
-            // Strictly check that the user's actual role matches the selected role
-            if (userProfile !== profileType) {
+            // Fetch all user profiles
+            const userProfileEntity = new UserProfile();
+            const allProfiles = await userProfileEntity.searchUserProfile();
+
+            // Find the profile that matches the user's profileName (normalized)
+            const userProfileDoc = allProfiles.find(
+                p =>
+                    this.normalize(p.profileName) === this.normalize(userProfileName) ||
+                    this.normalize(p.profileType) === this.normalize(userProfileName)
+            );
+
+            if (!userProfileDoc) {
+                this.lastError = 'INVALID_PROFILE';
+                return false;
+            }
+
+            // Now compare the profileType as before
+            if (this.normalize(userProfileDoc.profileType) !== this.normalize(profileType)) {
                 this.lastError = 'INVALID_PROFILE';
                 return false;
             }
 
             // Use UserProfile entity to verify profile type and suspension
-            const profileVerified = await UserProfile.verifyUserProfile(profileDocId, profileType);
+            const profileVerified = await UserProfile.verifyUserProfile(profileDocId);
             if (!profileVerified) {
                 this.lastError = 'INVALID_PROFILE';
                 return false;

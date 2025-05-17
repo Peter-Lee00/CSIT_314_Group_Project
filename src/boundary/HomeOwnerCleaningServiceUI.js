@@ -549,8 +549,8 @@ function HomeOwnerCleaningServiceUI() {
                         onChange={handleInputChange}
                     >
                         <option value="">All Types</option>
-                        {serviceTypes.map(type => (
-                            <option key={type} value={type}>{type}</option>
+                        {serviceTypes.map((type, idx) => (
+                            <option key={type + '-' + idx} value={type}>{type}</option>
                         ))}
                     </select>
                     <select
@@ -647,8 +647,8 @@ function HomeOwnerCleaningServiceUI() {
                                     style={{ minWidth: '140px' }}
                             >
                                 <option value="">All Types</option>
-                                {serviceTypes.map(type => (
-                                    <option key={type} value={type}>{type}</option>
+                                {serviceTypes.map((type, idx) => (
+                                    <option key={type + '-' + idx} value={type}>{type}</option>
                                 ))}
                             </select>
                             <select
@@ -734,8 +734,8 @@ function HomeOwnerCleaningServiceUI() {
                                     style={{ minWidth: '140px' }}
                             >
                                 <option value="">All Types</option>
-                                {serviceTypes.map(type => (
-                                    <option key={type} value={type}>{type}</option>
+                                {serviceTypes.map((type, idx) => (
+                                    <option key={type + '-' + idx} value={type}>{type}</option>
                                 ))}
                             </select>
                             <select
