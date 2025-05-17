@@ -616,7 +616,6 @@ function HomeOwnerCleaningServiceUI() {
                             <th>Type</th>
                             <th>Price</th>
                             <th>Duration</th>
-                            <th>Cleaner</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -628,7 +627,6 @@ function HomeOwnerCleaningServiceUI() {
                                 <td>{service.serviceType}</td>
                                 <td>${service.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                 <td>{service.duration} hrs</td>
-                                <td>{cleanerNames[service.cleanerId] || service.cleanerId || 'N/A'}</td>
                                 <td style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                                     <button className="serviceViewButton" onClick={() => handleViewService(service)}>
                                         View
