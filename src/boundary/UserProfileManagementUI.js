@@ -8,7 +8,7 @@ import {
   CreateProfileController,
   UpdateProfileController,
   UASearchUserProfileController,
-  SuspendProfileController,
+  UASuspendUserProfileController,
   UADeleteUserProfileController
 } from "../controller/AdminProfileController";
 import Swal from 'sweetalert2';
@@ -176,7 +176,7 @@ function UserProfileManagementUI() {
   };
 
   const handleToggleSuspend = async (profileName) => {
-    const controller = new SuspendProfileController();
+    const controller = new UASuspendUserProfileController();
     const changed = await controller.suspendUserProfile(profileName);
 
     if (changed) {

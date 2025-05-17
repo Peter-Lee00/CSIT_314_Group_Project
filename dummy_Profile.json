@@ -1,0 +1,542 @@
+[
+    {
+        "description": "User Admin Profile 1",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 2",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 3",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 4",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 5",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 6",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 7",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 8",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 9",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 10",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 11",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 12",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 13",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 14",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 15",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 16",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 17",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 18",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 19",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 20",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 21",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 22",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 23",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 24",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 25",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 26",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 27",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 28",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 29",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    },
+    {
+        "description": "User Admin Profile 30",
+        "profileName": "User Admin",
+        "profileType": "UserAdmin",
+        "suspended": false
+    }, 
+    
+    {
+        "description": "Platform Manager Profile 1",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 2",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 3",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 4",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 5",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 6",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 7",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 8",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 9",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 10",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 11",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 12",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 13",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 14",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 15",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 16",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 17",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 18",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 19",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 20",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 21",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 22",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 23",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 24",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 25",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 26",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 27",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 28",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 29",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    },
+    {
+        "description": "Platform Manager Profile 30",
+        "profileName": "Platform Manager",
+        "profileType": "PlatformManager",
+        "suspended": false
+    }, {
+        "description": "Cleaner Profile 1",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 2",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 3",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 4",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 5",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 6",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 7",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 8",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 9",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 10",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 11",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 12",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 13",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 14",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 15",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 16",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 17",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 18",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 19",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 20",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 21",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 22",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 23",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 24",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 25",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 26",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 27",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 28",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    },
+    {
+        "description": "Cleaner Profile 29",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": false
+    },
+    {
+        "description": "Cleaner Profile 30",
+        "profileName": "Cleaner",
+        "profileType": "Cleaner",
+        "suspended": true
+    }
+]

@@ -44,7 +44,7 @@ class UpdateProfileController {
     }
 }
 
-class SuspendProfileController {
+class UASuspendUserProfileController {
     async suspendUserProfile(profileName) {
         try {
             const profile = new UserProfile();
@@ -83,7 +83,7 @@ export {
     CreateProfileController,
     ViewProfileController,
     UpdateProfileController,
-    SuspendProfileController,
+    UASuspendUserProfileController,
     UASearchUserProfileController,
     UADeleteUserProfileController
 };

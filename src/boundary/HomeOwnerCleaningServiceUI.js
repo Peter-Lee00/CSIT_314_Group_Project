@@ -16,7 +16,6 @@ import {
   OwnerSearchServiceHistoryController
 } from '../controller/OwnerCleaningServiceController';
 import { CreateServiceRequestController } from '../controller/CleanerRequestController';
-import UserAccount from '../entity/UserAccount';
 
 function HomeOwnerCleaningServiceUI() {
     const [services, setServices] = useState([]);
@@ -61,7 +60,6 @@ function HomeOwnerCleaningServiceUI() {
     const [filteredConfirmedServices, setFilteredConfirmedServices] = useState([]);
     const [serviceHistory, setServiceHistory] = useState([]);
     const [historyMessage, setHistoryMessage] = useState('');
-    const [cleanerNames, setCleanerNames] = useState({});
 
     const searchController = new OwnerSearchCleaningServiceController();
     const saveShortlistController = new OwnerSaveShortlistController();
@@ -128,15 +126,6 @@ function HomeOwnerCleaningServiceUI() {
         }
     }, [showHistoryModal, confirmedServices]);
 
-    useEffect(() => {
-        if (services.length > 0) {
-            const uniqueCleanerIds = [...new Set(services.map(s => s.cleanerId).filter(Boolean))];
-            if (uniqueCleanerIds.length > 0) {
-                fetchCleanerNames(uniqueCleanerIds);
-            }
-        }
-    }, [services]);
-
     const fetchServices = async (filters = {}) => {
         const result = await searchController.searchCleaningService(
             filters.serviceName || undefined,
@@ -172,17 +161,6 @@ function HomeOwnerCleaningServiceUI() {
             );
         }
         setServices(filtered);
-    };
-
-    const fetchCleanerNames = async (cleanerIds) => {
-        const names = {};
-        for (const id of cleanerIds) {
-            const user = await UserAccount.searchUserAccount(id);
-            if (user) {
-                names[id] = `${user.firstName} ${user.lastName}`;
-            }
-        }
-        setCleanerNames(names);
     };
 
     const handleInputChange = (e) => {
@@ -629,11 +607,11 @@ function HomeOwnerCleaningServiceUI() {
                                 <td>{service.duration} hrs</td>
                                 <td style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                                     <button className="serviceViewButton" onClick={() => handleViewService(service)}>
-                                        View
-                                    </button>
+                                    View
+                                </button>
                                     <button className="serviceShortlistButton" onClick={() => handleShortlist(service)}>
-                                        Shortlist
-                                    </button>
+                                    Shortlist
+                                </button>
                                 </td>
                             </tr>
                         ))}
