@@ -12,7 +12,7 @@ admin.initializeApp({
 const db = admin.firestore();
 
 // Load your JSON data
-const data = JSON.parse(fs.readFileSync('dummy_services_200.json', 'utf8'));
+const data = JSON.parse(fs.readFileSync('dummy_services_PM.json', 'utf8'));
 
 // Loop through the data and upload
 async function uploadData() {

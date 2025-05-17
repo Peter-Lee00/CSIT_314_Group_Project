@@ -1,110 +1,391 @@
- [
+[
   {
-    "name": "Deep Cleaning",
-    "description": "A comprehensive and thorough cleaning of your space, reaching the deep grime and dirt in your home or office."
-  },
-  {
-    "name": "Move In/Out Cleaning",
-    "description": "Specialized cleaning service designed for people who are moving in or out of a property to ensure a spotless space."
+    "description": "Reliable and efficient bathroom deep cleaning performed by trained professionals.",
+    "name": "Bathroom Deep Cleaning"
   },
   {
-    "name": "Post Renovation Cleaning",
-    "description": "Cleaning after construction or renovation work, including removal of dust, debris, and leftover materials."
+    "description": "Our washing machine cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Washing Machine Cleaning"
   },
   {
-    "name": "Standard Cleaning",
-    "description": "Routine cleaning to maintain cleanliness and tidiness in your home or workspace."
+    "description": "Experience unmatched cleanliness with our expert deep cleaning solutions.",
+    "name": "Deep Cleaning"
   },
   {
-    "name": "Office Cleaning",
-    "description": "Cleaning service tailored for office environments, including desk areas, meeting rooms, and communal spaces."
+    "description": "Professional dryer cleaning service ensuring hygiene, quality, and satisfaction.",
+    "name": "Dryer Cleaning"
   },
   {
-    "name": "Disinfection Service",
-    "description": "Professional-grade disinfection to eliminate germs and bacteria, ideal for homes and businesses."
+    "description": "Our mold remediation offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Mold Remediation"
   },
   {
-    "name": "Upholstery Cleaning",
-    "description": "Specialized cleaning for furniture fabrics such as sofas and chairs to remove stains and allergens."
+    "description": "Reliable and efficient driveway pressure washing performed by trained professionals.",
+    "name": "Driveway Pressure Washing"
   },
   {
-    "name": "Carpet Cleaning",
-    "description": "Deep cleaning of carpets using professional equipment to remove stains, odors, and allergens."
+    "description": "Reliable and efficient basement cleaning performed by trained professionals.",
+    "name": "Basement Cleaning"
   },
   {
-    "name": "Mattress Cleaning",
-    "description": "Sanitization and deep cleaning of mattresses to ensure a hygienic sleeping environment."
-  },
-    {
-    "name": "Stair Cleaning",
-    "description": "clean stairs."
+    "description": "Our church/religious facility cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Church/Religious Facility Cleaning"
   },
   {
-    "name": "Especially for Office",
-    "description": "Office Cleaning"
+    "description": "Experience unmatched cleanliness with our expert flood damage cleaning solutions.",
+    "name": "Flood Damage Cleaning"
   },
   {
-    "name": "Residential",
-    "description": "Spring cleaning special "
+    "description": "Reliable and efficient daycare cleaning performed by trained professionals.",
+    "name": "Daycare Cleaning"
   },
   {
-    "name": "Office",
-    "description": "Service for ofice "
+    "description": "Experience unmatched cleanliness with our expert car interior cleaning solutions.",
+    "name": "Car Interior Cleaning"
   },
   {
-    "name": "Move-Out",
-    "description": "move service"
+    "description": "Perfect for homes and offices, our construction site cleanup ensures sparkling results.",
+    "name": "Construction Site Cleanup"
   },
   {
-    "name": "Standard",
-    "description": "Service standard"
-  },
-   {
-    "name": "Eco-Friendly",
-    "description": "Service description 297"
+    "description": "Perfect for homes and offices, our monthly cleaning ensures sparkling results.",
+    "name": "Monthly Cleaning"
   },
   {
-    "name": "One-Time Cleaning",
-    "description": "A single cleaning service for those who need a quick clean without a recurring schedule."
+    "description": "Professional grocery unpacking service ensuring hygiene, quality, and satisfaction.",
+    "name": "Grocery Unpacking"
   },
   {
-    "name": "Recurring Cleaning",
-    "description": "Regularly scheduled cleaning services, available weekly, bi-weekly, or monthly."
+    "description": "Professional bi-weekly home cleaning service ensuring hygiene, quality, and satisfaction.",
+    "name": "Bi-weekly Home Cleaning"
   },
   {
-    "name": "Green Cleaning",
-    "description": "Environmentally friendly cleaning using non-toxic and biodegradable products."
+    "description": "Reliable and efficient move-out cleaning performed by trained professionals.",
+    "name": "Move-Out Cleaning"
   },
   {
-    "name": "Window Cleaning",
-    "description": "Cleaning of windows, both interior and exterior, to ensure a streak-free shine."
+    "description": "Experience unmatched cleanliness with our expert carpet cleaning solutions.",
+    "name": "Carpet Cleaning"
   },
   {
-    "name": "Pressure Washing",
-    "description": "High-pressure cleaning for outdoor surfaces like driveways, patios, and siding."
+    "description": "Our mattress cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Mattress Cleaning"
   },
   {
-    "name": "Tile and Grout Cleaning",
-    "description": "Deep cleaning of tile surfaces and grout lines to remove stains and restore shine."
+    "description": "Reliable and efficient industrial cleaning performed by trained professionals.",
+    "name": "Industrial Cleaning"
   },
   {
-    "name": "Oven Cleaning",
-    "description": "Thorough cleaning of ovens, including the removal of grease and burnt-on food."
+    "description": "Our school & university cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "School & University Cleaning"
   },
   {
-    "name": "Fridge Cleaning",
-    "description": "Cleaning and sanitizing of refrigerators, including removal of expired food and spills."
+    "description": "Perfect for homes and offices, our bedroom cleaning ensures sparkling results.",
+    "name": "Bedroom Cleaning"
   },
   {
-    "name": "Laundry Service",
-    "description": "Washing, drying, and folding of laundry items, available as a standalone service or in conjunction with cleaning."
+    "description": "Experience unmatched cleanliness with our expert ironing & laundry solutions.",
+    "name": "Ironing & Laundry"
   },
   {
-    "name": "Pet Odor Removal",
-    "description": "Specialized cleaning to eliminate pet odors from carpets, upholstery, and other surfaces."
+    "description": "Perfect for homes and offices, our boat interior cleaning ensures sparkling results.",
+    "name": "Boat Interior Cleaning"
   },
   {
-    "name": "Emergency Cleaning",
-    "description": "Rapid response cleaning service for unexpected situations like floods or fire damage."
-  }
+    "description": "Our move-in cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Move-In Cleaning"
+  },
+  {
+    "description": "Professional bed linen changing service ensuring hygiene, quality, and satisfaction.",
+    "name": "Bed Linen Changing"
+  },
+  {
+    "description": "Perfect for homes and offices, our outdoor furniture cleaning ensures sparkling results.",
+    "name": "Outdoor Furniture Cleaning"
+  },
+  {
+    "description": "Reliable and efficient electronics cleaning performed by trained professionals.",
+    "name": "Electronics Cleaning"
+  },
+  {
+    "description": "Our window cleaning (exterior) offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Window Cleaning (Exterior)"
+  },
+  {
+    "description": "Professional oven cleaning service ensuring hygiene, quality, and satisfaction.",
+    "name": "Oven Cleaning"
+  },
+  {
+    "description": "Professional retail store cleaning service ensuring hygiene, quality, and satisfaction.",
+    "name": "Retail Store Cleaning"
+  },
+  {
+    "description": "Reliable and efficient decluttering service performed by trained professionals.",
+    "name": "Decluttering Service"
+  },
+  {
+    "description": "Perfect for homes and offices, our garage cleaning ensures sparkling results.",
+    "name": "Garage Cleaning"
+  },
+  {
+    "description": "Experience unmatched cleanliness with our expert light fixture cleaning solutions.",
+    "name": "Light Fixture Cleaning"
+  },
+  {
+    "description": "Our covid-19 disinfection offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Covid-19 Disinfection"
+  },
+  {
+    "description": "Experience unmatched cleanliness with our expert standard house cleaning solutions.",
+    "name": "Standard House Cleaning"
+  },
+  {
+    "description": "Reliable and efficient warehouse cleaning performed by trained professionals.",
+    "name": "Warehouse Cleaning"
+  },
+  {
+    "description": "Professional bank cleaning service ensuring hygiene, quality, and satisfaction.",
+    "name": "Bank Cleaning"
+  },
+  {
+    "description": "Our pressure washing offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Pressure Washing"
+  },
+  {
+    "description": "Our pool area cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Pool Area Cleaning"
+  },
+  {
+    "description": "Perfect for homes and offices, our fragrance treatment ensures sparkling results.",
+    "name": "Fragrance Treatment"
+  },
+  {
+    "description": "Perfect for homes and offices, our post-renovation cleaning ensures sparkling results.",
+    "name": "Post-Renovation Cleaning"
+  },
+  {
+    "description": "Reliable and efficient rv interior cleaning performed by trained professionals.",
+    "name": "RV Interior Cleaning"
+  },
+  {
+    "description": "Perfect for homes and offices, our ceiling fan cleaning ensures sparkling results.",
+    "name": "Ceiling Fan Cleaning"
+  },
+  {
+    "description": "Professional attic cleaning service ensuring hygiene, quality, and satisfaction.",
+    "name": "Attic Cleaning"
+  },
+  {
+    "description": "Reliable and efficient nightly cleaning contracts performed by trained professionals.",
+    "name": "Nightly Cleaning Contracts"
+  },
+  {
+    "description": "Perfect for homes and offices, our tile & grout cleaning ensures sparkling results.",
+    "name": "Tile & Grout Cleaning"
+  },
+  {
+    "description": "Our stain removal service offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Stain Removal Service"
+  },
+  {
+    "description": "Reliable and efficient solar panel cleaning performed by trained professionals.",
+    "name": "Solar Panel Cleaning"
+  },
+  {
+    "description": "Reliable and efficient hardwood floor cleaning performed by trained professionals.",
+    "name": "Hardwood Floor Cleaning"
+  },
+  {
+    "description": "Professional property management cleaning service ensuring hygiene, quality, and satisfaction.",
+    "name": "Property Management Cleaning"
+  },
+  {
+    "description": "Our fire damage cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Fire Damage Cleaning"
+  },
+  {
+    "description": "Reliable and efficient pet hair removal performed by trained professionals.",
+    "name": "Pet Hair Removal"
+  },
+  {
+    "description": "Experience unmatched cleanliness with our expert event venue cleaning solutions.",
+    "name": "Event Venue Cleaning"
+  },
+  {
+    "description": "Experience unmatched cleanliness with our expert airbnb/short-term rental cleaning solutions.",
+    "name": "Airbnb/Short-Term Rental Cleaning"
+  },
+  {
+    "description": "Experience unmatched cleanliness with our expert smoke odor removal solutions.",
+    "name": "Smoke Odor Removal"
+  },
+  {
+    "description": "Experience unmatched cleanliness with our expert weekly home cleaning solutions.",
+    "name": "Weekly Home Cleaning"
+  },
+  {
+    "description": "Perfect for homes and offices, our eco-friendly home cleaning ensures sparkling results.",
+    "name": "Eco-Friendly Home Cleaning"
+  },
+  {
+    "description": "Our office cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Office Cleaning"
+  },
+  {
+    "description": "Reliable and efficient biohazard cleaning performed by trained professionals.",
+    "name": "Biohazard Cleaning"
+  },
+  {
+    "description": "Our veterinary clinic cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Veterinary Clinic Cleaning"
+  },
+  {
+    "description": "Reliable and efficient curtain & drape cleaning performed by trained professionals.",
+    "name": "Curtain & Drape Cleaning"
+  },
+  {
+    "description": "Our tenant turnover cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Tenant Turnover Cleaning"
+  },
+  {
+    "description": "Perfect for homes and offices, our dishwasher cleaning ensures sparkling results.",
+    "name": "Dishwasher Cleaning"
+  },
+  {
+    "description": "Perfect for homes and offices, our office restroom sanitation ensures sparkling results.",
+    "name": "Office Restroom Sanitation"
+  },
+  {
+    "description": "Reliable and efficient scheduled maintenance cleaning performed by trained professionals.",
+    "name": "Scheduled Maintenance Cleaning"
+  },
+  {
+    "description": "Experience unmatched cleanliness with our expert fridge cleaning solutions.",
+    "name": "Fridge Cleaning"
+  },
+  {
+    "description": "Our facility maintenance cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Facility Maintenance Cleaning"
+  },
+  {
+    "description": "Our microwave cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Microwave Cleaning"
+  },
+  {
+    "description": "Professional gym & fitness center cleaning service ensuring hygiene, quality, and satisfaction.",
+    "name": "Gym & Fitness Center Cleaning"
+  },
+  {
+    "description": "Perfect for homes and offices, our dental clinic cleaning ensures sparkling results.",
+    "name": "Dental Clinic Cleaning"
+  },
+  {
+    "description": "Our kitchen deep cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Kitchen Deep Cleaning"
+  },
+  {
+    "description": "Perfect for homes and offices, our pest control cleaning prep ensures sparkling results.",
+    "name": "Pest Control Cleaning Prep"
+  },
+  {
+    "description": "Our hotel room cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Hotel Room Cleaning"
+  },
+  {
+    "description": "Our hvac vent cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "HVAC Vent Cleaning"
+  },
+  {
+    "description": "Reliable and efficient living room cleaning performed by trained professionals.",
+    "name": "Living Room Cleaning"
+  },
+  {
+    "description": "Professional closet organizing & cleaning service ensuring hygiene, quality, and satisfaction.",
+    "name": "Closet Organizing & Cleaning"
+  },
+  {
+    "description": "Our sidewalk cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Sidewalk Cleaning"
+  },
+  {
+    "description": "Reliable and efficient balcony cleaning performed by trained professionals.",
+    "name": "Balcony Cleaning"
+  },
+  {
+    "description": "Experience unmatched cleanliness with our expert janitorial services solutions.",
+    "name": "Janitorial Services"
+  },
+  {
+    "description": "Professional plant watering service ensuring hygiene, quality, and satisfaction.",
+    "name": "Plant Watering"
+  },
+  {
+    "description": "Perfect for homes and offices, our allergen reduction cleaning ensures sparkling results.",
+    "name": "Allergen Reduction Cleaning"
+  },
+  {
+    "description": "Our green cleaning (non-toxic products) offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Green Cleaning (Non-toxic products)"
+  },
+  {
+    "description": "Experience unmatched cleanliness with our expert crime scene cleanup solutions.",
+    "name": "Crime Scene Cleanup"
+  },
+  {
+    "description": "Our hoarding cleanup offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Hoarding Cleanup"
+  },
+  {
+    "description": "Our fence cleaning offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Fence Cleaning"
+  },
+  {
+    "description": "Our window cleaning (interior) offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Window Cleaning (Interior)"
+  },
+  {
+    "description": "Perfect for homes and offices, our trash bin sanitation ensures sparkling results.",
+    "name": "Trash Bin Sanitation"
+  },
+  {
+    "description": "Professional patio/deck cleaning service ensuring hygiene, quality, and satisfaction.",
+    "name": "Patio/Deck Cleaning"
+  },
+  {
+    "description": "Perfect for homes and offices, our supply restocking (toilet paper, soap, etc.) ensures sparkling results.",
+    "name": "Supply Restocking (Toilet paper, soap, etc.)"
+  },
+  {
+    "description": "Professional high-touch surface disinfection service ensuring hygiene, quality, and satisfaction.",
+    "name": "High-Touch Surface Disinfection"
+  },
+  {
+    "description": "Experience unmatched cleanliness with our expert hospital cleaning solutions.",
+    "name": "Hospital Cleaning"
+  },
+  {
+    "description": "Perfect for homes and offices, our elderly care facility cleaning ensures sparkling results.",
+    "name": "Elderly Care Facility Cleaning"
+  },
+  {
+    "description": "Perfect for homes and offices, our vacation home turnover cleaning ensures sparkling results.",
+    "name": "Vacation Home Turnover Cleaning"
+  },
+  {
+    "description": "Professional resort cleaning service ensuring hygiene, quality, and satisfaction.",
+    "name": "Resort Cleaning"
+  },
+  {
+    "description": "Our real estate cleaning (open house prep) offers top-to-bottom cleanliness with attention to detail.",
+    "name": "Real Estate Cleaning (Open House Prep)"
+  },
+  {
+    "description": "Perfect for homes and offices, our laboratory cleaning ensures sparkling results.",
+    "name": "Laboratory Cleaning"
+  },  
+  { "name": "Deep Cleaning", "description": "Thorough cleaning for your home or office." },
+      { "name": "Move Out", "description": "Cleaning for moving out." },
+      { "name": "Office", "description": "Office cleaning services." },
+      { "name": "Eco", "description": "Eco-friendly cleaning." },
+      { "name": "Quick", "description": "Quick cleaning jobs." }
 ]
