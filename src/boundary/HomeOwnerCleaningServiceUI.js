@@ -16,6 +16,7 @@ import {
   OwnerSearchServiceHistoryController
 } from '../controller/OwnerCleaningServiceController';
 import { CreateServiceRequestController } from '../controller/CleanerRequestController';
+import Cookies from "js-cookie";
 
 function HomeOwnerCleaningServiceUI() {
     const [services, setServices] = useState([]);
@@ -30,7 +31,7 @@ function HomeOwnerCleaningServiceUI() {
     const [showShortlist, setShowShortlist] = useState(false);
     const [shortlistedServices, setShortlistedServices] = useState([]);
     const [selectedService, setSelectedService] = useState(null);
-    const username = localStorage.getItem('username') || 'testuser';
+    const email = Cookies.get('email');
     const [showHistoryModal, setShowHistoryModal] = useState(false);
     const [confirmedServices, setConfirmedServices] = useState([]);
     const [historyFilters, setHistoryFilters] = useState({
@@ -184,7 +185,6 @@ function HomeOwnerCleaningServiceUI() {
     };
 
     const handleShortlist = async (service) => {
-        const username = localStorage.getItem('username') || 'testuser';
         // Check if service is already in shortlist
         if (isShortlisted(service.id)) {
             Swal.fire({
@@ -199,7 +199,7 @@ function HomeOwnerCleaningServiceUI() {
         try {
         // Increment shortlist count when service is added to shortlist
         await CleaningService.increaseShortlistCount(service.id);
-            const result = await saveShortlistController.saveToShortlist(username, service);
+            const result = await saveShortlistController.saveToShortlist(email, service);
         if (result) {
             Swal.fire({
                 title: 'Added!',
@@ -237,8 +237,7 @@ function HomeOwnerCleaningServiceUI() {
     };
 
     const handleViewShortlist = async () => {
-        const username = localStorage.getItem('username') || 'testuser';
-        const result = await getShortlistedServicesController.getShortlistedServices(username);
+        const result = await getShortlistedServicesController.getShortlistedServices(email);
         setShortlistedServices((result || []).map(doc => ({
             id: doc.id,
             serviceName: doc.serviceName,
@@ -300,7 +299,6 @@ function HomeOwnerCleaningServiceUI() {
     };
 
     const handleRemoveFromShortlist = async (serviceId) => {
-        const username = localStorage.getItem('username') || 'testuser';
         const result = await Swal.fire({
             title: 'Remove from Shortlist?',
             text: 'Are you sure you want to remove this service from your shortlist?',
@@ -310,7 +308,7 @@ function HomeOwnerCleaningServiceUI() {
             cancelButtonText: 'Cancel',
         });
         if (result.isConfirmed) {
-            await removeFromShortlistController.removeFromShortlist(username, serviceId);
+            await removeFromShortlistController.removeFromShortlist(email, serviceId);
             handleViewShortlist();
             Swal.fire('Removed!', 'Service has been removed from your shortlist.', 'success');
         }
@@ -319,7 +317,7 @@ function HomeOwnerCleaningServiceUI() {
     const handleSendRequest = async (service) => {
         try {
             // Check if request already exists
-            let existingRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(username);
+            let existingRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(email);
             if (existingRequests && existingRequests.success && Array.isArray(existingRequests.data)) {
                 existingRequests = existingRequests.data;
             }
@@ -365,7 +363,7 @@ function HomeOwnerCleaningServiceUI() {
             if (formValues) {  // User clicked Send Request
                 const result = await createServiceRequestController.createRequest(
                     service.id,
-                    username,
+                    email,
                     service.cleanerId,
                     formValues.msg,
                     formValues.date
@@ -400,7 +398,7 @@ function HomeOwnerCleaningServiceUI() {
 
     const loadConfirmedServices = async () => {
         try {
-            let allRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(username);
+            let allRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(email);
             // Handle both controller response object and direct array
             if (allRequests && allRequests.success && Array.isArray(allRequests.data)) {
                 allRequests = allRequests.data;
@@ -488,7 +486,6 @@ function HomeOwnerCleaningServiceUI() {
 
     const searchServiceHistory = async () => {
         try {
-            const username = localStorage.getItem('username') || 'testuser';
             const filters = {
                 status: document.getElementById('statusFilter').value,
                 startDate: document.getElementById('startDate').value,
@@ -496,7 +493,7 @@ function HomeOwnerCleaningServiceUI() {
                 serviceType: document.getElementById('serviceTypeFilter').value
             };
 
-            const result = await new OwnerSearchServiceHistoryController().searchServiceHistory(username, filters);
+            const result = await new OwnerSearchServiceHistoryController().searchServiceHistory(email, filters);
             
             if (result.success) {
                 setServiceHistory(result.data);

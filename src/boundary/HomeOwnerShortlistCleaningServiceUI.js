@@ -7,14 +7,15 @@ import {
   OwnerSearchShortlistedServicesController,
   OwnerRemoveFromShortlistController
 } from '../controller/OwnerCleaningServiceController';
+import Cookies from "js-cookie";
 
 function HomeOwnerShortlistCleaningServiceUI() {
-    const username = localStorage.getItem('username') || 'testuser';
+    const email = Cookies.get('email');
     const [shortlist, setShortlist] = useState([]);
 
     const fetchShortlist = async () => {
         const controller = new OwnerGetShortlistedServicesController();
-        const result = await controller.getShortlistedServices(username);
+        const result = await controller.getShortlistedServices(email);
         if (!result || result.length === 0) {
             setShortlist([]);
             } else {
@@ -51,7 +52,7 @@ function HomeOwnerShortlistCleaningServiceUI() {
         const duration = document.getElementById('duration_search_input').value;
 
         const controller = new OwnerSearchShortlistedServicesController();
-        const result = await controller.searchShortlistedServices(username, {
+        const result = await controller.searchShortlistedServices(email, {
             serviceName: name,
             serviceType: type,
             priceRange,
@@ -92,7 +93,7 @@ function HomeOwnerShortlistCleaningServiceUI() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 const controller = new OwnerRemoveFromShortlistController();
-                await controller.removeFromShortlist(username, serviceId);
+                await controller.removeFromShortlist(email, serviceId);
                     Swal.fire('Removed!', 'The service has been removed from your shortlist.', 'success');
                 fetchShortlist();
             }
@@ -164,11 +165,11 @@ function HomeOwnerShortlistCleaningServiceUI() {
                 <button onClick={handleBack} className="bsBack-button">Back</button>
                 <div className="bsProfile-picture">
                     <img
-                        src={"https://placehold.co/40x40?text=" + username}
+                        src={"https://placehold.co/40x40?text=" + email}
                         alt="Profile"
                     />
                 </div>
-                <span className="bsUsername">{username}</span>
+                <span className="bsUsername">{email}</span>
                 <button onClick={handleLogout} className="bsLogout-button">Logout</button>
             </div>
             <div className="bsSearch-bar">
