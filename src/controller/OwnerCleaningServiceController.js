@@ -326,6 +326,20 @@ class OwnerSearchServiceHistoryController {
     }
 }
 
+class OwnerViewCleaningServiceController {
+    // View a cleaning service by its ID and increment view count
+    async viewService(serviceId) {
+        try {
+            await CleaningService.increaseViewCount(serviceId);
+            const service = await CleaningService.getServiceById(serviceId);
+            return service;
+        } catch (error) {
+            console.error('Error viewing service:', error);
+            throw error;
+        }
+    }
+}
+
 export {
     OwnerSearchCleaningServiceController,
     OwnerSaveShortlistController,
@@ -337,5 +351,6 @@ export {
     OwnerGetConfirmedMatchesController,
     OwnerSearchShortlistedServicesController,
     OwnerGetRequestsByHomeownerController,
-    OwnerSearchServiceHistoryController
+    OwnerSearchServiceHistoryController,
+    OwnerViewCleaningServiceController
 };
