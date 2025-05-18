@@ -43,8 +43,15 @@ export class UserLoginController {
                 return false;
             }
 
-            // Now compare the profileType as before
-            if (this.normalize(userProfileDoc.profileType) !== this.normalize(profileType)) {
+            // Fetch user data from Users collection
+            const userData = await UserAccount.searchUserAccount(email);
+            if (!userData) {
+                this.lastError = 'INVALID_CREDENTIALS';
+                return false;
+            }
+
+            // Compare the selected role to the 'type' field from Users
+            if (this.normalize(userData.type) !== this.normalize(profileType)) {
                 this.lastError = 'INVALID_PROFILE';
                 return false;
             }
@@ -60,7 +67,6 @@ export class UserLoginController {
             // Set cookies and return success
             Cookies.set('email', email);
             Cookies.set('userProfile', profileType);
-            const userData = await UserAccount.searchUserAccount(email);
             if (userData) {
                 Cookies.set('username', userData.firstName || email);
             }

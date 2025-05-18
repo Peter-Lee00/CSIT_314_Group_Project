@@ -87,6 +87,7 @@ class UserAccount {
         phoneNumber: data.phoneNumber,
         email: data.email,
         userProfile: data.userProfile,
+        type: data.type,
         suspended: data.suspended || false,
         address: data.address
       };
