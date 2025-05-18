@@ -30,7 +30,7 @@ function HomeOwnerCleaningServiceUI() {
     const [showShortlist, setShowShortlist] = useState(false);
     const [shortlistedServices, setShortlistedServices] = useState([]);
     const [selectedService, setSelectedService] = useState(null);
-    const username = localStorage.getItem('username') || 'testuser';
+    const homeownerEmail = localStorage.getItem('email');
     const [showHistoryModal, setShowHistoryModal] = useState(false);
     const [confirmedServices, setConfirmedServices] = useState([]);
     const [historyFilters, setHistoryFilters] = useState({
@@ -319,7 +319,7 @@ function HomeOwnerCleaningServiceUI() {
     const handleSendRequest = async (service) => {
         try {
             // Check if request already exists
-            let existingRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(username);
+            let existingRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(homeownerEmail);
             if (existingRequests && existingRequests.success && Array.isArray(existingRequests.data)) {
                 existingRequests = existingRequests.data;
             }
@@ -365,7 +365,7 @@ function HomeOwnerCleaningServiceUI() {
             if (formValues) {  // User clicked Send Request
                 const result = await createServiceRequestController.createRequest(
                     service.id,
-                    username,
+                    homeownerEmail,
                     service.cleanerId,
                     formValues.msg,
                     formValues.date
@@ -400,13 +400,14 @@ function HomeOwnerCleaningServiceUI() {
 
     const loadConfirmedServices = async () => {
         try {
-            let allRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(username);
+            let allRequests = await getRequestsByHomeownerController.getRequestsByHomeowner(homeownerEmail);
             // Handle both controller response object and direct array
             if (allRequests && allRequests.success && Array.isArray(allRequests.data)) {
                 allRequests = allRequests.data;
             }
             allRequests = Array.isArray(allRequests) ? allRequests : [];
-            const accepted = allRequests.filter(r => r.status === 'ACCEPTED');
+            // Show both ACCEPTED and COMPLETED requests
+            const accepted = allRequests.filter(r => r.status === 'ACCEPTED' || r.status === 'COMPLETED');
             setConfirmedServices(accepted);
             // Fetch service details for each confirmed service
             const serviceIds = [...new Set(accepted.map(req => req.serviceId))];
