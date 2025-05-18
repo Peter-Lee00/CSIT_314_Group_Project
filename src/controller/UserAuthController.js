@@ -50,6 +50,13 @@ export class UserLoginController {
                 return false;
             }
 
+            // Debug: Log the values being compared
+            console.log('DEBUG: Comparing userData.type:', userData.type, 'with profileType:', profileType);
+            console.log('userData.type chars:', Array.from(userData.type || '').map(c => c.charCodeAt(0)));
+            console.log('profileType chars:', Array.from(profileType || '').map(c => c.charCodeAt(0)));
+            console.log('Normalized userData.type:', this.normalize(userData.type));
+            console.log('Normalized profileType:', this.normalize(profileType));
+
             // Compare the selected role to the 'type' field from Users
             if (this.normalize(userData.type) !== this.normalize(profileType)) {
                 this.lastError = 'INVALID_PROFILE';
@@ -57,7 +64,8 @@ export class UserLoginController {
             }
 
             // Use UserProfile entity to verify profile type and suspension
-            const profileVerified = await UserProfile.verifyUserProfile(profileDocId);
+            // Use the user's actual userProfile as the profileDocId
+            const profileVerified = await UserProfile.verifyUserProfile(userData.userProfile);
             if (!profileVerified) {
                 this.lastError = 'INVALID_PROFILE';
                 return false;

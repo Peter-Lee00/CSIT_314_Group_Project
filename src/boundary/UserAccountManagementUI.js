@@ -99,6 +99,16 @@ function UserAccountManagementUI() {
               ${roleOptions.map(role => `<option value="${role}">${role}</option>`).join('')}
             </select>
           </div>
+          <div class="item full-width">
+            <label>Role Type</label>
+            <select id="type" class="swal2-select">
+              <option value="">Choose role type</option>
+              <option value="UserAdmin">User Admin</option>
+              <option value="Cleaner">Cleaner</option>
+              <option value="HomeOwner">Home Owner</option>
+              <option value="PlatformManager">Platform Manager</option>
+            </select>
+          </div>
         </div>
       `,
       confirmButtonText: 'Create',
@@ -111,11 +121,12 @@ function UserAccountManagementUI() {
           password: document.getElementById('password').value,
           phoneNumber: document.getElementById('phoneNumber').value,
           email: document.getElementById('email').value,
-          userProfile: document.getElementById('userProfile').value
+          userProfile: document.getElementById('userProfile').value,
+          type: document.getElementById('type').value
         };
 
         if (!payload.firstName || !payload.lastName || !payload.password ||
-            !payload.phoneNumber || !payload.email || !payload.userProfile) {
+            !payload.phoneNumber || !payload.email || !payload.userProfile || !payload.type) {
           Swal.showValidationMessage('Please fill in all required fields.');
           return false;
         }
@@ -139,7 +150,8 @@ function UserAccountManagementUI() {
       data.password,
       data.phoneNumber,
       data.email,
-      data.userProfile
+      data.userProfile,
+      data.type
     );
 
     if (created === 'DUPLICATE_EMAIL') {
@@ -194,26 +206,37 @@ function UserAccountManagementUI() {
               ${roleOptions.map(role => `<option value="${role}" ${user.userProfile === role ? 'selected' : ''}>${role}</option>`).join('')}
             </select>
           </div>
+          <div class="item full-width">
+            <label>Role Type</label>
+            <select id="type" class="swal2-select">
+              <option value="">Choose role type</option>
+              <option value="UserAdmin" ${user.type === 'UserAdmin' ? 'selected' : ''}>User Admin</option>
+              <option value="Cleaner" ${user.type === 'Cleaner' ? 'selected' : ''}>Cleaner</option>
+              <option value="HomeOwner" ${user.type === 'HomeOwner' ? 'selected' : ''}>Home Owner</option>
+              <option value="PlatformManager" ${user.type === 'PlatformManager' ? 'selected' : ''}>Platform Manager</option>
+            </select>
+          </div>
         </div>
       `,
       confirmButtonText: 'Update',
       showCancelButton: true,
+      focusConfirm: false,
       preConfirm: () => {
-        const data = {
+        const payload = {
           firstName: document.getElementById('firstName').value,
           lastName: document.getElementById('lastName').value,
           password: document.getElementById('password').value,
           phoneNumber: document.getElementById('phoneNumber').value,
           email: document.getElementById('email').value,
-          userProfile: document.getElementById('userProfile').value
+          userProfile: document.getElementById('userProfile').value,
+          type: document.getElementById('type').value
         };
-
-        if (!data.firstName || !data.lastName || !data.password ||
-            !data.phoneNumber || !data.userProfile) {
-          Swal.showValidationMessage('Fill everything out!');
+        if (!payload.firstName || !payload.lastName || !payload.password ||
+            !payload.phoneNumber || !payload.email || !payload.userProfile || !payload.type) {
+          Swal.showValidationMessage('Please fill in all required fields.');
           return false;
         }
-        return data;
+        return payload;
       }
     }).then(applyUpdate);
   };
@@ -229,7 +252,8 @@ function UserAccountManagementUI() {
       update.password,
       update.phoneNumber,
       update.email,
-      update.userProfile
+      update.userProfile,
+      update.type
     );
 
     if (ok) {
